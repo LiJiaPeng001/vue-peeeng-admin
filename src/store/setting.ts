@@ -1,0 +1,40 @@
+import { defineStore } from 'pinia'
+import { SettingState } from '#/store'
+
+export default defineStore('setting', {
+  state(): SettingState {
+    return {
+      mode: "pc",
+      collapsed: false,
+      theme: 'light',
+      cacheTabs: [],
+      openKeys: []
+    }
+  },
+  getters: {
+    // 菜单宽度
+    menuW: state => state.mode === "pc" ? (!state.collapsed ? 210 : 80) : 210,
+    // layout-width
+    layoutW: state => state.mode === "pc" ? (!state.collapsed ? 210 : 80) : 0,
+    inlineCollapsed: state => state.mode === "pc" ? state.collapsed : false  // menu - inlineCollapsed
+  },
+  actions: {
+    setCacheTabs(cacheTabs: SettingState['cacheTabs']) {
+      this.cacheTabs = cacheTabs
+    },
+    setOpenKeys(openKeys: SettingState['openKeys']) {
+      this.openKeys = openKeys
+    },
+    onlistenBodyResize(options: ResizeObserverEntry['contentRect']) {
+      let { width = 0 } = options
+      if (width >= 1000) {
+        this.mode = "pc"
+        this.collapsed = false
+      }
+      else {
+        this.mode = "mobile"
+        this.collapsed = false
+      }
+    }
+  }
+})
