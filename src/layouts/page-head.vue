@@ -9,7 +9,7 @@
           v-if="settingStore.mode === 'mobile'"
           style="width: 36px; height: 36px; margin-right: 10px"
         ></Logo>
-        <a-button @click="handleClick">
+        <a-button size="small" @click="handleClick">
           <MenuUnfoldOutlined v-if="settingStore.collapsed" />
           <MenuFoldOutlined v-else />
         </a-button>

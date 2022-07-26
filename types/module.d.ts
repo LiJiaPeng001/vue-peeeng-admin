@@ -8,7 +8,6 @@ declare module "*.vue" {
   export default component;
 }
 
-declare type Nullable<T> = T | null;
 declare module "~/utils/*";
 declare module "~/store/*";
 declare module "~/plugins/*";
@@ -16,3 +15,4 @@ declare module "~/components/*";
 declare module "~/composables/*";
 declare module "~pages*";
 declare module "#/*";
+declare module "nprogress";
