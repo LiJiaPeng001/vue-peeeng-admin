@@ -8,7 +8,8 @@ export default defineStore('setting', {
       collapsed: false,
       theme: 'light',
       cacheTabs: [],
-      openKeys: []
+      openKeys: [],
+      refreshPath: "",
     }
   },
   getters: {
@@ -19,9 +20,6 @@ export default defineStore('setting', {
     inlineCollapsed: state => state.mode === "pc" ? state.collapsed : false  // menu - inlineCollapsed
   },
   actions: {
-    setOpenKeys(openKeys: SettingState['openKeys']) {
-      this.openKeys = openKeys
-    },
     onlistenBodyResize(options: ResizeObserverEntry['contentRect']) {
       let { width = 0 } = options
       if (width >= 1000) {
@@ -32,6 +30,9 @@ export default defineStore('setting', {
         this.mode = "mobile"
         this.collapsed = false
       }
+    },
+    refreshPage(path: string) {
+      this.refreshPath = path
     }
   }
 })

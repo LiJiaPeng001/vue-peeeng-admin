@@ -5,45 +5,23 @@
     </ul>
     <div class="login-wrap">
       <img m-b-40 m-auto display-block w-80 h-80 class="logo" :src="logo" />
-      <a-form
-        ref="form"
-        :label-col="labelCol"
-        :wrapper-col="wrapperCol"
-        class="form-model"
-        :model="forms"
-        :rules="rules"
-        @finish="onSubmit"
-      >
+      <a-form ref="form" :label-col="labelCol" :wrapper-col="wrapperCol" class="form-model" :model="forms" :rules="rules" @finish="onSubmit">
         <a-form-item name="phone">
-          <a-input
-            v-model:value="forms.phone"
-            size="large"
-            placeholder="请输入手机号"
-          >
+          <a-input v-model:value="forms.phone" size="large" placeholder="请输入手机号">
             <template #prefix>
               <PhoneFilled></PhoneFilled>
             </template>
           </a-input>
         </a-form-item>
         <a-form-item name="password">
-          <a-input
-            v-model:value="forms.password"
-            size="large"
-            placeholder="请输入密码"
-          >
+          <a-input v-model:value="forms.password" size="large" placeholder="请输入密码">
             <template #prefix>
               <LockFilled></LockFilled>
             </template>
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-button
-            size="large"
-            style="width: 100%"
-            type="primary"
-            html-type="submit"
-            >登录</a-button
-          >
+          <a-button size="large" style="width: 100%" type="primary" html-type="submit">登录</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -53,17 +31,11 @@
 <script setup lang="ts">
 import { PhoneFilled, LockFilled } from "@ant-design/icons-vue";
 import { notification } from "ant-design-vue";
-
-import permission from "~/store/permission";
-import setting from "~/store/setting";
 import user from "~/store/user";
-import { getRouteItem } from "~/utils/router";
 
 let router = useRouter();
 let { logo } = useLocalImage();
 let userStore = user();
-let settingStore = setting();
-let { currentRoutes } = permission();
 
 let labelCol = { span: 0 };
 let wrapperCol = { span: 24 };
@@ -85,14 +57,12 @@ let rules = ref({
 
 let onSubmit = async () => {
   await form.value.validate();
-  await userStore.login(forms.value);
-  let routes = getRouteItem(currentRoutes, "/dashboard/work");
-  settingStore.cacheTabs = [routes];
+  await userStore.login({ name: "wuihu", phone: 1367 });
   notification.success({
     message: "登录成功",
     description: "欢迎回来，买菜的家朋",
   });
-  router.replace("/");
+  router.replace("/dashboard/work");
 };
 </script>
 

@@ -38,5 +38,5 @@ export function getOpenKeys(path = "") {
   }
   // openKeys.value
   deepKeys(filterKeys);
-  settingStore.setOpenKeys(keys);
+  settingStore.openKeys = keys
 }

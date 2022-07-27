@@ -13,5 +13,6 @@ export interface SettingState {
   theme: 'light' | 'dark',
   cacheTabs: RouteRecordRaw[],
   openKeys: Array<string>,
-  mode: "pc" | "mobile"
+  mode: "pc" | "mobile",
+  refreshPath: string
 }

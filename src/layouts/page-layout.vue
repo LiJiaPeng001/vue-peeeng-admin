@@ -2,12 +2,10 @@
   <div class="page-layout">
     <route-tabs></route-tabs>
     <div class="route-page">
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition name="fade-slide" mode="out-in">
-          <keep-alive
-            :include="settingStore.cacheTabs.map(item => item.name) as []"
-          >
-            <component :is="Component"></component>
+          <keep-alive :include="keepRoutes">
+            <component :is="Component" v-if="route.path !== settingStore.refreshPath"></component>
           </keep-alive>
         </transition>
       </router-view>
@@ -20,6 +18,11 @@ import setting from "~/store/setting";
 import RouteTabs from "./components/route-tabs.vue";
 
 let settingStore = setting();
+
+let keepRoutes = computed(() => {
+  let cacheTabs = settingStore.cacheTabs.filter(item => item.path !== settingStore.refreshPath);
+  return cacheTabs.map(item => item.name) as [];
+});
 </script>
 
 <style lang="less" scoped>
