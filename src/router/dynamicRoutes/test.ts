@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "/iu/iu1",
-        name: "iuIu1",
+        name: "IuIu1",
         meta: {
           title: "IU一号",
         },
@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/iu/deng",
-        name: "/iu/deng",
+        name: "IuDeng",
         meta: {
           title: "邓紫棋",
           icon: "SettingOutlined"
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: "/iu/deng/deng1",
-            name: "deng-deng1",
+            name: "IuDengDeng1",
             meta: {
               title: "邓紫棋一号",
             },

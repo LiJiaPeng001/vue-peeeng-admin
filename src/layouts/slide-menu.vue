@@ -1,23 +1,18 @@
 <template>
   <div class="slide-menu">
-    <div
-      class="slide-blank"
-      :style="{ width: settingStore.layoutW + 'px' }"
-    ></div>
+    <div class="slide-blank" :style="{ width: settingStore.layoutW + 'px' }"></div>
     <component :is="settingStore.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
       <div class="header center-flex">
         <Logo />
-        <div v-if="!settingStore.inlineCollapsed" font-500 text-20>
-          无他社区
-        </div>
+        <div v-if="!settingStore.inlineCollapsed" font-500 text-20>无他社区</div>
       </div>
       <a-menu
         :selected-keys="selectedKeys"
         :inline-collapsed="settingStore.inlineCollapsed"
         mode="inline"
         :style="{ width: settingStore.menuW + 'px' }"
+        :open-keys="settingStore.openKeys"
         @click="handleClick"
-        :openKeys="settingStore.openKeys"
       >
         <template v-for="item in routes" :key="item.path">
           <template v-if="item.children">
@@ -26,10 +21,7 @@
           <template v-else>
             <a-menu-item :key="item.path">
               <template #icon>
-                <component
-                  :is="$icons[item.meta.icon as string]"
-                  v-if="item.meta && item.meta.icon"
-                ></component>
+                <component :is="$icons[item.meta.icon as string]" v-if="item.meta && item.meta.icon"></component>
               </template>
               <span>{{ item.meta ? item.meta.title : item.name }}</span>
             </a-menu-item>

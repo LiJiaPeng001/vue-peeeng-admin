@@ -5,7 +5,7 @@ const files = import.meta.globEager('./*.ts');
 let childrenRoutes: RouteRecordRaw[] = [
   {
     path: "/dashboard",
-    name: "dashboard",
+    name: "Dashboard",
     meta: {
       title: "Dashboard",
       icon: "HomeOutlined"
@@ -15,7 +15,7 @@ let childrenRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: "/dashboard/work",
-        name: "dashboardWork",
+        name: "DashboardWork",
         meta: {
           title: "Dashboard",
         },
@@ -37,7 +37,7 @@ for (const key in files) {
 let routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "index",
+    name: "Index",
     redirect: "/dashboard",
     component: () => import("~/layouts/base-layout.vue"),
     children: childrenRoutes as RouteRecordRaw[],

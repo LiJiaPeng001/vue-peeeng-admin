@@ -1,14 +1,9 @@
 <template>
   <a-sub-menu :key="menuInfo.path" v-bind="$attrs">
     <template #icon>
-      <component
-        :is="$icons[menuInfo.meta.icon as string]"
-        v-if="menuInfo.meta && menuInfo.meta.icon"
-      ></component>
+      <component :is="$icons[menuInfo.meta.icon as string]" v-if="menuInfo.meta && menuInfo.meta.icon"></component>
     </template>
-    <template #title>{{
-      menuInfo.meta ? menuInfo.meta.title : menuInfo.name
-    }}</template>
+    <template #title>{{ menuInfo.meta ? menuInfo.meta.title : menuInfo.name }}</template>
     <template v-for="item in menuInfo.children" :key="item.path">
       <template v-if="!item.children">
         <a-menu-item :key="item.path">

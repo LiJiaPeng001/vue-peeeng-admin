@@ -52,11 +52,18 @@
 
 <script setup lang="ts">
 import { PhoneFilled, LockFilled } from "@ant-design/icons-vue";
+import { notification } from "ant-design-vue";
+
+import permission from "~/store/permission";
+import setting from "~/store/setting";
 import user from "~/store/user";
+import { getRouteItem } from "~/utils/router";
 
 let router = useRouter();
 let { logo } = useLocalImage();
 let userStore = user();
+let settingStore = setting();
+let { currentRoutes } = permission();
 
 let labelCol = { span: 0 };
 let wrapperCol = { span: 24 };
@@ -79,6 +86,12 @@ let rules = ref({
 let onSubmit = async () => {
   await form.value.validate();
   await userStore.login(forms.value);
+  let routes = getRouteItem(currentRoutes, "/dashboard/work");
+  settingStore.cacheTabs = [routes];
+  notification.success({
+    message: "登录成功",
+    description: "欢迎回来，买菜的家朋",
+  });
   router.replace("/");
 };
 </script>

@@ -1,31 +1,32 @@
-import { defineStore } from 'pinia'
-import { UserState } from '#/store'
+import { defineStore } from "pinia";
+import { UserState } from "#/store";
 
-export default defineStore('user', {
+const auth = useAuth<UserState["user"]>();
+
+export default defineStore("user", {
   state(): UserState {
     return {
-      user: {
-        name: "",
-        phone: 0
-      },
-    }
+      user: { ...auth.value },
+    };
   },
   getters: {
-    isLogin: state => state.user.name
+    isLogin: state => state.user.name,
   },
   actions: {
-    login(payload: any) {
-      this.user = {
+    login(payload: UserState["user"]) {
+      console.log(payload, "payload");
+      const user = {
         name: "李家朋",
-        phone: 13673717028
-      }
-      return true
+        phone: 13673717028,
+      };
+      this.user = user;
+      auth.value = user;
     },
     logout() {
       this.user = {
         name: "",
-        phone: 0
-      }
-    }
-  }
-})
+        phone: 0,
+      };
+    },
+  },
+});

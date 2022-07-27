@@ -1,7 +1,7 @@
 <template>
   <a-drawer
     :visible="!settingStore.collapsed"
-    :bodyStyle="{ padding: 0, width: settingStore.menuW + 'px' }"
+    :body-style="{ padding: 0, width: settingStore.menuW + 'px' }"
     title=""
     :closable="false"
     placement="left"

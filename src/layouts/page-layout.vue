@@ -24,11 +24,11 @@ let settingStore = setting();
 
 <style lang="less" scoped>
 .page-layout {
-  padding: 20px;
+  padding: 10px 12px;
   .route-page {
     background-color: white;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 2px;
+    padding: 6px;
   }
 }
 </style>

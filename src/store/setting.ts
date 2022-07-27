@@ -19,9 +19,6 @@ export default defineStore('setting', {
     inlineCollapsed: state => state.mode === "pc" ? state.collapsed : false  // menu - inlineCollapsed
   },
   actions: {
-    setCacheTabs(cacheTabs: SettingState['cacheTabs']) {
-      this.cacheTabs = cacheTabs
-    },
     setOpenKeys(openKeys: SettingState['openKeys']) {
       this.openKeys = openKeys
     },

@@ -3,13 +3,8 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    "plugin:vue/vue3-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:prettier/recommended",
-    "./.eslintrc-auto-import.json",
-  ],
+  extends: ["plugin:vue/vue3-recommended", "plugin:@typescript-eslint/recommended", "prettier", "./.eslintrc-auto-import.json"],
+  parser: "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: "latest",
     parser: "@typescript-eslint/parser",
@@ -37,5 +32,6 @@ module.exports = {
     "vue/no-multiple-template-root": "off",
     "vue/multi-word-component-names": "off", // 去除组件只能多单词组成
     "no-unused-vars": ["error"],
+    "prefer-const": "off",
   },
 };

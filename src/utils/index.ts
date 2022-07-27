@@ -19,7 +19,7 @@ export function getPermissionRoutes(routes: RouteRecordRaw[], path: string): Rou
   else return filterChildrens(routes, path)
 }
 
-export function getOpenKeys(path: string = "") {
+export function getOpenKeys(path = "") {
   if (!path) {
     let route = useRoute()
     path = route.path

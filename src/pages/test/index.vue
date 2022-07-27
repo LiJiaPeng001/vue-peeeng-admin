@@ -7,6 +7,6 @@
 
 <script lang="ts">
 export default defineComponent({
-  name: "iuIu1",
+  name: "IuIu1",
 });
 </script>
