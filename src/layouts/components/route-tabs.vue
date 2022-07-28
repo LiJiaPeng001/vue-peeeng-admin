@@ -30,6 +30,10 @@
               <VerticalLeftOutlined />
               <span style="margin-left: 6px">关闭右侧标签</span>
             </a-menu-item>
+            <a-menu-item @click="removeTab(5)">
+              <PicCenterOutlined />
+              <span style="margin-left: 6px">关闭其他标签</span>
+            </a-menu-item>
             <a-menu-item @click="removeTab(4)">
               <MinusOutlined />
               <span style="margin-left: 6px">关闭所有标签</span>
@@ -41,7 +45,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { RedoOutlined, DownOutlined, CloseOutlined, VerticalLeftOutlined, VerticalRightOutlined, MinusOutlined } from "@ant-design/icons-vue";
+import { RedoOutlined, DownOutlined, CloseOutlined, VerticalLeftOutlined, VerticalRightOutlined, MinusOutlined, PicCenterOutlined } from "@ant-design/icons-vue";
 import permission from "~/store/permission";
 import setting from "~/store/setting";
 import { getRouteItem } from "~/utils/router";
@@ -50,7 +54,6 @@ let settingStore = setting();
 let permissionStore = permission();
 let route = useRoute();
 let go = useGo();
-let { ctx } = useInstance();
 
 let currentRoute = route.path === "/dashboard/work" ? [] : [getRouteItem(permissionStore.currentRoutes, route.path)];
 let dashborad = getRouteItem(permissionStore.currentRoutes, "/dashboard/work");
@@ -65,21 +68,32 @@ let edit = function (path: string) {
 };
 let refreshPage = async function () {
   settingStore.refreshPage(route.path);
-  await ctx.$nextTick();
+  await nextTick();
   settingStore.refreshPage("");
 };
 let removeTab = function (state: number) {
-  console.log(state);
-  // if(state === 1) settingStore.cacheTabs.
+  let { cacheTabs } = settingStore;
+  let current = cacheTabs.findIndex(item => item.path === route.path);
+  if (state === 1) {
+    settingStore.cacheTabs = cacheTabs.filter(item => item.path !== route.path);
+    go("/dashboard/work");
+  }
+  if (state === 2) settingStore.cacheTabs = [...cacheTabs.slice(0, 1), ...cacheTabs.slice(current, cacheTabs.length)];
+  if (state === 3) settingStore.cacheTabs = cacheTabs.slice(0, current + 1);
+  if (state === 5) settingStore.cacheTabs = [...cacheTabs.slice(0, 1), cacheTabs[current]];
+  if (state === 4) {
+    settingStore.cacheTabs = cacheTabs.slice(0, 1);
+    go("/dashboard/work");
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .layout-tabs {
   .tabs-box {
-    flex: 1;
-    min-width: 0;
+    flex-grow: 1;
     overflow-x: auto;
+    width: 0;
   }
   .extra-btns {
     margin-left: 6px;

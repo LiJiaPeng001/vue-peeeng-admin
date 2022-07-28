@@ -1,6 +1,6 @@
 import type { RouteRecordRaw, Router, LocationAsPath, RouteQueryAndHash } from "vue-router";
-import settingStore from "~/store/setting";
-import permissionStore from "~/store/permission";
+import setting from "~/store/setting";
+import permission from "~/store/permission";
 import { getOpenKeys } from "../utils/index";
 import { getRouteItem } from "../utils/router";
 
@@ -16,10 +16,10 @@ export function useGo(_router?: Router) {
     router = useRouter();
   }
   return function (route: RouteLocationRaw, options?: ActionOptions) {
-    let setting = settingStore();
-    let permission = permissionStore();
-    let { cacheTabs } = setting;
-    let { currentRoutes } = permission;
+    let settingStore = setting();
+    let permissionStore = permission();
+    let { cacheTabs } = settingStore;
+    let { currentRoutes } = permissionStore;
     let { action = "push" } = options || {};
     let path = "";
     if (typeof route === "string") path = route;
@@ -29,7 +29,7 @@ export function useGo(_router?: Router) {
       let p = item.path.split("?")[0];
       return p == path;
     });
-    if (!isCache) cacheTabs.push(getRouteItem(currentRoutes, path));
+    if (!isCache) settingStore.cacheTabs = [...cacheTabs, getRouteItem(currentRoutes, path)]
     // menu keys
     getOpenKeys(path);
     router[action](route);
