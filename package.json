@@ -23,7 +23,7 @@
     "vue-router": "4"
   },
   "lint-staged": {
-    "*.{vue,js,ts}": [
+    "src/**/*.{vue,js,ts}": [
       "pnpm run lint",
       "pnpm run format"
     ]
