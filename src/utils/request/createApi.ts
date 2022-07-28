@@ -1,34 +1,27 @@
-import axios from 'axios'
-import { OptionsConfig, CreateApiOptions } from './types'
-import type { AxiosRequestConfig, } from 'axios'
-import { getErrStatus, getErrMsg } from './tools/index'
+import axios from "axios";
+import { OptionsConfig, CreateApiOptions } from "./types";
+import type { AxiosRequestConfig } from "axios";
+import { getErrStatus, getErrMsg } from "./tools/index";
 
-function noop() { }
-function login() { }
+function noop() {}
+function login() {}
 
-export default (
-  {
-    loading = noop, // loading方法
-    toast = noop, // 提示方法
-    setHeaders = noop, // 动态设置headers
-    handleError = noop, // 自定义错误处理
-    loginForce = noop, // 返回401登录后再次尝试
-    createOptions = {}, // axios默认设置
-    maxCount = 1
-  }: CreateApiOptions
-) => {
-  const instence = axios.create(createOptions)
+export default ({
+  loading = noop, // loading方法
+  toast = noop, // 提示方法
+  setHeaders = noop, // 动态设置headers
+  handleError = noop, // 自定义错误处理
+  loginForce = noop, // 返回401登录后再次尝试
+  createOptions = {}, // axios默认设置
+  maxCount = 1,
+}: CreateApiOptions) => {
+  const instence = axios.create(createOptions);
   instence.interceptors.request.use((config: AxiosRequestConfig) => {
-    const headers = setHeaders(config)
+    const headers = setHeaders(config);
     Object.assign(config.headers || {}, headers);
     return config;
-  })
-  return async (requestOptions: AxiosRequestConfig,
-    {
-      shouldLoading = true,
-      shouldToast = true,
-      shouldLogin = false,
-    }: OptionsConfig = {}) => {
+  });
+  return async (requestOptions: AxiosRequestConfig, { shouldLoading = true, shouldToast = true, shouldLogin = false }: OptionsConfig = {}) => {
     if (shouldLogin) await login();
     // 是否loadding
     if (shouldLoading) loading();
@@ -61,5 +54,5 @@ export default (
         return Promise.reject(e);
       }
     }
-  }
-}
+  };
+};

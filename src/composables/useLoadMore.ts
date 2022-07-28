@@ -4,7 +4,7 @@
  * @param {Number} - time 节流时间间隔
  * @param {Element} ele 滚动Element 默认body
  */
-let noop = () => { };
+let noop = () => {};
 
 interface PropsOptions {
   toLoadMore?: Function;

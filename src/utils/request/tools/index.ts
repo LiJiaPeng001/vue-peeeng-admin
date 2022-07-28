@@ -1,18 +1,16 @@
-import type { AxiosError } from 'axios'
-
+import type { AxiosError } from "axios";
 
 /**
  * 状态码
  */
 interface CodeMessage {
-  [propsname: string]: string
+  [propsname: string]: string;
 }
 
 interface DataOptions {
-  msg?: string,
-  [propsname: string]: any
+  msg?: string;
+  [propsname: string]: any;
 }
-
 
 const codeMessage: CodeMessage = {
   400: "请求有错误",
@@ -36,8 +34,8 @@ const codeMessage: CodeMessage = {
  */
 export function getErrMsg(error: AxiosError<DataOptions>) {
   let { status = 0, data = {} } = error.response || {};
-  let message = codeMessage.hasOwnProperty(status) ? codeMessage[status] : "系统错误，请联系管理员"
-  return data.msg || message
+  let message = codeMessage.hasOwnProperty(status) ? codeMessage[status] : "系统错误，请联系管理员";
+  return data.msg || message;
 }
 
 // 获取接口Http状态码

@@ -1,11 +1,5 @@
 <template>
-  <div
-    ref="dialog"
-    :class="[{ visible: props.visible }, props.direction]"
-    class="my-dialog-container"
-    :style="{ backgroundColor: props.bgColor }"
-    @click.stop="cancel"
-  >
+  <div ref="dialog" :class="[{ visible: props.visible }, props.direction]" class="my-dialog-container" :style="{ backgroundColor: props.bgColor }" @click.stop="cancel">
     <div ref="content" class="dialog-content" @click.stop @touchmove.stop>
       <slot></slot>
     </div>

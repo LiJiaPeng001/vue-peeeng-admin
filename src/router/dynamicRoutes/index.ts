@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const files = import.meta.globEager('./*.ts');
+const files = import.meta.globEager("./*.ts");
 
 let childrenRoutes: RouteRecordRaw[] = [
   {
@@ -8,7 +8,7 @@ let childrenRoutes: RouteRecordRaw[] = [
     name: "Dashboard",
     meta: {
       title: "Dashboard",
-      icon: "HomeOutlined"
+      icon: "HomeOutlined",
     },
     component: () => import("~/layouts/page-layout.vue"),
     redirect: "/dashboard/work",
@@ -20,17 +20,17 @@ let childrenRoutes: RouteRecordRaw[] = [
           title: "Dashboard",
         },
         component: () => import("~/pages/dashboard/index.vue"),
-      }
-    ]
-  }
-]
+      },
+    ],
+  },
+];
 
 for (const key in files) {
-  const route = files[key].default
+  const route = files[key].default;
   if (Array.isArray(route)) {
-    childrenRoutes = [...childrenRoutes, ...route]
+    childrenRoutes = [...childrenRoutes, ...route];
   } else {
-    childrenRoutes.push(route)
+    childrenRoutes.push(route);
   }
 }
 
@@ -43,9 +43,9 @@ let routes: RouteRecordRaw[] = [
     children: childrenRoutes as RouteRecordRaw[],
   },
   {
-    path: '/:pathMatch(.*)*',
-    redirect: { name: 'dashboard' },
-  }
-]
+    path: "/:pathMatch(.*)*",
+    redirect: { name: "dashboard" },
+  },
+];
 
-export default routes
+export default routes;

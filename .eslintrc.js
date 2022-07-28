@@ -33,5 +33,6 @@ module.exports = {
     "vue/multi-word-component-names": "off", // 去除组件只能多单词组成
     "no-unused-vars": ["error"],
     "prefer-const": "off",
+    "vue/comment-directive": "off",
   },
 };

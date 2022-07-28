@@ -37,7 +37,7 @@ import permission from "~/store/permission";
 import setting from "~/store/setting";
 import SubMenu from "./components/sub-menu.vue";
 import Logo from "../components/logo.vue";
-import { getOpenKeys } from "../utils/index";
+import { getOpenKeys } from "../utils/router";
 
 let route = useRoute();
 let go = useGo();

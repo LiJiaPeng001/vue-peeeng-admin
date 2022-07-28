@@ -1,8 +1,7 @@
 import type { RouteRecordRaw, Router, LocationAsPath, RouteQueryAndHash } from "vue-router";
 import setting from "~/store/setting";
 import permission from "~/store/permission";
-import { getOpenKeys } from "../utils/index";
-import { getRouteItem } from "../utils/router";
+import { getRouteItem, getOpenKeys } from "../utils/router";
 
 type RouteLocationRaw = string | (LocationAsPath & RouteQueryAndHash);
 
@@ -29,7 +28,7 @@ export function useGo(_router?: Router) {
       let p = item.path.split("?")[0];
       return p == path;
     });
-    if (!isCache) settingStore.cacheTabs = [...cacheTabs, getRouteItem(currentRoutes, path)]
+    if (!isCache) settingStore.cacheTabs = [...cacheTabs, getRouteItem(currentRoutes, path)];
     // menu keys
     getOpenKeys(path);
     router[action](route);

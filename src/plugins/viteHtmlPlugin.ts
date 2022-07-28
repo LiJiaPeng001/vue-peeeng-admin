@@ -10,7 +10,7 @@ export default function (options: EnvOptions): PluginOption {
     transformIndexHtml(html) {
       let { metaEnv = {} } = options;
       let envKeys = html.match(/(?<=<%= )\w*(?= %>)/gim);
-      envKeys?.forEach((key) => {
+      envKeys?.forEach(key => {
         let reg = new RegExp(`<%= ${key} %>`, "gmi");
         html = html.replace(reg, metaEnv[key]);
       });

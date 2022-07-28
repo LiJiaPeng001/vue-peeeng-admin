@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router"
+import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -6,9 +6,9 @@ const routes: RouteRecordRaw[] = [
     name: "iu",
     meta: {
       title: "IUIU",
-      icon: "SettingOutlined"
+      icon: "SettingOutlined",
     },
-    redirect: '/test/test1',
+    redirect: "/test/test1",
     component: () => import("~/layouts/page-layout.vue"),
     children: [
       {
@@ -17,14 +17,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "IU一号",
         },
-        component: () => import("~/pages/test/index.vue")
+        component: () => import("~/pages/test/index.vue"),
       },
       {
         path: "/iu/deng",
         name: "IuDeng",
         meta: {
           title: "邓紫棋",
-          icon: "SettingOutlined"
+          icon: "SettingOutlined",
         },
         component: () => import("~/pages/test1.vue"),
         children: [
@@ -34,12 +34,12 @@ const routes: RouteRecordRaw[] = [
             meta: {
               title: "邓紫棋一号",
             },
-            component: () => import("~/pages/test1.vue")
-          }
-        ]
-      }
-    ]
+            component: () => import("~/pages/test1.vue"),
+          },
+        ],
+      },
+    ],
   },
-]
+];
 
-export default routes
+export default routes;

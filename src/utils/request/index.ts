@@ -1,4 +1,4 @@
-import createApi from './createApi'
+import createApi from "./createApi";
 
 /**
  * @desc 项目中单独配置
@@ -6,9 +6,9 @@ import createApi from './createApi'
 export default createApi({
   setHeaders() {
     const headers = {
-      "wt": 'yes',
+      wt: "yes",
       "Content-Type": "application/json",
     };
-    return headers
-  }
-})
+    return headers;
+  },
+});
