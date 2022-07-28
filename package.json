@@ -1,7 +1,7 @@
 {
   "name": "wuta-community-admin",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -21,6 +21,12 @@
     "pinia": "^2.0.14",
     "vue": "^3.2.25",
     "vue-router": "4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "npx --no-install commitlint --edit"
+    }
   },
   "lint-staged": {
     "src/**/*.{vue,js,ts,html}": [
