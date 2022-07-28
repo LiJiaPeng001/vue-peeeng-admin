@@ -23,7 +23,10 @@
     "vue-router": "4"
   },
   "lint-staged": {
-    "src/**/*.{vue,js,ts}": "eslint --fix"
+    "*.{vue,js,ts}": [
+      "pnpm run lint",
+      "pnpm run format"
+    ]
   },
   "homepage": "https://github.com/LiJiaPeng001/vue3-ts-vite-template",
   "devDependencies": {
