@@ -74,6 +74,7 @@ let refreshPage = async function () {
 let removeTab = function (state: number) {
   let { cacheTabs } = settingStore;
   let current = cacheTabs.findIndex(item => item.path === route.path);
+  if (cacheTabs.length === 1) return;
   if (state === 1) {
     settingStore.cacheTabs = cacheTabs.filter(item => item.path !== route.path);
     go("/dashboard/work");

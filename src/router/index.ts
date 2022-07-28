@@ -19,9 +19,9 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(route => {
-  NProgress.done();
   let title = import.meta.env.title || route.meta.title;
   document.title = title;
+  NProgress.done();
 });
 
 export default router;
