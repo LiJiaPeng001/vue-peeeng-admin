@@ -4,7 +4,8 @@
     <!-- tabs -->
     <div class="tabs-box">
       <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
-        <a-tab-pane v-for="(pane, i) in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" :closable="i ? true : false"> </a-tab-pane>
+        <a-tab-pane :key="defaultTab.path" :tab="defaultTab.meta?.title" :closable="false"> </a-tab-pane>
+        <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
       </a-tabs>
     </div>
     <!-- action-btn -->
@@ -54,10 +55,16 @@ let settingStore = setting();
 let permissionStore = permission();
 let route = useRoute();
 let go = useGo();
+let defaultTab = ref({
+  path: "",
+  meta: {
+    title: "",
+  },
+});
 
 let currentRoute = route.path === "/dashboard/work" ? [] : [getRouteItem(permissionStore.currentRoutes, route.path)];
-let dashborad = getRouteItem(permissionStore.currentRoutes, "/dashboard/work");
-settingStore.cacheTabs = [dashborad, ...currentRoute];
+defaultTab.value = getRouteItem(permissionStore.currentRoutes, "/dashboard/work");
+settingStore.cacheTabs = currentRoute;
 
 let activeKey = computed(() => {
   let path = route.fullPath;
@@ -72,18 +79,18 @@ let refreshPage = async function () {
   settingStore.refreshPage("");
 };
 let removeTab = function (state: number) {
-  let { cacheTabs } = settingStore;
+  let { cacheTabs = [] } = settingStore;
+  if (!cacheTabs.length) return;
   let current = cacheTabs.findIndex(item => item.path === route.path);
-  if (cacheTabs.length === 1) return;
   if (state === 1) {
     settingStore.cacheTabs = cacheTabs.filter(item => item.path !== route.path);
     go("/dashboard/work");
   }
-  if (state === 2) settingStore.cacheTabs = [...cacheTabs.slice(0, 1), ...cacheTabs.slice(current, cacheTabs.length)];
+  if (state === 2) settingStore.cacheTabs = cacheTabs.slice(current, cacheTabs.length);
   if (state === 3) settingStore.cacheTabs = cacheTabs.slice(0, current + 1);
-  if (state === 5) settingStore.cacheTabs = [...cacheTabs.slice(0, 1), cacheTabs[current]];
+  if (state === 5) settingStore.cacheTabs = [cacheTabs[current]];
   if (state === 4) {
-    settingStore.cacheTabs = cacheTabs.slice(0, 1);
+    settingStore.cacheTabs = [];
     go("/dashboard/work");
   }
 };

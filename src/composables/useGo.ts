@@ -23,11 +23,13 @@ export function useGo(_router?: Router) {
     let path = "";
     if (typeof route === "string") path = route;
     if (typeof route === "object") path = route.path;
-    // keep-alive + Tabs
+    // keep-alive + Tabs  白名单
+    let whiteList = ["/dashboard/work"];
     let isCache = cacheTabs.some((item: RouteRecordRaw) => {
       let p = item.path.split("?")[0];
       return p == path;
     });
+    isCache = whiteList.includes(path) ? true : isCache;
     if (!isCache) settingStore.cacheTabs = [...cacheTabs, getRouteItem(currentRoutes, path)];
     // menu keys
     getOpenKeys(path);
