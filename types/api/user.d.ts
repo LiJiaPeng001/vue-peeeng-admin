@@ -1,5 +1,5 @@
 export interface StcikersRecord {
-  id: number,
-  img_list: string[],
-  desc: string
+  id: number;
+  img_list: string[];
+  desc: string;
 }
