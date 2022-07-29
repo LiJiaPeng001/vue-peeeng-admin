@@ -7,7 +7,8 @@ export default defineStore("setting", {
       mode: "pc",
       collapsed: false,
       theme: "light",
-      cacheTabs: [],
+      cacheTabs: [], // cacheTabs
+      defaultTabs: [],
       openKeys: [],
       refreshPath: "",
     };

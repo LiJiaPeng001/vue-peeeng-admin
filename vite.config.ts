@@ -18,6 +18,7 @@ export default ({ mode }: ConfigEnv) => {
       alias: {
         "~": resolve(__dirname, "./src"),
         "#": resolve(__dirname, "./types"),
+        "vue": "vue/dist/vue.esm-bundler.js"
       },
     },
     plugins: [

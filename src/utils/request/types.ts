@@ -11,5 +11,9 @@ export interface CreateApiOptions {
   loginForce?: Function; // 返回401登录后再次尝试
   setHeaders?: Function; // 动态设置headers
   toast?: Function; // 提示方法
-  loading?: Function; // loading方法
+  loading?: {
+    num?: number;
+    show: Function;
+    hide: Function;
+  }; // loading方法
 }

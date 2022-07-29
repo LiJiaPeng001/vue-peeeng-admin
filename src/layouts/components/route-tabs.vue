@@ -4,7 +4,7 @@
     <!-- tabs -->
     <div class="tabs-box">
       <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
-        <a-tab-pane :key="defaultTab.path" :tab="defaultTab.meta?.title" :closable="false"> </a-tab-pane>
+        <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
         <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
       </a-tabs>
     </div>
@@ -55,23 +55,18 @@ let settingStore = setting();
 let permissionStore = permission();
 let route = useRoute();
 let go = useGo();
-let defaultTab = ref({
-  path: "",
-  meta: {
-    title: "",
-  },
-});
 
-let currentRoute = route.path === "/dashboard/work" ? [] : [getRouteItem(permissionStore.currentRoutes, route.path)];
-defaultTab.value = getRouteItem(permissionStore.currentRoutes, "/dashboard/work");
+let currentRoute = route.path === "/dashboard/work" ? [] : [{ ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
+settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard/work")];
 settingStore.cacheTabs = currentRoute;
 
 let activeKey = computed(() => {
-  let path = route.fullPath;
-  return path.split("?")[0];
+  return route.fullPath;
 });
+
 let edit = function (path: string) {
-  settingStore.cacheTabs = settingStore.cacheTabs.filter(item => item.path !== path);
+  settingStore.cacheTabs = [...settingStore.cacheTabs.filter(item => item.path !== path)];
+  go("/dashboard/work");
 };
 let refreshPage = async function () {
   settingStore.refreshPage(route.path);

@@ -21,6 +21,15 @@ let childrenRoutes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/dashboard/index.vue"),
       },
+      {
+        path: "/dashboard/work/detail",
+        name: "DashboardWorkDetail",
+        meta: {
+          title: "详情页面wuhu",
+          hidden: true,
+        },
+        component: () => import("~/pages/dashboard/detail.vue"),
+      },
     ],
   },
 ];

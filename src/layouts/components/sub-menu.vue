@@ -6,7 +6,7 @@
     <template #title>{{ menuInfo.meta ? menuInfo.meta.title : menuInfo.name }}</template>
     <template v-for="item in menuInfo.children" :key="item.path">
       <template v-if="!item.children">
-        <a-menu-item :key="item.path">
+        <a-menu-item v-if="!item.meta.hidden" :key="item.path">
           <span>{{ item.meta ? item.meta.title : item.name }}</span>
         </a-menu-item>
       </template>

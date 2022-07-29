@@ -60,7 +60,7 @@ useResizeObserver(
 getOpenKeys();
 
 let handleClick = ({ key = "" }: { key: string }) => {
-  go({ path: key });
+  go(key);
 };
 </script>
 
