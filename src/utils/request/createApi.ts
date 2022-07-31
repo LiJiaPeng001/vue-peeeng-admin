@@ -4,8 +4,8 @@ import type { AxiosRequestConfig } from "axios";
 import { getErrStatus, getErrMsg } from "./tools/index";
 import useLoading from "./tools/loading";
 
-function noop() {}
-function login() {}
+function noop() { }
+function login() { }
 
 useLoading();
 

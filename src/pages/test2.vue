@@ -1,3 +1,5 @@
 <template>
-  <div>text2wuhu</div>
+  <page-layout>
+    <div class="title">test2</div>
+  </page-layout>
 </template>

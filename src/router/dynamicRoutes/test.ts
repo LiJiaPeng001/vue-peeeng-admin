@@ -18,27 +18,17 @@ const routes: RouteRecordRaw[] = [
           title: "IU一号",
         },
         component: () => import("~/pages/test/index.vue"),
-      },
-      {
-        path: "/iu/deng",
-        name: "IuDeng",
-        meta: {
-          title: "邓紫棋",
-          icon: "SettingOutlined",
-        },
-        component: () => import("~/pages/test1.vue"),
-        children: [
-          {
-            path: "/iu/deng/deng1",
-            name: "IuDengDeng1",
-            meta: {
-              title: "邓紫棋一号",
-            },
-            component: () => import("~/pages/test1.vue"),
-          },
-        ],
-      },
+      }
     ],
+  },
+  {
+    path: "/test2",
+    name: "Test2",
+    meta: {
+      title: "测试二号",
+      icon: "SettingOutlined",
+    },
+    component: () => import("~/pages/test2.vue"),
   },
 ];
 
