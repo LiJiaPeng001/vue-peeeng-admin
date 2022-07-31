@@ -3,7 +3,11 @@
     <slide-menu></slide-menu>
     <div class="right-layout flex1">
       <page-head />
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component"></component>
+        </keep-alive>
+      </router-view>
     </div>
   </div>
 </template>

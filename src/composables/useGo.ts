@@ -23,6 +23,7 @@ export function useGo(_router?: Router) {
     // keep-alive + Tabs
     let routeRecord = getRouteItem(currentRoutes, newPath);
     let isWhite = defaultTabs.some(route => route.name == routeRecord.name);
+
     if (!isWhite) {
       let current = cacheTabs.findIndex(route => route.name == routeRecord.name);
       if (current >= 0) settingStore.cacheTabs.splice(current, 1, { ...routeRecord, path })

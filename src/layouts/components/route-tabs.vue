@@ -58,7 +58,7 @@ let go = useGo();
 
 let currentRoute = route.path === "/dashboard/work" ? [] : [{ ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
 settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard/work")];
-settingStore.cacheTabs = currentRoute;
+if (!settingStore.cacheTabs.length) settingStore.cacheTabs = currentRoute;
 
 let activeKey = computed(() => {
   return route.fullPath;
