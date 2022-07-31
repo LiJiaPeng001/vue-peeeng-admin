@@ -15,6 +15,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
   let userStore = user();
   if (!userStore.isLogin && to.path !== "/login") next("/login");
+  if (userStore.isLogin && to.path == "/login") next("/")
   next();
 });
 

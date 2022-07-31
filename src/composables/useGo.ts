@@ -25,8 +25,8 @@ export function useGo(_router?: Router) {
     let isWhite = defaultTabs.some(route => route.name == routeRecord.name);
     if (!isWhite) {
       let current = cacheTabs.findIndex(route => route.name == routeRecord.name);
-      if (current >= 0) settingStore.cacheTabs = [...cacheTabs.slice(0, current), { ...routeRecord, path }, ...cacheTabs.slice(current + 1, cacheTabs.length)];
-      else settingStore.cacheTabs = [...cacheTabs, { ...routeRecord, path }];
+      if (current >= 0) settingStore.cacheTabs.splice(current, 1, { ...routeRecord, path })
+      else settingStore.cacheTabs.push({ ...routeRecord, path })
     }
     // menu keys
     getOpenKeys(newPath);

@@ -14,7 +14,7 @@
         :open-keys="settingStore.openKeys"
         @click="handleClick"
       >
-        <template v-for="item in routes" :key="item.path">
+        <template v-for="item in permissionStore.currentRoutes" :key="item.path">
           <template v-if="item.children">
             <sub-menu :key="item.path" :menu-info="item" />
           </template>
@@ -43,11 +43,9 @@ let route = useRoute();
 let go = useGo();
 let settingStore = setting();
 let permissionStore = permission();
-let instance: any = getCurrentInstance();
+let { $icons } = useInstance();
 
 let selectedKeys = computed(() => [route.path]);
-let { currentRoutes: routes } = permissionStore;
-let $icons = instance.proxy.$icons;
 
 useResizeObserver(
   document.body,

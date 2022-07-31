@@ -5,6 +5,6 @@ export default function () {
   let { appContext } = instance;
   const proxy = appContext.config.globalProperties;
   return {
-    proxy,
+    ...proxy,
   };
 }

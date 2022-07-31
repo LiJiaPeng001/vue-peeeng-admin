@@ -25,6 +25,5 @@ defineProps({
   },
 });
 
-let instance: any = getCurrentInstance();
-let $icons = instance.proxy.$icons;
+let { $icons } = useInstance();
 </script>
