@@ -18,7 +18,7 @@ const routes: RouteRecordRaw[] = [
           title: "IU一号",
         },
         component: () => import("~/pages/test/index.vue"),
-      }
+      },
     ],
   },
   {

@@ -25,10 +25,10 @@ export default defineStore("user", {
     logout() {
       let user = {
         name: "",
-        phone: 0
-      }
-      this.user = user
-      auth.value = user
+        phone: 0,
+      };
+      this.user = user;
+      auth.value = user;
     },
   },
 });
