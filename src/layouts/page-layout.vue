@@ -2,12 +2,14 @@
   <div class="page-layout">
     <route-tabs></route-tabs>
     <div class="route-page">
-      <router-view v-slot="{ Component, route }">
+      <router-view v-slot="{ Component }">
         <transition name="fade-slide" mode="out-in">
           <component :is="Component" v-if="route.path !== settingStore.refreshPath" :key="route.name"></component>
         </transition>
       </router-view>
-      <slot></slot>
+      <transition name="fade-slide" mode="out-in">
+        <slot v-if="route.path !== settingStore.refreshPath"></slot>
+      </transition>
     </div>
   </div>
 </template>
@@ -16,6 +18,7 @@
 import setting from "~/store/setting";
 import RouteTabs from "./components/route-tabs.vue";
 
+let route = useRoute();
 let settingStore = setting();
 // let keepRoutes = computed(() => {
 //   let cacheTabs = settingStore.cacheTabs.filter(item => item.path !== settingStore.refreshPath);
