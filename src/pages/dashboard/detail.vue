@@ -1,8 +1,22 @@
 <template>
-  <a-calendar />
+  <div>
+    <a-calendar />
+    <a-button @click="changeQuery">芜湖</a-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
+let go = useGo();
+
+function changeQuery() {
+  go({
+    path: "/dashboard/work/detail",
+    query: {
+      id: Math.random() * (10 - 1) + 1,
+    },
+  });
+}
+
 onMounted(() => {
   console.log("wuhu mounted");
 });

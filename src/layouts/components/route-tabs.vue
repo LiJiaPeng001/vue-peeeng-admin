@@ -83,7 +83,10 @@ let removeTab = function (state: number) {
   }
   if (state === 2) settingStore.cacheTabs = cacheTabs.slice(current, cacheTabs.length);
   if (state === 3) settingStore.cacheTabs = cacheTabs.slice(0, current + 1);
-  if (state === 5) settingStore.cacheTabs = [cacheTabs[current]];
+  if (state === 5) {
+    if (cacheTabs.length === 1) return;
+    settingStore.cacheTabs = [cacheTabs[current]];
+  }
   if (state === 4) {
     settingStore.cacheTabs = [];
     go("/dashboard/work");
