@@ -1,5 +1,5 @@
 <template>
-  <div class="slide-menu">
+  <div v-if="showTabs" class="slide-menu">
     <div class="slide-blank" :style="{ width: settingStore.layoutW + 'px' }"></div>
     <component :is="settingStore.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
       <div class="header center-flex">
@@ -35,6 +35,7 @@
 <script setup lang="ts">
 import permission from "~/store/permission";
 import setting from "~/store/setting";
+import constantRoutes from "~/router/constantRoutes/index";
 import SubMenu from "./components/sub-menu.vue";
 import Logo from "../components/logo.vue";
 import { getOpenKeys } from "../utils/router";
@@ -44,6 +45,8 @@ let go = useGo();
 let settingStore = setting();
 let permissionStore = permission();
 let { $icons } = useInstance();
+
+let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
 
 let selectedKeys = computed(() => [route.path]);
 
