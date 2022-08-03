@@ -17,7 +17,7 @@ let childrenRoutes: RouteRecordRaw[] = [
         path: "/dashboard/work",
         name: "DashboardWork",
         meta: {
-          title: "Dashboard",
+          title: "工作台",
         },
         component: () => import("~/pages/dashboard/index.vue"),
       },

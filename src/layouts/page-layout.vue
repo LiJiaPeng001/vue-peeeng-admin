@@ -8,7 +8,7 @@
         </transition>
       </router-view>
       <transition name="fade-slide" mode="out-in">
-        <slot v-if="route.path !== settingStore.refreshPath"></slot>
+        <slot v-if="route.path !== settingStore.refreshPath" :key="route.name"></slot>
       </transition>
     </div>
   </div>

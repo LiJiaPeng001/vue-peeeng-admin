@@ -4,4 +4,5 @@
       <component :is="Component"></component>
     </keep-alive>
   </router-view>
+  <a-back-top />
 </template>
