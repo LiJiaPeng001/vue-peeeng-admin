@@ -10,8 +10,8 @@ let childrenRoutes: RouteRecordRaw[] = [
       title: "Dashboard",
       icon: "HomeOutlined",
     },
-    component: () => import("~/layouts/page-layout.vue"),
     redirect: "/dashboard/work",
+    component: () => import("~/pages/dashboard/index.vue"),
     children: [
       {
         path: "/dashboard/work",

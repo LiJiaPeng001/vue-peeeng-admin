@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
       icon: "SettingOutlined",
     },
     redirect: "/test/test1",
-    component: () => import("~/layouts/page-layout.vue"),
+    component: () => import("~/pages/test/index.vue"),
     children: [
       {
         path: "/iu/iu1",
