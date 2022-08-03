@@ -16,3 +16,4 @@ declare module "~/composables/*";
 declare module "~pages*";
 declare module "#/*";
 declare module "nprogress";
+declare module "ant-design-vue/*";
