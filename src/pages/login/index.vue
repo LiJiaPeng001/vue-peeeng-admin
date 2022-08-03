@@ -21,7 +21,7 @@
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-button size="large" style="width: 100%" type="primary" html-type="submit">登录</a-button>
+          <a-button size="large" style="width: 100%" type="primary" :loading="loading" html-type="submit">登录</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -36,6 +36,7 @@ import user from "~/store/user";
 let router = useRouter();
 let { logo } = useLocalImage();
 let userStore = user();
+let loading = ref(false);
 
 let labelCol = { span: 0 };
 let wrapperCol = { span: 24 };
@@ -57,12 +58,16 @@ let rules = ref({
 
 let onSubmit = async () => {
   await form.value.validate();
-  await userStore.login({ name: "wuihu", phone: 1367 });
-  notification.success({
-    message: "登录成功",
-    description: "欢迎回来，买菜的家朋",
-  });
-  router.replace("/dashboard/work");
+  loading.value = true;
+  setTimeout(async () => {
+    await userStore.login({ name: "wuihu", phone: 1367 });
+    loading.value = false;
+    notification.success({
+      message: "登录成功",
+      description: "欢迎回来，买菜的家朋",
+    });
+    router.replace("/dashboard/work");
+  }, 1000);
 };
 </script>
 
