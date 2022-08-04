@@ -2,15 +2,12 @@ import axios from "axios";
 import { OptionsConfig, CreateApiOptions } from "./types";
 import type { AxiosRequestConfig } from "axios";
 import { getErrStatus, getErrMsg } from "./tools/index";
-import useLoading from "./tools/loading";
+// import useLoading from "./tools/loading";
 
 function noop() {}
 function login() {}
 
-useLoading();
-
 export default ({
-  loading = useLoading(), // loading方法
   toast = noop, // 提示方法
   setHeaders = noop, // 动态设置headers
   handleError = noop, // 自定义错误处理
@@ -24,15 +21,12 @@ export default ({
     Object.assign(config.headers || {}, headers);
     return config;
   });
-  return async (requestOptions: AxiosRequestConfig, { shouldLoading = true, shouldToast = true, shouldLogin = false }: OptionsConfig = {}) => {
+  return async (requestOptions: AxiosRequestConfig, { shouldToast = true, shouldLogin = false }: OptionsConfig = {}) => {
     if (shouldLogin) await login();
     // 是否loadding
-    if (shouldLoading) loading.show();
     for (let i = 0; i < maxCount + 1; i++) {
       try {
         const { data } = await instence(requestOptions);
-        // 取消loading
-        if (shouldLoading) loading.hide();
         // success code
         if (data.code === "OK") return data.data;
         if (shouldToast) toast(data.msg, 4000);
@@ -50,7 +44,6 @@ export default ({
           toast("网络异常");
           continue;
         }
-        if (shouldLoading) loading.hide();
         // 自定义错误处理
         if (status) toast(getErrMsg(e) + status);
         handleError(e);

@@ -19,7 +19,7 @@
             <sub-menu :key="item.path" :menu-info="item" />
           </template>
           <template v-else>
-            <a-menu-item :key="item.path">
+            <a-menu-item v-if="!item?.meta?.hidden" :key="item.path">
               <template #icon>
                 <component :is="$icons[item.meta.icon as string]" v-if="item.meta && item.meta.icon"></component>
               </template>

@@ -36,7 +36,7 @@ onMounted(() => {
 
 let toDetail = function () {
   go({
-    path: "/dashboard/work/detail",
+    path: "/dashboard/detail",
     query: {
       id: Math.random() * (10 - 1) + 1,
     },

@@ -30,14 +30,13 @@ import Logo from "~/components/logo.vue";
 
 let settingStore = setting();
 let userStore = user();
-let router = useRouter();
 
 let handleClick = () => {
   settingStore.collapsed = !settingStore.collapsed;
 };
 let logout = () => {
   userStore.logout();
-  router.replace("/login");
+  window.location.reload();
 };
 </script>
 

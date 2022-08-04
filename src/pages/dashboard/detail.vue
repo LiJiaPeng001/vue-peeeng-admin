@@ -10,7 +10,7 @@ let go = useGo();
 
 function changeQuery() {
   go({
-    path: "/dashboard/work/detail",
+    path: "/dashboard/detail",
     query: {
       id: Math.random() * (10 - 1) + 1,
     },

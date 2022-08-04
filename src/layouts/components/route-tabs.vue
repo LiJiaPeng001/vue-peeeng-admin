@@ -56,8 +56,8 @@ let permissionStore = permission();
 let route = useRoute();
 let go = useGo();
 
-let currentRoute = route.path === "/dashboard/work" ? [] : [{ ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
-settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard/work")];
+let currentRoute = route.path === "/dashboard" ? [] : [{ ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
+settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
 if (!settingStore.cacheTabs.length) settingStore.cacheTabs = currentRoute;
 
 let activeKey = computed(() => {
@@ -66,7 +66,7 @@ let activeKey = computed(() => {
 
 let edit = function (path: string) {
   settingStore.cacheTabs = settingStore.cacheTabs.filter(item => item.path !== path);
-  go("/dashboard/work");
+  go("/dashboard");
 };
 let refreshPage = async function () {
   settingStore.refreshPage(route.path);
@@ -79,7 +79,7 @@ let removeTab = function (state: number) {
   let current = cacheTabs.findIndex(item => item.path === route.path);
   if (state === 1) {
     settingStore.cacheTabs = cacheTabs.filter(item => item.path !== route.path);
-    go("/dashboard/work");
+    go("/dashboard");
   }
   if (state === 2) settingStore.cacheTabs = cacheTabs.slice(current, cacheTabs.length);
   if (state === 3) settingStore.cacheTabs = cacheTabs.slice(0, current + 1);
@@ -89,7 +89,7 @@ let removeTab = function (state: number) {
   }
   if (state === 4) {
     settingStore.cacheTabs = [];
-    go("/dashboard/work");
+    go("/dashboard");
   }
 };
 </script>

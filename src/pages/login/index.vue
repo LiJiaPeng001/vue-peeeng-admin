@@ -66,7 +66,7 @@ let onSubmit = async () => {
       message: "登录成功",
       description: "欢迎回来，买菜的家朋",
     });
-    router.replace("/dashboard/work");
+    router.replace("/dashboard");
   }, 1000);
 };
 </script>

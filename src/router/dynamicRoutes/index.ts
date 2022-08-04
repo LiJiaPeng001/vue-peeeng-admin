@@ -7,30 +7,19 @@ let childrenRoutes: RouteRecordRaw[] = [
     path: "/dashboard",
     name: "Dashboard",
     meta: {
-      title: "Dashboard",
+      title: "工作台",
       icon: "HomeOutlined",
     },
-    redirect: "/dashboard/work",
     component: () => import("~/pages/dashboard/index.vue"),
-    children: [
-      {
-        path: "/dashboard/work",
-        name: "DashboardWork",
-        meta: {
-          title: "工作台",
-        },
-        component: () => import("~/pages/dashboard/index.vue"),
-      },
-      {
-        path: "/dashboard/work/detail",
-        name: "DashboardWorkDetail",
-        meta: {
-          title: "详情页面wuhu",
-          hidden: true,
-        },
-        component: () => import("~/pages/dashboard/detail.vue"),
-      },
-    ],
+  },
+  {
+    path: "/dashboard/detail",
+    name: "DashboardDetail",
+    meta: {
+      title: "DashboardDetail",
+      hidden: true,
+    },
+    component: () => import("~/pages/dashboard/detail.vue"),
   },
 ];
 
