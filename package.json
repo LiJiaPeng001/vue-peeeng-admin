@@ -11,7 +11,7 @@
     "lint": "eslint --fix",
     "format": "prettier . --write",
     "prepare": "husky install",
-    "lintStaged":"lint-staged"
+    "lintStaged": "lint-staged"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
@@ -25,7 +25,8 @@
   },
   "lint-staged": {
     "*.{vue,js,ts}": [
-      "pnpm run lint"
+      "pnpm run lint",
+      "pnpm run format"
     ]
   },
   "homepage": "https://github.com/LiJiaPeng001/vue3-ts-vite-template",
