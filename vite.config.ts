@@ -14,7 +14,7 @@ function getEnvVariable(mode: string) {
 // let { VITE_BASE_URL } = import.meta.env
 
 export default ({ mode }: ConfigEnv) => {
-  let env = getEnvVariable(mode)
+  let env = getEnvVariable(mode);
   return defineConfig({
     base: "/", // 基础路径
     resolve: {
