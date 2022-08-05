@@ -24,7 +24,9 @@
         sm: { span: 16, offset: 8 },
       }"
     >
-      <a-button type="primary" html-type="submit">Submit</a-button>
+      <a-button type="primary" html-type="submit">登录</a-button>
+      <a-button type="primary" html-type="submit">登录</a-button>
+      <a-button type="primary" html-type="submit">登录</a-button>
     </a-form-item>
   </a-form>
 </template>

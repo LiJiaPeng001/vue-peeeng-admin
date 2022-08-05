@@ -10,7 +10,8 @@
     "clean:lib": "rm -rf node_modules",
     "lint": "eslint --fix",
     "format": "prettier . --write",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lintStaged":"lint-staged"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
