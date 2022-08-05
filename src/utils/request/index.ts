@@ -9,10 +9,6 @@ export default createApi({
   setHeaders() {
     const headers = {
       "Content-Type": "application/json",
-      "wt-response-encrypt": 0,
-      "device-token": "",
-      "browser-token": "",
-      "storage-token": "",
     };
     return headers;
   },

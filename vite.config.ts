@@ -11,7 +11,10 @@ function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
 }
 
+// let { VITE_BASE_URL } = import.meta.env
+
 export default ({ mode }: ConfigEnv) => {
+  let env = getEnvVariable(mode)
   return defineConfig({
     base: "/", // 基础路径
     resolve: {
@@ -33,7 +36,7 @@ export default ({ mode }: ConfigEnv) => {
         dirs: ["./src/composables"],
       }),
       viteHtmlPlugin({
-        metaEnv: getEnvVariable(mode),
+        metaEnv: env,
       }),
     ],
     css: {
@@ -47,7 +50,9 @@ export default ({ mode }: ConfigEnv) => {
     server: {
       port: 2525,
       host: "0.0.0.0",
-      proxy: {}, // cross
+      // proxy: {
+      //   '^/community*': env.VITE_BASE_URL
+      // },
     },
   });
 };

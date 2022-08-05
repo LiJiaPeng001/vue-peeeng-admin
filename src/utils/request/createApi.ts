@@ -2,13 +2,14 @@ import axios from "axios";
 import { OptionsConfig, CreateApiOptions } from "./types";
 import type { AxiosRequestConfig } from "axios";
 import { getErrStatus, getErrMsg } from "./tools/index";
+import { message } from "ant-design-vue";
 // import useLoading from "./tools/loading";
 
 function noop() {}
 function login() {}
 
 export default ({
-  toast = noop, // 提示方法
+  toast = message, // 提示方法
   setHeaders = noop, // 动态设置headers
   handleError = noop, // 自定义错误处理
   loginForce = noop, // 返回401登录后再次尝试
@@ -29,7 +30,7 @@ export default ({
         const { data } = await instence(requestOptions);
         // success code
         if (data.code === "OK") return data.data;
-        if (shouldToast) toast(data.msg, 4000);
+        if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);
       } catch (e: any) {
         const status = getErrStatus(e);
@@ -41,11 +42,11 @@ export default ({
           }
         }
         if (e.message.indexOf("timeout of") > -1) {
-          toast("网络异常");
+          toast.error("网络异常");
           continue;
         }
         // 自定义错误处理
-        if (status) toast(getErrMsg(e) + status);
+        if (status) toast.error(status + " " + getErrMsg(e));
         handleError(e);
         return Promise.reject(e);
       }

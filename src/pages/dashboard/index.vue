@@ -26,8 +26,10 @@ let columns = [
 ];
 
 async function fetchList() {
-  let { list = [] } = await Api.list();
-  data.value = list;
+  // let { list = [] } = await Api.list();
+  // data.value = list;
+  let d = await Api.test();
+  console.log(d);
 }
 
 onMounted(() => {

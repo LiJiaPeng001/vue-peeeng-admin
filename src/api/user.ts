@@ -10,3 +10,8 @@ export function list() {
     },
   });
 }
+export function test() {
+  return request({
+    url: "/community/init",
+  });
+}

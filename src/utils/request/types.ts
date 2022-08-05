@@ -1,7 +1,8 @@
+import { MessageApi } from "ant-design-vue/es/message";
+
 export interface OptionsConfig {
   shouldLogin?: boolean;
   shouldToast?: boolean;
-  shouldLoading?: boolean;
 }
 
 export interface CreateApiOptions {
@@ -10,10 +11,5 @@ export interface CreateApiOptions {
   handleError?: Function; // 自定义错误处理
   loginForce?: Function; // 返回401登录后再次尝试
   setHeaders?: Function; // 动态设置headers
-  toast?: Function; // 提示方法
-  loading?: {
-    num?: number;
-    show: Function;
-    hide: Function;
-  }; // loading方法
+  toast?: MessageApi; // 提示方法
 }
