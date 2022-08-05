@@ -26,7 +26,6 @@
     >
       <a-button type="primary" html-type="submit">Submit</a-button>
     </a-form-item>
-    <div class="blank" style="height: 100vh"></div>
   </a-form>
 </template>
 <script lang="ts">
