@@ -18,6 +18,7 @@ let childrenRoutes: RouteRecordRaw[] = [
     meta: {
       title: "DashboardDetail",
       hidden: true,
+      parentRoute: "/dashboard",
     },
     component: () => import("~/pages/dashboard/detail.vue"),
   },

@@ -48,7 +48,9 @@ let { $icons } = useInstance();
 
 let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
 
-let selectedKeys = computed(() => [route.path]);
+let selectedKeys = computed(() => {
+  return [route.meta.parentRoute || route.path];
+});
 
 useResizeObserver(
   document.body,
