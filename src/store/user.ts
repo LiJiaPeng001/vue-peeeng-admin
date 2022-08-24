@@ -1,31 +1,30 @@
 import { defineStore } from "pinia";
-import { UserState } from "#/store";
+import { UserState, UserInfo } from "#/store";
+import { Login } from "#/api/user";
+import { login } from "~/api/user";
 
-const auth = useAuth<UserState["user"]>();
+const auth = useAuth();
 
 export default defineStore("user", {
   state(): UserState {
     return {
-      user: { ...auth.value },
+      user: auth.value,
     };
   },
   getters: {
     isLogin: state => state.user.name,
   },
   actions: {
-    login(payload: UserState["user"]) {
-      console.log(payload, "payload");
-      const user = {
-        name: "李家朋",
-        phone: 13673717028,
-      };
+    async login(payload: Login): Promise<UserInfo> {
+      let user = await login(payload);
       this.user = user;
       auth.value = user;
+      return user;
     },
     logout() {
       let user = {
         name: "",
-        phone: 0,
+        token: "",
       };
       this.user = user;
       auth.value = user;

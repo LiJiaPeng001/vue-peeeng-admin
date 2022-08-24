@@ -1,8 +1,8 @@
 import { RouteRecordRaw } from "vue-router";
 
 export interface UserInfo {
+  token: string;
   name: string;
-  phone: number;
 }
 export interface UserState {
   user: UserInfo;

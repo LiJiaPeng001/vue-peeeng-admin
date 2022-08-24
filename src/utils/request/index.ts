@@ -7,8 +7,11 @@ let { VITE_BASE_URL } = import.meta.env;
 
 export default createApi({
   setHeaders() {
+    const auth = useAuth();
+    let { token } = auth.value;
     const headers = {
-      "Content-Type": "application/json",
+      "content-type": "application/json",
+      "x-cros-token": token,
     };
     return headers;
   },

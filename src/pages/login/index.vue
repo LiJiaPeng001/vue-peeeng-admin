@@ -4,10 +4,10 @@
       <li v-for="n in 10" :key="n"></li>
     </ul>
     <div class="login-wrap">
-      <img m-b-40 m-auto display-block w-80 h-80 class="logo" :src="logo" />
+      <img class="logo" :src="logo" />
       <a-form ref="form" :label-col="labelCol" :wrapper-col="wrapperCol" class="form-model" :model="forms" :rules="rules" @finish="onSubmit">
-        <a-form-item name="phone">
-          <a-input v-model:value="forms.phone" size="large" placeholder="请输入手机号">
+        <a-form-item name="username">
+          <a-input v-model:value="forms.username" size="large" placeholder="请输入账号">
             <template #prefix>
               <PhoneFilled></PhoneFilled>
             </template>
@@ -41,16 +41,15 @@ let loading = ref(false);
 let labelCol = { span: 0 };
 let wrapperCol = { span: 24 };
 let forms = ref({
-  phone: "13673717028",
-  password: "111111",
+  username: "admin",
+  password: "admin",
 });
 let form = ref();
 let rules = ref({
-  phone: [
+  username: [
     {
       required: true,
-      pattern: /^1\d{10}$/,
-      message: "请正确输入手机号",
+      message: "请输入账号",
     },
   ],
   password: [{ required: true, message: "请输入密码" }],
@@ -59,15 +58,13 @@ let rules = ref({
 let onSubmit = async () => {
   await form.value.validate();
   loading.value = true;
-  setTimeout(async () => {
-    await userStore.login({ name: "wuihu", phone: 1367 });
-    loading.value = false;
-    notification.success({
-      message: "登录成功",
-      description: "欢迎回来，买菜的家朋",
-    });
-    router.replace("/dashboard");
-  }, 1000);
+  let { name } = await userStore.login(forms.value);
+  loading.value = false;
+  notification.success({
+    message: "登录成功",
+    description: `欢迎回来，${name}`,
+  });
+  router.replace("/dashboard");
 };
 </script>
 

@@ -10,6 +10,7 @@ declare module "*.vue" {
 
 declare module "~/utils/*";
 declare module "~/store/*";
+declare module "~/api/*";
 declare module "~/plugins/*";
 declare module "~/components/*";
 declare module "~/composables/*";

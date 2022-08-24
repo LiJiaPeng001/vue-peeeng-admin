@@ -29,7 +29,7 @@ export default ({
       try {
         const { data } = await instence(requestOptions);
         // success code
-        if (data.code === "OK") return data.data;
+        if (data.code === 0) return data.data;
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);
       } catch (e: any) {

@@ -17,6 +17,7 @@
             <UserOutlined />
           </template>
         </a-avatar>
+        {{ userStore.user.name }}
       </a-popover>
     </div>
   </div>
