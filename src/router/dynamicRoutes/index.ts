@@ -12,16 +12,6 @@ let childrenRoutes: RouteRecordRaw[] = [
     },
     component: () => import("~/pages/dashboard/index.vue"),
   },
-  {
-    path: "/dashboard/detail",
-    name: "DashboardDetail",
-    meta: {
-      title: "DashboardDetail",
-      hidden: true,
-      parentRoute: "/dashboard",
-    },
-    component: () => import("~/pages/dashboard/detail.vue"),
-  },
 ];
 
 for (const key in files) {

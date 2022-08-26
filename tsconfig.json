@@ -20,14 +20,6 @@
       "#/*": ["types/*"]
     }
   },
-  // "include": [
-  //   "src/**/*.ts",
-  //   "src/**/*.d.ts",
-  //   "src/**/*.tsx",
-  //   "src/**/*.vue",
-  //   "types/**/*.d.ts",
-  //   "types/**/*.ts",
-  //   "vite.config.ts"
-  // ],
+  // "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts", "types/**/*.ts", "vite.config.ts"],
   "exclude": ["dist", "node_modules"]
 }

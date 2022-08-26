@@ -9,7 +9,7 @@
         <a-form-item name="username">
           <a-input v-model:value="forms.username" size="large" placeholder="请输入账号">
             <template #prefix>
-              <PhoneFilled></PhoneFilled>
+              <UserOutlined></UserOutlined>
             </template>
           </a-input>
         </a-form-item>
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhoneFilled, LockFilled } from "@ant-design/icons-vue";
+import { UserOutlined, LockFilled } from "@ant-design/icons-vue";
 import { notification } from "ant-design-vue";
 import user from "~/store/user";
 

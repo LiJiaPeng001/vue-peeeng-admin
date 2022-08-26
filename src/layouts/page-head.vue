@@ -10,7 +10,7 @@
       </div>
       <a-popover>
         <template #content>
-          <p class="pointer" @click="logout">退出登录</p>
+          <p @click="logout">退出登录</p>
         </template>
         <a-avatar>
           <template #icon>
@@ -35,8 +35,8 @@ let userStore = user();
 let handleClick = () => {
   settingStore.collapsed = !settingStore.collapsed;
 };
-let logout = () => {
-  userStore.logout();
+let logout = async () => {
+  await userStore.logout();
   window.location.reload();
 };
 </script>
@@ -48,6 +48,7 @@ let logout = () => {
   box-sizing: border-box;
   position: relative;
   height: 64px;
+  cursor: pointer;
   .layout-fixed {
     justify-content: space-between;
     height: 64px;

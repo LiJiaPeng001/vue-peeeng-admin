@@ -50,9 +50,9 @@ export default ({ mode }: ConfigEnv) => {
     server: {
       port: 2525,
       host: "0.0.0.0",
-      // proxy: {
-      //   '^/community*': env.VITE_BASE_URL
-      // },
+      proxy: {
+        "^/api*": env.VITE_BASE_URL,
+      },
     },
   });
 };

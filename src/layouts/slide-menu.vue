@@ -21,7 +21,7 @@
           <template v-else>
             <a-menu-item v-if="!item?.meta?.hidden" :key="item.path">
               <template #icon>
-                <component :is="$icons[item.meta.icon as string]" v-if="item.meta && item.meta.icon"></component>
+                <component :is="item.meta.icon as string" v-if="item.meta && item.meta.icon"></component>
               </template>
               <span>{{ item.meta ? item.meta.title : item.name }}</span>
             </a-menu-item>
@@ -44,7 +44,6 @@ let route = useRoute();
 let go = useGo();
 let settingStore = setting();
 let permissionStore = permission();
-let { $icons } = useInstance();
 
 let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
 

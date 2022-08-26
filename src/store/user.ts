@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 import { UserState, UserInfo } from "#/store";
 import { Login } from "#/api/user";
-import { login } from "~/api/user";
+import { login, logout } from "~/api/user";
 
-const auth = useAuth();
+const authority = useAuth();
 
 export default defineStore("user", {
   state(): UserState {
     return {
-      user: auth.value,
+      user: authority.value,
     };
   },
   getters: {
@@ -17,17 +17,21 @@ export default defineStore("user", {
   actions: {
     async login(payload: Login): Promise<UserInfo> {
       let user = await login(payload);
+      const auth = useAuth();
+      let { token } = auth.value;
+      user = { ...user, token };
       this.user = user;
       auth.value = user;
       return user;
     },
-    logout() {
+    async logout() {
+      await logout();
       let user = {
         name: "",
         token: "",
       };
       this.user = user;
-      auth.value = user;
+      authority.value = user;
     },
   },
 });
