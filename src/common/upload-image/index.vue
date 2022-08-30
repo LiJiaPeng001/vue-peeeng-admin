@@ -43,7 +43,6 @@ const upload = async () => {
   let images = await getFileUrl({ multiple: true });
   emits("update:images", [...props.images, ...images]);
 };
-console.log(props, emits);
 </script>
 
 <style lang="less" scoped>

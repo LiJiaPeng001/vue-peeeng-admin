@@ -29,6 +29,7 @@ export default ({
     for (let i = 0; i < maxCount + 1; i++) {
       try {
         let userStore = user();
+        let router = useRouter();
         // 更新本地token
         const { data, headers } = await instence(requestOptions);
         let { authorization = "" } = headers;
@@ -38,7 +39,10 @@ export default ({
         // success code
         if (data.code === 0) return data.data;
         // 重新登录
-        if (data.code === 401 || data.code === 419) await userStore.logout();
+        if (data.code === 401 || data.code === 419) {
+          await userStore.logout();
+          router.replace("/login");
+        }
         // 报错提醒
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);

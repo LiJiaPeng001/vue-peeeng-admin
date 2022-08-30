@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 
 const files = import.meta.globEager("./*.ts");
+const mode = import.meta.env.MODE;
 
 let childrenRoutes: RouteRecordRaw[] = [
   {
@@ -21,6 +22,18 @@ for (const key in files) {
   } else {
     childrenRoutes.push(route);
   }
+}
+
+if (mode === "development") {
+  childrenRoutes.push({
+    path: "/test",
+    name: "Test",
+    meta: {
+      title: "Debugger",
+      icon: "BugOutlined",
+    },
+    component: () => import("~/pages/test/index.vue"),
+  });
 }
 
 let routes: RouteRecordRaw[] = [

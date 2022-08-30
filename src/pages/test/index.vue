@@ -1,18 +1,22 @@
 <template>
   <div class="container">
+    <a-button @click="openSwiper">点击开启弹窗</a-button>
     <upload-image v-model:images="images"></upload-image>
   </div>
 </template>
 
 <script lang="ts" setup>
 let images = ref([
-  { url: "https://ljpeng.fun/static/images/4f4536d9c49e729d394486dfe81b1998.jpeg" },
-  { url: "https://ljpeng.fun/static/images/ab2877da7ab79cafbaf51008744b3348.jpeg" },
+  { src: "https://wuta-tmp.oss-cn-shanghai.aliyuncs.com/community_debug/works/20220830110145_97_187811.jpg?x-oss-process=style/lq" },
+  { src: "https://wuta-tmp.oss-cn-shanghai.aliyuncs.com/community_debug/works/20220830110145_97_057591.jpg?x-oss-process=style/lq" },
 ]);
-</script>
 
-<style lang="less" scoped>
-div:has(span) {
-  color: red;
+let photoSwiper = usePhotoSwiper();
+
+function openSwiper() {
+  photoSwiper({
+    dataSource: images.value,
+    index: 1,
+  });
 }
-</style>
+</script>
