@@ -38,7 +38,7 @@ export async function getFileUrl(options: FileOptions = { multiple: false, accep
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
     urls.push({
-      url: getObjectURL(file),
+      src: getObjectURL(file),
       file,
     });
   }

@@ -3,26 +3,25 @@ import PhotoSwipe from "photoswipe";
 import getImage from "~/utils/getImage";
 import "photoswipe/style.css";
 
-let pswp: any;
+let pswp: PhotoSwipe | null;
 
 export default function () {
-  let preview = async (options: PhotoSwipeOptions) => {
-    if (!pswp) {
-      let images = await getImage(options.dataSource as []);
-      pswp = new PhotoSwipe({
-        bgOpacity: 0.6,
-        ...options,
-        dataSource: images,
-      });
-    }
-    pswp.init();
-    pswp.on("close", close);
-  };
   let close = () => {
     if (!pswp) return;
     pswp.close();
     pswp = null;
   };
   onBeforeUnmount(close);
-  return preview;
+  return async (options: PhotoSwipeOptions) => {
+    if (!pswp) {
+      let dataSource = await getImage(options.dataSource as []);
+      pswp = new PhotoSwipe({
+        bgOpacity: 0.6,
+        ...options,
+        dataSource,
+      });
+    }
+    pswp.init();
+    pswp.on("close", close);
+  };
 }

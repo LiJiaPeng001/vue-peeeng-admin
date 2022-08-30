@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <a-button @click="openSwiper">点击开启弹窗</a-button>
-    <upload-image v-model:images="images"></upload-image>
+    <upload-image v-model:images="images" v-model:current="current" show-cover></upload-image>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ let images = ref([
 ]);
 
 let photoSwiper = usePhotoSwiper();
+let current = ref<number>(0);
 
 function openSwiper() {
   photoSwiper({

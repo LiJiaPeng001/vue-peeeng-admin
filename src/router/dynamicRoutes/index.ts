@@ -15,15 +15,6 @@ let childrenRoutes: RouteRecordRaw[] = [
   },
 ];
 
-for (const key in files) {
-  const route = files[key].default;
-  if (Array.isArray(route)) {
-    childrenRoutes = [...childrenRoutes, ...route];
-  } else {
-    childrenRoutes.push(route);
-  }
-}
-
 if (mode === "development") {
   childrenRoutes.push({
     path: "/test",
@@ -34,6 +25,15 @@ if (mode === "development") {
     },
     component: () => import("~/pages/test/index.vue"),
   });
+}
+
+for (const key in files) {
+  const route = files[key].default;
+  if (Array.isArray(route)) {
+    childrenRoutes = [...childrenRoutes, ...route];
+  } else {
+    childrenRoutes.push(route);
+  }
 }
 
 let routes: RouteRecordRaw[] = [

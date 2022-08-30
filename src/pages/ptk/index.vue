@@ -7,7 +7,17 @@
       :columns="columns"
       :pagination="{ current: payload.page, pageSize: payload.limit, total: count, pageSizeOptions: ['12', '15', '20'] }"
       @change="onChange"
-    />
+    >
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'user_avatar'">
+          <my-image :src="record.user_avatar"></my-image>
+        </template>
+        <template v-if="column.key === 'action'">
+          <a-button type="primary" style="margin-right: 4px">编辑</a-button>
+          <a-button type="danger">删除</a-button>
+        </template>
+      </template>
+    </a-table>
   </div>
 </template>
 
@@ -39,27 +49,22 @@ let columns = ref([
   {
     title: "编号",
     dataIndex: "id",
-    key: "id",
   },
   {
     title: "归属分类",
     dataIndex: "camera_tag_tab_name",
-    key: "camera_tag_tab_name",
   },
   {
     title: "归属子分类",
     dataIndex: "camera_tag_child_tab_name",
-    key: "camera_tag_child_tab_name",
   },
   {
     title: "类型",
     dataIndex: "type_text",
-    key: "type_text",
   },
   {
     title: "功能类型",
     dataIndex: "func_type_text",
-    key: "func_type_text",
   },
   {
     title: "头像",
@@ -69,31 +74,26 @@ let columns = ref([
   {
     title: "贴纸名",
     dataIndex: "camera_tag_name",
-    key: "camera_tag_name",
   },
   {
     title: "内容类型",
     dataIndex: "content_type_text",
-    key: "content_type_text",
   },
   {
     title: "权重",
     dataIndex: "sort",
-    key: "sort",
   },
   {
     title: "热门权重",
     dataIndex: "hot_sort",
-    key: "hot_sort",
   },
   {
     title: "状态",
     dataIndex: "state_text",
-    key: "state_text",
   },
   {
     title: "操作",
-    dataIndex: "action",
+    key: "action",
   },
 ]);
 
