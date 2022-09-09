@@ -7,7 +7,6 @@ export interface UserInfo {
 export interface UserState {
   user: UserInfo;
 }
-
 export interface SettingState {
   collapsed: boolean;
   theme: "light" | "dark";

@@ -19,6 +19,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/ptk/index.vue"),
       },
+      {
+        path: "/ptk/detail",
+        name: "PtkDetail",
+        meta: {
+          title: "编辑",
+          hidden: true,
+        },
+        component: () => import("~/pages/ptk/detail/index.vue"),
+      },
     ],
   },
 ];

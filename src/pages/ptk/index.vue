@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <Search v-model:payload="payload" @ok="fetchList" />
+    <Search v-model:payload="payload" :cates="cates" @ok="fetchList" />
+    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0 })">添加</a-button>
     <a-table
       :loading="loading"
       :data-source="list"
@@ -9,12 +10,14 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'user_avatar'">
+        <!-- <template v-if="column.key === 'user_avatar'">
           <my-image :src="record.user_avatar"></my-image>
-        </template>
+        </template> -->
         <template v-if="column.key === 'action'">
-          <a-button type="primary" style="margin-right: 4px">编辑</a-button>
-          <a-button type="danger">删除</a-button>
+          <div class="btn-action">
+            <a-button type="primary" size="small" @click="toEdit(record)">编辑</a-button>
+            <a-button type="danger" size="small" @click="remove(record)">删除</a-button>
+          </div>
         </template>
       </template>
     </a-table>
@@ -22,26 +25,29 @@
 </template>
 
 <script lang="ts" setup>
+import { RecordRawItem } from "#/api/ptk";
+import { Modal, message } from "ant-design-vue";
 import Search from "./search.vue";
 import * as Api from "~/api/ptk";
 
 let route = useRoute();
 
-let { page = 1, limit = 12, camera_tag_name = "" } = route.query;
+let { page = 1, state = -1, limit = 12, camera_tag_name = "", camera_tag_tab_id = 0, camera_tag_child_tab_id = 0, id = "", camera_tag_state = -1 } = route.query;
 
 let payload = ref({
   page: Number(page),
   limit: Number(limit),
-  id: 0,
-  state: -1,
-  camera_tag_tab_id: 0,
-  camera_tag_child_tab_id: 0,
-  camera_tag_name: camera_tag_name as string,
-  camera_tag_state: -1,
+  id: String(id),
+  state: Number(state),
+  camera_tag_tab_id: Number(camera_tag_tab_id),
+  camera_tag_child_tab_id: Number(camera_tag_child_tab_id),
+  camera_tag_name: String(camera_tag_name),
+  camera_tag_state: Number(camera_tag_state),
 });
 
 let count = ref(0);
-let list = ref([]);
+let list = ref<RecordRawItem[]>([]);
+let cates = ref([]);
 let go = useGo();
 let loading = ref(false);
 
@@ -67,12 +73,7 @@ let columns = ref([
     dataIndex: "func_type_text",
   },
   {
-    title: "头像",
-    dataIndex: "user_avatar",
-    key: "user_avatar",
-  },
-  {
-    title: "贴纸名",
+    title: "贴纸展示名",
     dataIndex: "camera_tag_name",
   },
   {
@@ -104,18 +105,44 @@ let fetchList = async () => {
   count.value = d.count;
   list.value = d.list;
 };
+let fetchCate = async () => {
+  let { list } = await Api.cates();
+  cates.value = list;
+};
 
-let onChange = (values: any) => {
+let onChange = (values: { current: number; pageSize: number }) => {
   payload.value.page = values.current;
   payload.value.limit = values.pageSize;
   fetchList();
-  go({
-    path: route.path,
-    query: { ...payload.value },
-  });
 };
 
 fetchList();
+fetchCate();
+
+let toEdit = (record: RecordRawItem) => {
+  go({
+    path: "/ptk/detail",
+    query: {
+      id: record.id,
+    },
+  });
+};
+let remove = (record: RecordRawItem) => {
+  let { id } = record;
+  Modal.confirm({
+    title: "删除",
+    content: "您确定要删除嘛?",
+    async onOk() {
+      await Api.remove({ ids: [id] });
+      message.success("删除成功");
+      fetchList();
+    },
+  });
+};
 </script>
 
-<style lang="less" scoped></style>
+<script lang="ts">
+export default defineComponent({
+  name: "PtkList",
+});
+</script>

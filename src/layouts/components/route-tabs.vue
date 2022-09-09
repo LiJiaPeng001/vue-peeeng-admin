@@ -5,7 +5,7 @@
     <div class="tabs-box">
       <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
         <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
-        <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path.split('?')[0]" :tab="pane.meta?.title" closable> </a-tab-pane>
+        <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
       </a-tabs>
     </div>
     <!-- action-btn -->
@@ -61,7 +61,7 @@ settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashbo
 if (!settingStore.cacheTabs.length) settingStore.cacheTabs = currentRoute;
 
 let activeKey = computed(() => {
-  return route.path;
+  return route.fullPath;
 });
 
 let edit = function (path: string) {

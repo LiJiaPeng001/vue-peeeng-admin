@@ -8,12 +8,11 @@
         <div class="route-page">
           <router-view v-slot="{ Component }">
             <transition name="fade-slide" mode="out-in">
-              <component :is="Component" v-if="route.path !== settingStore.refreshPath" :key="route.name"></component>
+              <keep-alive :include="settingStore.cacheTabs.map(item => item.name as string)">
+                <component :is="Component" v-if="route.path !== settingStore.refreshPath" :key="route.name"></component>
+              </keep-alive>
             </transition>
           </router-view>
-          <transition name="fade-slide" mode="out-in">
-            <slot v-if="route.path !== settingStore.refreshPath" :key="route.name"></slot>
-          </transition>
         </div>
       </div>
     </div>

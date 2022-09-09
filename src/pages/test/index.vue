@@ -21,3 +21,9 @@ function openSwiper() {
   });
 }
 </script>
+
+<script lang="ts">
+export default defineComponent({
+  name: "Test",
+});
+</script>

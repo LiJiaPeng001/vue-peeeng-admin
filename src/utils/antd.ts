@@ -1,6 +1,7 @@
 import { App } from "vue";
 import "ant-design-vue/lib/notification/style/index.less";
 import "ant-design-vue/lib/message/style/index.less";
+import "ant-design-vue/lib/modal/style/index.less";
 import { HomeOutlined, SettingOutlined, CameraOutlined, BugOutlined } from "@ant-design/icons-vue";
 
 export default (app: App) => {

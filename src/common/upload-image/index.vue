@@ -1,7 +1,7 @@
 <template>
-  <div class="images middle-flex">
+  <div class="value middle-flex">
     <div
-      v-for="(it, i) in images"
+      v-for="(it, i) in value"
       :key="it.src"
       draggable="true"
       class="image cover"
@@ -35,7 +35,7 @@ import { UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-
 
 const props = withDefaults(
   defineProps<{
-    images: { src: string }[];
+    value: { src: string }[];
     current: number;
     showCover: boolean;
   }>(),
@@ -45,7 +45,7 @@ const props = withDefaults(
   }
 );
 
-const emits = defineEmits(["update:images", "cancel", "update:current"]);
+const emits = defineEmits(["update:value", "cancel", "update:current"]);
 let startIndex = ref<number>(0);
 let photoSwiper = usePhotoSwiper();
 
@@ -53,12 +53,12 @@ let dragstart = (e: DragEvent, index: number) => {
   startIndex.value = index;
 };
 let onDrop = (e: DragEvent, index: number) => {
-  let imgs = [...props.images];
+  let imgs = [...props.value];
   let { current } = props;
   let d = imgs[index];
   imgs[index] = imgs[startIndex.value];
   imgs[startIndex.value] = d;
-  emits("update:images", imgs);
+  emits("update:value", imgs);
   if (startIndex.value === current || index === current) {
     if (startIndex.value === current) emits("update:current", index);
     if (index === current) emits("update:current", startIndex.value);
@@ -66,30 +66,30 @@ let onDrop = (e: DragEvent, index: number) => {
 };
 
 const edit = async (i: number) => {
-  let images = await getFileUrl();
-  let imgs = [...props.images];
-  imgs.splice(i, 1, images[0]);
-  emits("update:images", imgs);
+  let value = await getFileUrl();
+  let imgs = [...props.value];
+  imgs.splice(i, 1, value[0]);
+  emits("update:value", imgs);
 };
 const remove = (i: number) => {
   let { current } = props;
   if (current === i) emits("update:current", 0);
   emits(
-    "update:images",
-    props.images.filter((it, index) => index != i)
+    "update:value",
+    props.value.filter((it, index) => index != i)
   );
 };
 
 const preview = (index: number) => {
   photoSwiper({
-    dataSource: props.images,
+    dataSource: props.value,
     index,
   });
 };
 
 const upload = async () => {
-  let images = await getFileUrl({ multiple: true });
-  emits("update:images", [...props.images, ...images]);
+  let value = await getFileUrl({ multiple: true });
+  emits("update:value", [...props.value, ...value]);
 };
 
 const changeCover = (i: number) => {
@@ -98,7 +98,7 @@ const changeCover = (i: number) => {
 </script>
 
 <style lang="less" scoped>
-.images {
+.value {
   position: relative;
   flex-wrap: wrap;
   .image {
