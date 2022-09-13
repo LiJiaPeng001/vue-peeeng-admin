@@ -2,7 +2,9 @@ export interface SearchPayload {
   id?: number | string;
   page?: number;
   limit?: number;
+  state?: number;
   camera_tag_name?: string;
+  camera_tag_state?: number;
   camera_tag_tab_id: number;
   camera_tag_child_tab_id: number;
 }

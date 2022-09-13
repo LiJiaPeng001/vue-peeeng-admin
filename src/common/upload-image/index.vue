@@ -18,11 +18,11 @@
           <DeleteOutlined @click="remove(i)" />
           <EyeOutlined @click="preview(i)" />
         </div>
-        <div v-if="showCover" class="set-cover" @click="changeCover(i)">{{ i === current ? "封面图" : "设为封面" }}</div>
+        <div v-if="showCover && i != current" class="set-cover" @click="changeCover(i)">设为封面</div>
       </div>
     </div>
     <!-- upload -->
-    <div class="image upload-item center-flex" @click="upload">
+    <div v-if="value.length < limit" class="image upload-item center-flex" @click="upload">
       <UploadOutlined></UploadOutlined>
       <p>上传文件</p>
     </div>
@@ -36,10 +36,12 @@ import { UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-
 const props = withDefaults(
   defineProps<{
     value: { src: string }[];
-    current: number;
-    showCover: boolean;
+    current?: number;
+    showCover?: boolean;
+    limit?: 1;
   }>(),
   {
+    limit: 1,
     current: 0,
     showCover: false,
   }
@@ -88,8 +90,12 @@ const preview = (index: number) => {
 };
 
 const upload = async () => {
-  let value = await getFileUrl({ multiple: true });
-  emits("update:value", [...props.value, ...value]);
+  let { value, limit } = props;
+  let images = await getFileUrl({ multiple: limit > 1 ? true : false });
+  if (value.length + images.length > limit) {
+    images = images.slice(0, limit - value.length);
+  }
+  emits("update:value", [...props.value, ...images]);
 };
 
 const changeCover = (i: number) => {

@@ -7,6 +7,8 @@ enum Api {
   cates = "/api/get_all_camera_tag_tabs",
   edit = "/api/camera_tag_tab_content/save",
   remove = "/api/camera_tag_tab_content/destroy",
+  types = "/api/get_camera_tag_types",
+  typeTags = "/api/get_camera_tags",
 }
 
 export function list(data: SearchPayload) {
@@ -29,7 +31,7 @@ export function cates() {
     method: "post",
   });
 }
-export function edit(data: any) {
+export function edit(data: { id: number }) {
   return request({
     url: Api.edit,
     method: "post",
@@ -39,6 +41,19 @@ export function edit(data: any) {
 export function remove(data: { ids: number[] }) {
   return request({
     url: Api.remove,
+    method: "post",
+    data,
+  });
+}
+export function types() {
+  return request({
+    url: Api.types,
+    method: "post",
+  });
+}
+export function typeTags(data: { camera_tag_type_id: number }) {
+  return request({
+    url: Api.typeTags,
     method: "post",
     data,
   });
