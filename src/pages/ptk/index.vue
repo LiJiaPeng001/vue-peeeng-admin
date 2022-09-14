@@ -10,13 +10,10 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
-        <!-- <template v-if="column.key === 'user_avatar'">
-          <my-image :src="record.user_avatar"></my-image>
-        </template> -->
         <template v-if="column.key === 'action'">
           <div class="btn-action">
-            <a-button type="primary" size="small" @click="toEdit(record)">编辑</a-button>
-            <a-button type="danger" size="small" @click="remove(record)">删除</a-button>
+            <span class="primary" @click="toEdit(record)">编辑</span>
+            <span class="danger" @click="remove(record)">删除</span>
           </div>
         </template>
       </template>
@@ -25,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-import { RecordRawItem } from "#/api/ptk";
 import { Modal, message } from "ant-design-vue";
 import Search from "./search.vue";
 import * as Api from "~/api/ptk";
+import { RecordItem } from "#/api/ptk";
 
 let route = useRoute();
 
@@ -46,7 +43,7 @@ let payload = ref({
 });
 
 let count = ref(0);
-let list = ref<RecordRawItem[]>([]);
+let list = ref<RecordItem[]>([]);
 let cates = ref([]);
 let go = useGo();
 let loading = ref(false);
@@ -119,7 +116,7 @@ let onChange = (values: { current: number; pageSize: number }) => {
 fetchList();
 fetchCate();
 
-let toEdit = (record: RecordRawItem) => {
+let toEdit = (record: RecordItem) => {
   go({
     path: "/ptk/detail",
     query: {
@@ -127,8 +124,8 @@ let toEdit = (record: RecordRawItem) => {
     },
   });
 };
-let remove = (record: RecordRawItem) => {
-  let { id } = record;
+let remove = (record: RecordItem) => {
+  let { id = 0 } = record;
   Modal.confirm({
     title: "删除",
     content: "您确定要删除嘛?",

@@ -7,6 +7,7 @@
       <span class="text">{{ data?.name }}</span>
       <span class="remove" @click="onChangeValue()"><DeleteOutlined></DeleteOutlined></span>
     </div>
+    <a-badge v-if="!value && !list.length" color="yellow" :text="!list.length ? '请选择贴纸类型👆' : ''" />
     <div class="tags middle-flex">
       <div v-for="it in list" :key="it.id" class="tag cover fadeIn" :style="{ backgroundImage: `url(${it.icon_url})` }">
         <div class="mask center-flex" @click="onChangeValue(it)">选择</div>

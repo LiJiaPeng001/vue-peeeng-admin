@@ -1,4 +1,4 @@
-import { SearchPayload } from "#/api/ptk";
+import { SearchPayload, RecordItem, ListResult } from "#/api/ptk";
 import request from "../utils/request/index";
 
 enum Api {
@@ -11,14 +11,14 @@ enum Api {
   typeTags = "/api/get_camera_tags",
 }
 
-export function list(data: SearchPayload) {
+export function list(data: SearchPayload): Promise<ListResult> {
   return request({
     url: Api.list,
     method: "post",
     data,
   });
 }
-export function detail(data: { id: number }) {
+export function detail(data: { id: number }): Promise<RecordItem> {
   return request({
     url: Api.detail,
     method: "post",
@@ -31,7 +31,7 @@ export function cates() {
     method: "post",
   });
 }
-export function edit(data: { id: number }) {
+export function edit(data: RecordItem) {
   return request({
     url: Api.edit,
     method: "post",

@@ -1,8 +1,10 @@
 import { FileOptions } from "#/upload";
+import { message } from "ant-design-vue";
 
 let input: HTMLInputElement;
 
-export function getFiles(options: FileOptions = { multiple: false, accept: "image/*" }): Promise<FileList> {
+export function getFiles(options: FileOptions = {}): Promise<FileList> {
+  let { multiple = false, accept = "image/*" } = options;
   return new Promise(resolve => {
     if (!input) {
       input = document.createElement("input");
@@ -11,8 +13,8 @@ export function getFiles(options: FileOptions = { multiple: false, accept: "imag
       input.style.top = "-1000px";
       document.body.append(input);
     }
-    input.multiple = options.multiple || false;
-    input.accept = options.accept || "image/*";
+    input.multiple = multiple || false;
+    input.accept = accept || "image/*";
     input.value = "";
     input.click();
     input.onchange = function () {
@@ -32,13 +34,18 @@ export function getObjectURL(file: File): string {
   return url;
 }
 
-export async function getFileUrl(options: FileOptions = { multiple: false, accept: "image/*" }) {
+export async function getFileUrl(options: FileOptions = { multiple: false, accept: "image/*", size: 10 }) {
+  let { size = 10 } = options;
   let files = await getFiles(options);
   let urls: any[] = [];
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
+    if (file.size > size * 1024 * 1024) {
+      message.warning(`${file.name.length > 10 ? file.name.slice(0, 10) + "..." : file.name}文件超过了${size}MB`);
+      continue;
+    }
     urls.push({
-      src: getObjectURL(file),
+      url: getObjectURL(file),
       file,
     });
   }

@@ -65,7 +65,12 @@ let activeKey = computed(() => {
 });
 
 let edit = function (path: string) {
-  settingStore.cacheTabs = settingStore.cacheTabs.filter(item => item.path !== path);
+  let { cacheTabs } = settingStore;
+  let current = cacheTabs.findIndex(item => item.path == path);
+  settingStore.cacheTabs = cacheTabs.filter(item => item.path !== path);
+  if (current > 0) {
+    return go(cacheTabs[current - 1].path);
+  }
   go("/dashboard");
 };
 let refreshPage = async function () {

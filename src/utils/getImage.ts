@@ -1,42 +1,42 @@
 interface ImageRecord {
-  src: string;
+  url: string;
   [props: string]: any;
 }
 
 interface ReturnImageRecord {
-  src: string;
-  width: number;
-  height: number;
+  url: string;
+  w: number;
+  h: number;
   img?: HTMLImageElement;
 }
 
-export function getSize(src: string): Promise<ReturnImageRecord> {
+export function getSize(url: string): Promise<ReturnImageRecord> {
   return new Promise(resolve => {
     const img = new Image();
-    img.src = src;
+    img.src = url;
     img.crossOrigin = "anonymous";
     img.onload = function () {
       resolve({
         img,
-        src,
-        width: img.width,
-        height: img.height,
+        url,
+        w: img.width,
+        h: img.height,
       });
     };
 
-    img.onerror = () => resolve({ src, width: 0, height: 0 });
+    img.onerror = () => resolve({ url, w: 0, h: 0 });
   });
 }
 
-export default async (src: string | ImageRecord[]): Promise<ReturnImageRecord[]> => {
-  if (typeof src === "string") {
-    const image = await getSize(src);
+export default async (url: string | ImageRecord[]): Promise<ReturnImageRecord[]> => {
+  if (typeof url === "string") {
+    const image = await getSize(url);
     return [image];
   }
 
   return Promise.all(
-    src.map(item => {
-      return getSize(item.src);
+    url.map(item => {
+      return getSize(item.url);
     })
   );
 };

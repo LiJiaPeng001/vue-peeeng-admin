@@ -2,15 +2,20 @@
   <div class="value middle-flex">
     <div
       v-for="(it, i) in value"
-      :key="it.src"
+      :key="it.url"
       draggable="true"
       class="image cover"
-      :style="{ backgroundImage: `url(${it.src})` }"
+      :style="{ backgroundImage: `url(${it.url})` }"
       @dragover.prevent
       @dragstart="dragstart($event, i)"
       @drop="onDrop($event, i)"
     >
+      <!-- 是否封面 -->
       <div v-if="showCover && i === current" class="cover-text">封面</div>
+      <!-- 是否视频 -->
+      <div v-if="isVideo" class="video-mask center-flex">
+        <img :src="video" alt="" class="icon" />
+      </div>
       <!-- edit remove -->
       <div class="mask-action center-flex">
         <div class="icons center-flex">
@@ -27,6 +32,7 @@
       <p>上传文件</p>
     </div>
   </div>
+  <a-badge style="margin-top: 6px" color="yellow" :text="`单文件限制${size}mb`" />
 </template>
 
 <script lang="ts" setup>
@@ -35,12 +41,16 @@ import { UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-
 
 const props = withDefaults(
   defineProps<{
-    value: { src: string }[];
+    value: { url: string }[];
     current?: number;
     showCover?: boolean;
     limit?: 1;
+    accept?: string;
+    size?: number;
   }>(),
   {
+    size: 10,
+    accept: "image/*",
     limit: 1,
     current: 0,
     showCover: false,
@@ -48,8 +58,12 @@ const props = withDefaults(
 );
 
 const emits = defineEmits(["update:value", "cancel", "update:current"]);
+const { video } = useLocalImage();
 let startIndex = ref<number>(0);
 let photoSwiper = usePhotoSwiper();
+let isVideo = computed(() => {
+  return props.accept.includes("video");
+});
 
 let dragstart = (e: DragEvent, index: number) => {
   startIndex.value = index;
@@ -68,7 +82,8 @@ let onDrop = (e: DragEvent, index: number) => {
 };
 
 const edit = async (i: number) => {
-  let value = await getFileUrl();
+  let { limit, accept, size } = props;
+  let value = await getFileUrl({ multiple: limit > 1 ? true : false, accept, size });
   let imgs = [...props.value];
   imgs.splice(i, 1, value[0]);
   emits("update:value", imgs);
@@ -83,15 +98,17 @@ const remove = (i: number) => {
 };
 
 const preview = (index: number) => {
+  let { value } = props;
+  if (isVideo.value) return window.open(value[index].url);
   photoSwiper({
-    dataSource: props.value,
+    dataSource: value,
     index,
   });
 };
 
 const upload = async () => {
-  let { value, limit } = props;
-  let images = await getFileUrl({ multiple: limit > 1 ? true : false });
+  let { value, limit, accept, size } = props;
+  let images = await getFileUrl({ multiple: limit > 1 ? true : false, accept, size });
   if (value.length + images.length > limit) {
     images = images.slice(0, limit - value.length);
   }
@@ -116,6 +133,18 @@ const changeCover = (i: number) => {
     margin: 0 8px 8px 0;
     overflow: hidden;
     position: relative;
+    .video-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      .icon {
+        width: 42px;
+        height: 30px;
+      }
+    }
     &:hover {
       .mask-action {
         opacity: 1;

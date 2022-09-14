@@ -9,6 +9,11 @@ export interface SearchPayload {
   camera_tag_child_tab_id: number;
 }
 
+export interface ListResult {
+  count: number;
+  list: RecordItem[];
+}
+
 export interface CateResult {
   name: string;
   id: number;
@@ -16,8 +21,20 @@ export interface CateResult {
 }
 
 export interface RecordItem {
+  id?: number;
+  user_avatar?: string;
+  user_avatar_url?: string;
   state?: number;
+  img_list_data?: RecordImagesData[];
+  userAvatar?: RecordImagesData[];
+  images?: RecordImagesData[];
+  img_list?: string[];
+  tabMaps?: number[];
   [props: string]: any;
 }
 
-export type RecordRawItem = { id: number } & RecordItem;
+export interface RecordImagesData {
+  url: string;
+  filename?: string;
+  file?: File;
+}

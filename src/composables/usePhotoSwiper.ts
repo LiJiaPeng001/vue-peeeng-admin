@@ -18,7 +18,7 @@ export default function () {
       pswp = new PhotoSwipe({
         bgOpacity: 0.6,
         ...options,
-        dataSource,
+        dataSource: dataSource.map(item => ({ ...item, src: item.url })),
       });
     }
     pswp.init();
