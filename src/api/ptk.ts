@@ -1,4 +1,4 @@
-import { SearchPayload, RecordItem, ListResult } from "#/api/ptk";
+import { SearchPayload, RecordItem, ListResult, TypeRecord, CateResult } from "#/api/ptk";
 import request from "../utils/request/index";
 
 enum Api {
@@ -25,7 +25,7 @@ export function detail(data: { id: number }): Promise<RecordItem> {
     data,
   });
 }
-export function cates() {
+export function cates(): Promise<{ list: CateResult[] }> {
   return request({
     url: Api.cates,
     method: "post",
@@ -45,7 +45,7 @@ export function remove(data: { ids: number[] }) {
     data,
   });
 }
-export function types() {
+export function types(): Promise<{ list: TypeRecord[] }> {
   return request({
     url: Api.types,
     method: "post",

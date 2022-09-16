@@ -4,6 +4,7 @@ export interface SearchPayload {
   limit?: number;
   state?: number;
   camera_tag_name?: string;
+  camera_tag_show_name?: string;
   camera_tag_state?: number;
   camera_tag_tab_id: number;
   camera_tag_child_tab_id: number;
@@ -18,6 +19,12 @@ export interface CateResult {
   name: string;
   id: number;
   camera_tag_child_tabs: CateResult[];
+}
+
+export interface TypeRecord {
+  id: number;
+  type_text?: string;
+  name?: string;
 }
 
 export interface RecordItem {

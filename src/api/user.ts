@@ -1,22 +1,22 @@
 import request from "../utils/request/index";
-import { Login } from "#/api/user";
+import { LoginPayload } from "#/api/user";
+import { UserInfo } from "#/api/user";
 
-export function login(data: Login) {
+enum Api {
+  login = "/api/login",
+  logout = "/api/logout",
+}
+
+export function login(data: LoginPayload): Promise<UserInfo> {
   return request({
-    url: "/api/login",
+    url: Api.login,
     method: "post",
     data,
   });
 }
 export function logout() {
   return request({
-    url: "/api/logout",
-    method: "post",
-  });
-}
-export function test() {
-  return request({
-    url: "/api/init",
+    url: Api.logout,
     method: "post",
   });
 }

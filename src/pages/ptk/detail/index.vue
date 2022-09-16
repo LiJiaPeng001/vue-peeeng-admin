@@ -5,10 +5,7 @@
         <a-switch v-model:checked="form.is_qualify" checked-children="是" un-checked-children="否" />
       </a-form-item>
       <a-form-item label="状态" name="state">
-        <a-radio-group v-model:value="form.state">
-          <a-radio :value="0">下架</a-radio>
-          <a-radio :value="1">上架</a-radio>
-        </a-radio-group>
+        <a-switch v-model:checked="form.state" checked-children="上架" un-checked-children="下架" />
       </a-form-item>
       <a-form-item label="热门分类" name="tabMaps">
         <a-cascader
@@ -18,13 +15,6 @@
           placeholder="请选择热门分类"
           change-on-select
         />
-      </a-form-item>
-      <a-form-item label="配置类型" name="config_type">
-        <a-radio-group v-model:value="form.config_type">
-          <a-radio :value="1">自助配置</a-radio>
-          <a-radio :value="2">社区作品</a-radio>
-          <a-radio :value="3">社区用户</a-radio>
-        </a-radio-group>
       </a-form-item>
       <!-- 自助配置：用户昵称 + 用户头像 -->
       <template v-if="form.config_type == 1">
@@ -40,24 +30,8 @@
         <a-input v-model:value="form.work_id" placeholder="请输入社区作品ID"> </a-input>
       </a-form-item>
       <!-- 社区用户：社区用户ID -->
-      <a-form-item v-else label="社区用户ID" name="uid">
+      <a-form-item v-else-if="form.config_type == 3" label="社区用户ID" name="uid">
         <a-input v-model:value="form.uid" placeholder="请输入用户ID"> </a-input>
-      </a-form-item>
-      <a-form-item label="类型" name="type">
-        <a-select ref="select" v-model:value="form.type" placeholder="请选择类型">
-          <a-select-option v-for="(it, i) in typeMaps" :key="Number(i)">{{ it }}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="链接跳转方式" name="open_type">
-        <a-select ref="select" v-model:value="form.open_type" placeholder="请选择链接跳转方式">
-          <a-select-option v-for="(it, i) in linkMaps" :key="Number(i)">{{ it }}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="跳转链接" name="url">
-        <a-input v-model:value="form.url" placeholder="请输入跳转链接"> </a-input>
-      </a-form-item>
-      <a-form-item label="瀑布流简介" name="desc">
-        <a-textarea v-model:value="form.desc" show-count :maxlength="200" :rows="4" placeholder="请输入瀑布流简介"> </a-textarea>
       </a-form-item>
       <a-form-item label="内容类型" name="content_type">
         <a-radio-group v-model:value="form.content_type">
@@ -80,21 +54,13 @@
           <upload-image v-model:value="form.videoCover"></upload-image>
         </a-form-item>
       </template>
-      <a-form-item label="按钮图片" name="button_img">
-        <upload-image v-model:value="form.button_img"></upload-image>
-      </a-form-item>
-      <a-form-item label="权重" name="sort">
-        <a-input-number v-model:value="form.sort" placeholder="请输入权重"> </a-input-number>
-      </a-form-item>
-      <a-form-item label="热门权重" name="hot_sort">
-        <a-input-number v-model:value="form.hot_sort" placeholder="请输入热门权重"> </a-input-number>
-      </a-form-item>
       <a-form-item label="功能类型" name="func_type">
         <a-radio-group v-model:value="form.func_type">
           <a-radio :value="0">贴纸</a-radio>
           <a-radio :value="1">拼图</a-radio>
         </a-radio-group>
       </a-form-item>
+
       <!-- 贴纸 -->
       <template v-if="form.func_type == 0">
         <a-form-item label="贴纸类型" name="tag_type">
@@ -105,6 +71,7 @@
             allow-clear
             :filter-option="filterOption"
             :options="typeList"
+            :field-names="{ label: 'name', value: 'id' }"
             placeholder="请选择贴纸类型 (可搜索) "
             @select="onSelectTag"
           >
@@ -127,13 +94,37 @@
             <a-select-option v-for="it in modeMaps" :key="it.value">{{ it.label }}</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="贴纸展示名" name="camera_tag_name">
-          <a-input v-model:value="form.camera_tag_name" placeholder="请输入贴纸展示名"> </a-input>
+        <a-form-item label="作者配置类型" name="config_type">
+          <a-radio-group v-model:value="form.config_type">
+            <a-radio :value="0">贴纸回填</a-radio>
+            <a-radio :value="1">自助配置</a-radio>
+            <a-radio :value="2">社区作品</a-radio>
+            <a-radio :value="3">社区用户</a-radio>
+          </a-radio-group>
         </a-form-item>
-        <a-form-item label="贴纸简介" name="camera_tag_desc">
-          <a-textarea v-model:value="form.camera_tag_desc" show-count :maxlength="200" :rows="4" placeholder="请输入贴纸简介"> </a-textarea>
+        <a-form-item label="作者标签" name="type">
+          <a-select ref="select" v-model:value="form.type" placeholder="请选择作者标签">
+            <a-select-option v-for="(it, i) in typeMaps" :key="Number(i)">{{ it }}</a-select-option>
+          </a-select>
         </a-form-item>
-        <a-form-item label="标签数据" name="content_labels">
+        <a-form-item label="跳转方式" name="open_type">
+          <a-select ref="select" v-model:value="form.open_type" placeholder="跳转方式">
+            <a-select-option v-for="(it, i) in linkMaps" :key="Number(i)">{{ it }}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="跳转链接" name="url">
+          <a-input v-model:value="form.url" placeholder="请输入跳转链接"> </a-input>
+        </a-form-item>
+        <a-form-item label="瀑布流简介" name="desc">
+          <a-textarea v-model:value="form.desc" show-count :maxlength="200" :rows="4" placeholder="请输入瀑布流简介"> </a-textarea>
+        </a-form-item>
+        <a-form-item label="沉浸标题" name="camera_tag_name">
+          <a-input v-model:value="form.camera_tag_name" placeholder="请输入沉浸标题"> </a-input>
+        </a-form-item>
+        <a-form-item label="沉浸简介" name="camera_tag_desc">
+          <a-textarea v-model:value="form.camera_tag_desc" show-count :maxlength="200" :rows="4" placeholder="请输入沉浸简介"> </a-textarea>
+        </a-form-item>
+        <a-form-item label="沉浸标签数据" name="content_labels">
           <tag-label v-model:value="form.content_labels"></tag-label>
         </a-form-item>
       </template>
@@ -149,18 +140,29 @@
           <a-input v-model:value="form.puzzle_background_color" placeholder="请输入拼图背景色" style="max-width: 140px"> </a-input>
           <input v-model="form.puzzle_background_color" style="width: 30px; height: 30px" type="color" />
         </a-form-item>
-        <a-form-item label="模板图" name="puzzle_img">
+        <a-form-item label="模板底图" name="puzzle_img">
           <upload-image v-model:value="form.puzzle_img"></upload-image>
         </a-form-item>
-        <a-form-item label="模板背景图" name="puzzle_special_effects_img">
+        <a-form-item label="模板特效图" name="puzzle_special_effects_img">
           <upload-image v-model:value="form.puzzle_special_effects_img"></upload-image>
         </a-form-item>
-        <a-form-item label="模板数据" name="puzzle_params">
+        <a-form-item label="模板数据" name="puzzle_params" :wrapper-col="{ span: 14 }">
           <image-table v-model:value="form.puzzle_params"></image-table>
         </a-form-item>
       </template>
-      <a-form-item :wrapper-col="{ offset: 4, span: 16 }">
-        <a-button :loading="loading" type="primary" html-type="submit">保存</a-button>
+      <!-- <a-form-item label="按钮图片" name="button_img">
+        <upload-image v-model:value="form.button_img"></upload-image>
+      </a-form-item> -->
+      <a-form-item label="权重" name="sort">
+        <a-input-number v-model:value="form.sort" placeholder="请输入权重"> </a-input-number>
+      </a-form-item>
+      <a-form-item label="热门权重" name="hot_sort">
+        <a-input-number v-model:value="form.hot_sort" placeholder="请输入热门权重"> </a-input-number>
+      </a-form-item>
+
+      <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 4 } }">
+        <a-button :loading="loading" type="primary" html-type="submit" style="margin-right: 6px">保存</a-button>
+        <a-button @click="router.back()">返回</a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -171,25 +173,20 @@ import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
 import { linkMaps } from "~/utils/utils";
 import { detail, cates as cateList, types, typeTags, edit } from "~/api/ptk";
-import { RecordItem } from "#/api/ptk";
+import { RecordItem, TypeRecord, CateResult } from "#/api/ptk";
 import { upload } from "~/api/upload";
 import getSize from "~/utils/getImage";
 import TagTable from "./tag-table.vue";
 import TagLabel from "./tab-label.vue";
 import ImageTable from "./image-table.vue";
 
-interface TypeRecord {
-  id: number;
-  type_text: string;
-  name: string;
-}
-
 let route = useRoute();
+let router = useRouter();
 let id = ref(Number(route.query.id || 0));
 let initFormData = (): RecordItem => ({
   is_qualify: 0,
   state: 0,
-  config_type: 1,
+  config_type: 0,
   user_nick: "",
   userAvatar: [],
   work_id: undefined,
@@ -225,7 +222,7 @@ let initFormData = (): RecordItem => ({
 });
 let form = ref<RecordItem>(initFormData());
 let loading = ref<boolean>(false);
-let cates = ref([]);
+let cates = ref<CateResult[]>([]);
 let typeList = ref<TypeRecord[]>([]);
 let androidTags = ref([]);
 let iosTags = ref([]);
@@ -233,8 +230,6 @@ let iosTags = ref([]);
 let rules = computed(() => {
   let r: Record<string, Rule[]> = {
     tabMaps: [{ required: true }],
-    url: [{ required: true }],
-    func_type: [{ required: true }],
   };
   if (form.value.config_type == 1) {
     r.user_nick = [{ required: true }];
@@ -256,10 +251,10 @@ let rules = computed(() => {
   if (form.value.func_type == 1) {
     r.puzzle_name = [{ required: true }];
     r.puzzle_use_number = [{ required: true }];
-    r.puzzle_background_color = [{ required: true }];
-    r.puzzle_img = [{ required: true }];
-    r.puzzle_special_effects_img = [{ required: true }];
-    r.puzzle_params = [{ required: true }];
+    r.puzzle_background_color = [{ required: true, trigger: "change" }];
+    r.puzzle_img = [{ required: true, trigger: "change" }];
+    // r.puzzle_special_effects_img = [{ required: true }];
+    r.puzzle_params = [{ required: true, trigger: "change" }];
   }
   return r;
 });
@@ -320,8 +315,7 @@ let fetchCate = async () => {
 };
 let fetchTypes = async () => {
   let { list } = await types();
-  list = list.map((item: TypeRecord) => ({ value: item.id, label: item.name + "=>" + item.type_text }));
-  typeList.value = list;
+  typeList.value = list.map((item: TypeRecord) => ({ ...item, name: item.name + "=>" + item.type_text }));
 };
 let fetchTags = async (camera_tag_type_id: number) => {
   let { android_tags, ios_tags } = await typeTags({ camera_tag_type_id });
@@ -329,8 +323,8 @@ let fetchTags = async (camera_tag_type_id: number) => {
   iosTags.value = ios_tags;
 };
 
-let filterOption = (input: string, option: { label: string }) => {
-  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+let filterOption = (input: string, option: any) => {
+  return option.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
 let onSelectTag = (value: number) => {
@@ -371,10 +365,18 @@ let onFinish = async () => {
       button_img = [],
       puzzle_special_effects_img = [],
       puzzle_params,
+      android_camera_tag_id,
+      ios_camera_tag_id,
+      camera_tag_name,
+      camera_tag_desc,
       func_type,
     } = form.value;
     p.id = id.value || 0;
     p.state = state;
+    p.android_camera_tag_id = android_camera_tag_id;
+    p.ios_camera_tag_id = ios_camera_tag_id;
+    p.camera_tag_name = camera_tag_name;
+    p.camera_tag_desc = camera_tag_desc;
     p.type = type;
     p.is_qualify = is_qualify;
     p.user_nick = user_nick;
@@ -499,6 +501,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .edit-container {
-  padding: 40px 20px;
+  padding: 40px 6px;
 }
 </style>

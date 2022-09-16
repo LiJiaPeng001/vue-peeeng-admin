@@ -7,13 +7,23 @@
       :data-source="list"
       :columns="columns"
       :pagination="{ current: payload.page, pageSize: payload.limit, total: count, pageSizeOptions: ['12', '15', '20'] }"
+      :scroll="{ x: 1000 }"
       @change="onChange"
     >
-      <template #bodyCell="{ column, record }">
+      <template #bodyCell="{ column, text, record }">
+        <template v-if="column.key === 'cameraTagIcon'">
+          <my-image :width="50" :height="50" :url="record.camera_tag_data.icon_url"></my-image>
+        </template>
+        <template v-if="column.key === 'cameraTagName'">
+          {{ record.camera_tag_data.name ? record.camera_tag_data.name : "-" }}
+        </template>
+        <template v-if="column.key === 'camera_tag_tab_name'"> {{ text }} {{ record.camera_tag_child_tab_name ? `- ${record.camera_tag_child_tab_name}` : "" }} </template>
         <template v-if="column.key === 'action'">
           <div class="btn-action">
             <span class="primary" @click="toEdit(record)">编辑</span>
-            <span class="danger" @click="remove(record)">删除</span>
+            <a-popconfirm title="您确定要删除嘛?" ok-text="是" cancel-text="否" @confirm="remove(record)">
+              <span class="danger">删除</span>
+            </a-popconfirm>
           </div>
         </template>
       </template>
@@ -22,10 +32,10 @@
 </template>
 
 <script lang="ts" setup>
-import { Modal, message } from "ant-design-vue";
+import { message } from "ant-design-vue";
 import Search from "./search.vue";
 import * as Api from "~/api/ptk";
-import { RecordItem } from "#/api/ptk";
+import { RecordItem, CateResult } from "#/api/ptk";
 
 let route = useRoute();
 
@@ -44,7 +54,7 @@ let payload = ref({
 
 let count = ref(0);
 let list = ref<RecordItem[]>([]);
-let cates = ref([]);
+let cates = ref<CateResult[]>([]);
 let go = useGo();
 let loading = ref(false);
 
@@ -52,52 +62,72 @@ let columns = ref([
   {
     title: "编号",
     dataIndex: "id",
+    fixed: "left",
+    width: 100,
   },
   {
-    title: "归属分类",
+    title: "热门分类",
+    key: "camera_tag_tab_name",
     dataIndex: "camera_tag_tab_name",
-  },
-  {
-    title: "归属子分类",
-    dataIndex: "camera_tag_child_tab_name",
+    // width: 150,
   },
   {
     title: "类型",
     dataIndex: "type_text",
+    // width: 80,
+  },
+  {
+    title: "贴纸icon",
+    key: "cameraTagIcon",
+  },
+  {
+    title: "贴纸名",
+    key: "cameraTagName",
+  },
+  {
+    title: "沉浸标题",
+    dataIndex: "camera_tag_name",
+    // width: 80,
   },
   {
     title: "功能类型",
     dataIndex: "func_type_text",
+    // width: 140,
   },
-  {
-    title: "贴纸展示名",
-    dataIndex: "camera_tag_name",
-  },
-  {
-    title: "内容类型",
-    dataIndex: "content_type_text",
-  },
+  // {
+  //   title: "内容类型",
+  //   dataIndex: "content_type_text",
+  //   // width: 140,
+  // },
   {
     title: "权重",
     dataIndex: "sort",
+    // width: 80,
   },
   {
     title: "热门权重",
     dataIndex: "hot_sort",
+    // width: 140,
   },
   {
     title: "状态",
     dataIndex: "state_text",
+    // width: 80,
   },
   {
     title: "操作",
     key: "action",
+    fixed: "right",
+    width: 100,
   },
 ]);
 
 let fetchList = async () => {
   loading.value = true;
-  let d = await Api.list(payload.value);
+  let d = await Api.list(payload.value).catch(() => {
+    loading.value = false;
+    return Promise.reject();
+  });
   loading.value = false;
   count.value = d.count;
   list.value = d.list;
@@ -124,17 +154,11 @@ let toEdit = (record: RecordItem) => {
     },
   });
 };
-let remove = (record: RecordItem) => {
+let remove = async (record: RecordItem) => {
   let { id = 0 } = record;
-  Modal.confirm({
-    title: "删除",
-    content: "您确定要删除嘛?",
-    async onOk() {
-      await Api.remove({ ids: [id] });
-      message.success("删除成功");
-      fetchList();
-    },
-  });
+  await Api.remove({ ids: [id] });
+  message.success("删除成功");
+  fetchList();
 };
 </script>
 

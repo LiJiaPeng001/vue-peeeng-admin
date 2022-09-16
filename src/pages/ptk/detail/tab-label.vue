@@ -15,7 +15,7 @@
       <a-button :disabled="formState.name === '' || formState.url === ''" type="primary" html-type="submit">添加</a-button>
     </a-form-item>
   </a-form>
-  <a-table :data-source="value" :columns="columns">
+  <a-table :data-source="value" :columns="columns" :scroll="{ x: true }">
     <template #bodyCell="{ column, record, index }">
       <template v-if="column.dataIndex === 'open_type'">
         {{ linkMaps[record.open_type as MapKey] }}
@@ -55,19 +55,22 @@ const columns = [
   {
     title: "标签名",
     dataIndex: "name",
+    minWidth: 100,
   },
   {
     title: "跳转地址",
     dataIndex: "url",
-    width: 300,
+    minWidth: 100,
   },
   {
     title: "跳转方式",
     dataIndex: "open_type",
+    minWidth: 100,
   },
   {
     title: "操作",
     dataIndex: "action",
+    minWidth: 100,
   },
 ];
 

@@ -1,17 +1,17 @@
 <template>
   <img
-    v-if="src"
+    v-if="url"
     :class="`${type || 'cover'} my-image`"
-    :src="src"
+    :src="url"
     :style="{ width: width + 'px', height: height + 'px' }"
     alt=""
-    @click="photoSwiper({ dataSource: [{ src }] })"
+    @click="photoSwiper({ dataSource: [{ url }] })"
   />
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-  src: string;
+  url: string;
   width?: number;
   height?: number;
   type?: string;

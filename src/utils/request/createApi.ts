@@ -29,19 +29,18 @@ export default ({
     for (let i = 0; i < maxCount + 1; i++) {
       try {
         let userStore = user();
-        let router = useRouter();
         // 更新本地token
         const { data, headers } = await instence(requestOptions);
         let { authorization = "" } = headers;
         const auth = useAuth();
         let { name } = auth.value;
-        auth.value = { token: authorization, name };
+        auth.value = { token: authorization || auth.value.token, name };
         // success code
         if (data.code === 0) return data.data;
         // 重新登录
         if (data.code === 401 || data.code === 419) {
           await userStore.logout();
-          router.replace("/login");
+          window.location.reload();
         }
         // 报错提醒
         if (shouldToast) toast.error(data.msg);

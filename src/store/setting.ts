@@ -28,7 +28,7 @@ export default defineStore("setting", {
         this.collapsed = false;
       } else {
         this.mode = "mobile";
-        this.collapsed = false;
+        this.collapsed = true;
       }
     },
     refreshPage(path: string) {

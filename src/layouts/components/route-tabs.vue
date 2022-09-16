@@ -101,6 +101,8 @@ let removeTab = function (state: number) {
 
 <style lang="less" scoped>
 .layout-tabs {
+  position: sticky;
+  top: 0;
   .tabs-box {
     flex-grow: 1;
     overflow-x: auto;

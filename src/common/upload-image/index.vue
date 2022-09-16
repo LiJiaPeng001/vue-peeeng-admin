@@ -4,7 +4,7 @@
       v-for="(it, i) in value"
       :key="it.url"
       draggable="true"
-      class="image cover"
+      class="image cover fadeIn"
       :style="{ backgroundImage: `url(${it.url})` }"
       @dragover.prevent
       @dragstart="dragstart($event, i)"
@@ -100,6 +100,7 @@ const remove = (i: number) => {
 const preview = (index: number) => {
   let { value } = props;
   if (isVideo.value) return window.open(value[index].url);
+  console.log(value, "value");
   photoSwiper({
     dataSource: value,
     index,

@@ -1,10 +1,9 @@
-export interface StcikersRecord {
-  id: number;
-  img_list: string[];
-  desc: string;
-}
-
-export interface Login {
+export interface LoginPayload {
   username: string;
   password: string;
+}
+
+export interface UserInfo {
+  token?: string;
+  name: string;
 }

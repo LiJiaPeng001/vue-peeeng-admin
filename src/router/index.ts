@@ -26,6 +26,10 @@ function changeChildRoutes(routes: RouteRecordRaw[]) {
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [...constantRoutes, ...changeChildRoutes(dynamicRoutes)],
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) return savedPosition;
+    return { top: 0 };
+  },
 });
 
 router.beforeEach((to, from, next) => {

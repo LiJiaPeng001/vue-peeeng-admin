@@ -2,10 +2,13 @@
   <div class="search-form">
     <a-form :model="form" name="horizontal_login" layout="inline" autocomplete="off" @finish="onFinish">
       <a-form-item label="Id" name="id">
-        <a-input v-model:value="form.id" placeholder="请输入作品id"> </a-input>
+        <a-input-number v-model:value="form.id" style="min-width: 140px" placeholder="请输入作品id"> </a-input-number>
       </a-form-item>
       <a-form-item label="贴纸名" name="camera_tag_name">
         <a-input v-model:value="form.camera_tag_name" placeholder="请输入贴纸名"> </a-input>
+      </a-form-item>
+      <a-form-item label="沉浸标题" name="camera_tag_show_name">
+        <a-input v-model:value="form.camera_tag_show_name" placeholder="请输入沉浸标题"> </a-input>
       </a-form-item>
       <a-form-item label="热门分类">
         <a-cascader
@@ -78,6 +81,7 @@ const clear = () => {
     camera_tag_state: -1,
     camera_tag_tab_id: 0,
     camera_tag_child_tab_id: 0,
+    camera_tag_show_name: "",
     id: "",
     state: -1,
     limit: 12,

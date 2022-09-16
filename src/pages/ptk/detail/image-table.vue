@@ -23,22 +23,22 @@
     </a-form-item>
   </a-form>
   <a-table :data-source="value" :columns="columns">
-    <template #bodyCell="{ column, index }">
-      <!-- <template v-if="['x', 'y', 'w', 'h', 'angle', 'fillet_angle'].includes(column.dataIndex)">
+    <template #bodyCell="{ column, index, text, record }">
+      <template v-if="['x', 'y', 'w', 'h', 'angle', 'fillet_angle'].includes(column.dataIndex)">
         <div>
-          <a-input v-if="editData.id == record.id" v-model:value="editData[column.dataIndex as AngleKey]" />
+          <a-input-number v-if="index == editCurrent" v-model:value="editData[column.dataIndex as AngleKey]" />
           <template v-else>
             {{ text }}
           </template>
         </div>
-      </template> -->
+      </template>
       <template v-if="column.dataIndex === 'action'">
-        <!-- <div v-if="editData.id == record.id" class="btn-action">
-          <span class="primary" @click="save">保存</span>
+        <div v-if="index == editCurrent" class="btn-action">
+          <span class="primary" @click="save(index)">保存</span>
           <span class="danger" @click="cancel">取消</span>
-        </div> -->
-        <div class="btn-action">
-          <!-- <span class="primary" @click="edit(record)">编辑</span> -->
+        </div>
+        <div v-else class="btn-action">
+          <span class="primary" @click="edit(record, index)">编辑</span>
           <span class="danger" @click="remove(index)">删除</span>
         </div>
       </template>
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AngleRecord } from "../ptk";
+import { AngleRecord, AngleKey } from "../ptk";
 
 const props = defineProps<{
   value: AngleRecord[];
@@ -65,7 +65,8 @@ let formState = ref<AngleRecord>({
   angle: 0,
   fillet_angle: 0,
 });
-// let editData = ref<AngleRecord>({});
+let editData = ref<AngleRecord>({});
+let editCurrent = ref<number>();
 
 const columns = [
   {
@@ -100,19 +101,21 @@ const columns = [
   },
 ];
 
-// const edit = (record: AngleRecord) => {
-//   editData.value = { ...record };
-// };
-// const save = () => {
-//   let p = [...props.value];
-//   let current = p.findIndex(item => item.id == editData.value.id) as number;
-//   p[current] = editData.value;
-//   emits("update:value", p);
-//   cancel();
-// };
-// const cancel = () => {
-//   editData.value = {};
-// };
+const edit = (record: AngleRecord, index: number) => {
+  editData.value = { ...record };
+  editCurrent.value = index;
+};
+const save = (current: number) => {
+  let p = [...props.value];
+  p[current] = editData.value;
+  editCurrent.value = undefined;
+  emits("update:value", p);
+  cancel();
+};
+const cancel = () => {
+  editData.value = {};
+  editCurrent.value = undefined;
+};
 
 const remove = (index: number) => {
   emits(
