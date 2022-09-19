@@ -56,9 +56,12 @@ let permissionStore = permission();
 let route = useRoute();
 let go = useGo();
 
-let currentRoute = route.path === "/dashboard" ? [] : [{ ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
-settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
-if (!settingStore.cacheTabs.length) settingStore.cacheTabs = currentRoute;
+watchEffect(() => {
+  settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
+  if (route.path !== "/dashboard" && !settingStore.cacheTabs.some(item => item.path == route.fullPath)) {
+    settingStore.cacheTabs = [...settingStore.cacheTabs, { ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
+  }
+});
 
 let activeKey = computed(() => {
   return route.fullPath;

@@ -35,16 +35,16 @@
 import { message } from "ant-design-vue";
 import Search from "./search.vue";
 import * as Api from "~/api/ptk";
-import { RecordItem, CateResult } from "#/api/ptk";
+import { RecordItem, CateResult, SearchPayload } from "#/api/ptk";
 
 let route = useRoute();
 
 let { page = 1, state = -1, limit = 12, camera_tag_name = "", camera_tag_tab_id = 0, camera_tag_child_tab_id = 0, id = "", camera_tag_state = -1 } = route.query;
 
-let payload = ref({
+let payload = ref<SearchPayload>({
   page: Number(page),
   limit: Number(limit),
-  id: String(id),
+  id: id ? Number(id) : String(id),
   state: Number(state),
   camera_tag_tab_id: Number(camera_tag_tab_id),
   camera_tag_child_tab_id: Number(camera_tag_child_tab_id),
