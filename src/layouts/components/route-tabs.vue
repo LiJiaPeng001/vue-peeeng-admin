@@ -77,9 +77,9 @@ let edit = function (path: string) {
   go("/dashboard");
 };
 let refreshPage = async function () {
-  settingStore.refreshPage(route.path);
+  settingStore.refreshName = route.name as string;
   await nextTick();
-  settingStore.refreshPage("");
+  settingStore.refreshName = "";
 };
 let removeTab = function (state: number) {
   let { cacheTabs = [] } = settingStore;

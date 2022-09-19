@@ -13,6 +13,6 @@ export interface SettingState {
   cacheTabs: RouteRecordRaw[];
   openKeys: Array<string>;
   mode: "pc" | "mobile";
-  refreshPath: string;
+  refreshName: string;
   defaultTabs: RouteRecordRaw[];
 }

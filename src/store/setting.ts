@@ -10,7 +10,7 @@ export default defineStore("setting", {
       cacheTabs: [], // cacheTabs
       defaultTabs: [],
       openKeys: [],
-      refreshPath: "",
+      refreshName: "",
     };
   },
   getters: {
@@ -30,9 +30,6 @@ export default defineStore("setting", {
         this.mode = "mobile";
         this.collapsed = true;
       }
-    },
-    refreshPage(path: string) {
-      this.refreshPath = path;
     },
   },
 });
