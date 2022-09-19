@@ -1,49 +1,51 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
-  <div class="layout-tabs middle-flex">
-    <!-- tabs -->
-    <div class="tabs-box">
-      <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
-        <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
-        <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
-      </a-tabs>
+  <a-affix :offset-top="64">
+    <div class="layout-tabs middle-flex">
+      <!-- tabs -->
+      <div class="tabs-box">
+        <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
+          <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
+          <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
+        </a-tabs>
+      </div>
+      <!-- action-btn -->
+      <div class="extra-btns middle-flex">
+        <span style="margin-right: 4px" @click="refreshPage"><RedoOutlined /></span>
+        <a-dropdown trigger="click">
+          <span><DownOutlined /></span>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item @click="refreshPage">
+                <RedoOutlined />
+                <span style="margin-left: 6px">重新加载</span>
+              </a-menu-item>
+              <a-menu-item @click="removeTab(1)">
+                <CloseOutlined />
+                <span style="margin-left: 6px">关闭标签页</span>
+              </a-menu-item>
+              <a-menu-item @click="removeTab(2)">
+                <VerticalRightOutlined />
+                <span style="margin-left: 6px">关闭左侧标签</span>
+              </a-menu-item>
+              <a-menu-item @click="removeTab(3)">
+                <VerticalLeftOutlined />
+                <span style="margin-left: 6px">关闭右侧标签</span>
+              </a-menu-item>
+              <a-menu-item @click="removeTab(5)">
+                <PicCenterOutlined />
+                <span style="margin-left: 6px">关闭其他标签</span>
+              </a-menu-item>
+              <a-menu-item @click="removeTab(4)">
+                <MinusOutlined />
+                <span style="margin-left: 6px">关闭所有标签</span>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
     </div>
-    <!-- action-btn -->
-    <div class="extra-btns middle-flex">
-      <span style="margin-right: 4px" @click="refreshPage"><RedoOutlined /></span>
-      <a-dropdown trigger="click">
-        <span><DownOutlined /></span>
-        <template #overlay>
-          <a-menu>
-            <a-menu-item @click="refreshPage">
-              <RedoOutlined />
-              <span style="margin-left: 6px">重新加载</span>
-            </a-menu-item>
-            <a-menu-item @click="removeTab(1)">
-              <CloseOutlined />
-              <span style="margin-left: 6px">关闭标签页</span>
-            </a-menu-item>
-            <a-menu-item @click="removeTab(2)">
-              <VerticalRightOutlined />
-              <span style="margin-left: 6px">关闭左侧标签</span>
-            </a-menu-item>
-            <a-menu-item @click="removeTab(3)">
-              <VerticalLeftOutlined />
-              <span style="margin-left: 6px">关闭右侧标签</span>
-            </a-menu-item>
-            <a-menu-item @click="removeTab(5)">
-              <PicCenterOutlined />
-              <span style="margin-left: 6px">关闭其他标签</span>
-            </a-menu-item>
-            <a-menu-item @click="removeTab(4)">
-              <MinusOutlined />
-              <span style="margin-left: 6px">关闭所有标签</span>
-            </a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
-    </div>
-  </div>
+  </a-affix>
 </template>
 <script lang="ts" setup>
 import { RedoOutlined, DownOutlined, CloseOutlined, VerticalLeftOutlined, VerticalRightOutlined, MinusOutlined, PicCenterOutlined } from "@ant-design/icons-vue";
@@ -104,8 +106,8 @@ let removeTab = function (state: number) {
 
 <style lang="less" scoped>
 .layout-tabs {
-  position: sticky;
-  top: 0;
+  padding: 10px 12px;
+  background-color: #f6f6f6;
   .tabs-box {
     flex-grow: 1;
     overflow-x: auto;
@@ -135,7 +137,6 @@ let removeTab = function (state: number) {
 
 <style lang="less">
 .layout-tabs {
-  margin-bottom: 12px;
   .ant-tabs-nav {
     margin: 0;
   }

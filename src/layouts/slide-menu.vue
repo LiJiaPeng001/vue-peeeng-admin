@@ -80,6 +80,8 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .slide-menu {
+  position: relative;
+  z-index: 99;
   .slide-blank {
     height: 100%;
     flex-shrink: 0;
