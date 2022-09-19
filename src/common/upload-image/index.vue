@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { getFileUrl } from "~/utils/upload/index";
-import { UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons-vue";
+import { UploadOutlined, EyeOutlined } from "@ant-design/icons-vue";
 
 const props = withDefaults(
   defineProps<{

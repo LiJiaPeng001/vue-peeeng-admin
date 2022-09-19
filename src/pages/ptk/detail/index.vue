@@ -173,7 +173,7 @@ import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
 import { linkMaps } from "~/utils/utils";
 import { detail, cates as cateList, types, typeTags, edit } from "~/api/ptk";
-import { RecordItem, TypeRecord, CateResult } from "#/api/ptk";
+import { RecordItem, TagTypeRecord, CateResult } from "#/api/ptk";
 import { upload } from "~/api/upload";
 import getSize from "~/utils/getImage";
 import TagTable from "./tag-table.vue";
@@ -223,7 +223,7 @@ let initFormData = (): RecordItem => ({
 let form = ref<RecordItem>(initFormData());
 let loading = ref<boolean>(false);
 let cates = ref<CateResult[]>([]);
-let typeList = ref<TypeRecord[]>([]);
+let typeList = ref<TagTypeRecord[]>([]);
 let androidTags = ref([]);
 let iosTags = ref([]);
 
@@ -315,7 +315,7 @@ let fetchCate = async () => {
 };
 let fetchTypes = async () => {
   let { list } = await types();
-  typeList.value = list.map((item: TypeRecord) => ({ ...item, name: item.name + "=>" + item.type_text }));
+  typeList.value = list.map((item: TagTypeRecord) => ({ ...item, name: item.name + "=>" + item.type_text }));
 };
 let fetchTags = async (camera_tag_type_id: number) => {
   let { android_tags, ios_tags } = await typeTags({ camera_tag_type_id });

@@ -4,7 +4,7 @@ export interface ObjectMaps {
 
 export type MapKey = keyof ObjectMaps;
 
-export const stateMaps = {
+export const stateMaps: ObjectMaps = {
   "-1": "全部",
   0: "下架",
   1: "上架",
