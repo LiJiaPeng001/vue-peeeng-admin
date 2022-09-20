@@ -11,6 +11,9 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, text, record }">
+        <template v-if="column.key === 'name'">
+          {{ text ? text : "-" }}
+        </template>
         <template v-if="column.key === 'show_type'">
           {{ text == 0 ? "文字" : "图标" }}
         </template>
@@ -63,6 +66,7 @@ let columns = ref([
   {
     title: "名称",
     dataIndex: "name",
+    key: "name",
   },
   {
     title: "状态",

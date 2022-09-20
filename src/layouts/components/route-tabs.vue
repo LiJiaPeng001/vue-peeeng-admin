@@ -56,14 +56,18 @@ import { getRouteItem } from "~/utils/router";
 let settingStore = setting();
 let permissionStore = permission();
 let route = useRoute();
+let router = useRouter();
 let go = useGo();
 
-watchEffect(() => {
+let onChangePageAddRoute = () => {
   settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
   if (route.path !== "/dashboard" && !settingStore.cacheTabs.some(item => item.path == route.fullPath)) {
     settingStore.cacheTabs = [...settingStore.cacheTabs, { ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
   }
-});
+};
+onChangePageAddRoute();
+
+router.afterEach(onChangePageAddRoute);
 
 let activeKey = computed(() => {
   return route.fullPath;
