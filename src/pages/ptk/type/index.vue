@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Search v-model:payload="payload" @ok="fetchList" />
-    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0 })">添加</a-button>
+    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit">添加</a-button>
     <a-table
       :loading="loading"
       :data-source="list"
       :columns="columns"
       :pagination="{ current: payload.page, pageSize: payload.limit, total: count, pageSizeOptions: ['12', '15', '20'] }"
-      :scroll="{ x: 1000 }"
+      :scroll="{ x: 800 }"
       @change="onChange"
     >
       <template #bodyCell="{ column, text, record }">
@@ -103,7 +103,7 @@ let toEdit = (record: TypeRecord) => {
   go({
     path: "/ptk/type/detail",
     query: {
-      id: record.id,
+      id: record.id || 0,
     },
   });
 };

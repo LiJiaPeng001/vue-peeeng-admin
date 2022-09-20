@@ -1,6 +1,6 @@
 <template>
   <div class="search-form">
-    <a-form :model="form" name="horizontal_login" layout="inline" autocomplete="off" @finish="onFinish">
+    <a-form :model="form" layout="inline" @finish="onFinish">
       <a-form-item label="Id" name="id">
         <a-input-number v-model:value="form.id" style="min-width: 140px" placeholder="请输入作品id"> </a-input-number>
       </a-form-item>

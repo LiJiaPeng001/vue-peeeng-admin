@@ -7,7 +7,6 @@ enum Api {
   detail = "/api/camera_tag_tabs/detail",
   edit = "/api/camera_tag_tabs/save",
   communityTags = "/api/get_camera_tag_community_types",
-  tags = "/api/get_gathers",
   typeTags = "/api/get_camera_tag_type_labels",
 }
 export function list(data: TypePayload): Promise<RequestRecord<TypeRecord>> {
@@ -34,12 +33,6 @@ export function edit(data: TypeRecord): Promise<void> {
 export function communityTags(): Promise<RequestRecord<TagRecord>> {
   return request({
     url: Api.communityTags,
-    method: "post",
-  });
-}
-export function tags(): Promise<RequestRecord<TagRecord>> {
-  return request({
-    url: Api.tags,
     method: "post",
   });
 }

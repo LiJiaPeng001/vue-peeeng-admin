@@ -45,6 +45,14 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/ptk/type/detail/index.vue"),
       },
+      {
+        path: "/ptk/tagGather",
+        name: "PtkTagGather",
+        meta: {
+          title: "标签集合",
+        },
+        component: () => import("~/pages/ptk/tagGather/index.vue"),
+      },
     ],
   },
 ];
