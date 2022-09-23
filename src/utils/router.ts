@@ -55,3 +55,23 @@ export function getOpenKeys(path = "") {
   deepKeys(filterKeys);
   settingStore.openKeys = keys;
 }
+/**
+ * @desc 获取当前路由的父级
+ * @param name string
+ */
+export function getRawOptionRoutes(path?: string): RouteRecordRaw[] {
+  if (!path) {
+    let route = useRoute();
+    console.log(useRoute, "route");
+    path = route.path as string;
+  }
+  let permissionStore = permission();
+  const flat = (list: RouteRecordRaw[]): RouteRecordRaw[] => {
+    return list.reduce((all, item: RouteRecordRaw) => {
+      all.push(item);
+      if (item.children && item.children.length) all.push(...flat(item.children));
+      return all;
+    }, [] as RouteRecordRaw[]);
+  };
+  return flat(getPermissionRoutes(permissionStore.currentRoutes, path));
+}

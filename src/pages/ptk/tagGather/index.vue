@@ -106,14 +106,14 @@ let onFinish = async () => {
     editLoading.value = false;
     return Promise.reject();
   });
-  message.success("编辑成功");
+  message.success("保存成功");
   editLoading.value = false;
   visible.value = false;
   fetchList();
 };
 let remove = async (record: TagRecord) => {
   await Api.remove({ id: record.id });
-  message.success("删除成功");
+  message.success("已删除");
   fetchList();
 };
 </script>

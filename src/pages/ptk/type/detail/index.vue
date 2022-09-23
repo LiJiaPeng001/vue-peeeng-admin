@@ -1,70 +1,82 @@
 <template>
   <div class="edit-container">
-    <a-form :scroll-to-first-error="{ block: 'center' }" :rules="rules" :model="form" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 12 }" @finish="onFinish">
-      <a-form-item label="状态" name="state">
-        <a-switch v-model:checked="form.state" checked-children="上架" un-checked-children="下架" />
-      </a-form-item>
-      <a-form-item label="内容类型" name="show_type">
-        <a-radio-group v-model:value="form.show_type">
-          <a-radio :value="0">文字</a-radio>
-          <a-radio :value="1">图标</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item v-if="form.show_type == 0" label="名称" name="name">
-        <a-input v-model:value="form.name" placeholder="请输入展示名称"> </a-input>
-      </a-form-item>
-      <a-form-item v-if="form.show_type == 1" label="图标" name="icons">
-        <upload-image v-model:value="form.icons"></upload-image>
-      </a-form-item>
-      <a-form-item label="列表展示类型" name="list_show_type">
-        <a-radio-group v-model:value="form.list_show_type">
-          <a-radio :value="0">瀑布流</a-radio>
-          <a-radio :value="1">合集</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item label="社区贴纸类型" name="community_camera_tag_type_ids">
-        <a-checkbox-group v-model:value="form.community_camera_tag_type_ids" :options="communityTags.map(item => ({ label: item.name, value: item.id }))" name="checkboxgroup" />
-      </a-form-item>
-      <a-form-item label="标签集合" name="gather_ids">
-        <a-checkbox-group v-model:value="form.gather_ids" :options="tags.map(item => ({ label: item.name, value: item.id }))" name="checkboxgroup" />
-      </a-form-item>
-      <a-form-item label="选择标签" name="label_ids">
-        <tag-type v-model:value="form.label_ids" :tags="typeTags"></tag-type>
-      </a-form-item>
-      <a-form-item label="是否展示拍同款" name="is_show">
-        <a-switch v-model:checked="form.is_show" checked-children="是" un-checked-children="否" />
-      </a-form-item>
-      <a-form-item label="是否隐藏分栏" name="is_hidden_child">
-        <a-switch v-model:checked="form.is_hidden_child" checked-children="是" un-checked-children="否" />
-      </a-form-item>
-      <a-form-item label="是否开启Lite多贴纸" name="is_enable_lite_list">
-        <a-switch v-model:checked="form.is_enable_lite_list" checked-children="是" un-checked-children="否" />
-      </a-form-item>
-      <a-form-item label="是否展示全部栏目" name="is_show_all">
-        <a-switch v-model:checked="form.is_show_all" checked-children="是" un-checked-children="否" />
-      </a-form-item>
-      <a-form-item label="权重" name="sort">
-        <a-input-number v-model:value="form.sort" placeholder="请输入权重"> </a-input-number>
-      </a-form-item>
-      <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 4 } }">
-        <a-button :loading="loading" type="primary" html-type="submit" style="margin-right: 6px">保存</a-button>
-        <a-button @click="router.back()">返回</a-button>
-      </a-form-item>
-    </a-form>
+    <a-tabs v-model:activeKey="activeKey">
+      <a-tab-pane :key="1" tab="基本信息">
+        <a-form :scroll-to-first-error="{ block: 'center' }" :rules="rules" :model="form" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 12 }" @finish="onFinish">
+          <a-form-item label="状态" name="state">
+            <a-switch v-model:checked="form.state" checked-children="上架" un-checked-children="下架" />
+          </a-form-item>
+          <a-form-item label="内容类型" name="show_type">
+            <a-radio-group v-model:value="form.show_type">
+              <a-radio :value="0">文字</a-radio>
+              <a-radio :value="1">图标</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item v-if="form.show_type == 0" label="名称" name="name">
+            <a-input v-model:value="form.name" placeholder="请输入展示名称"> </a-input>
+          </a-form-item>
+          <a-form-item v-if="form.show_type == 1" label="图标" name="icons">
+            <upload-image v-model:value="form.icons"></upload-image>
+          </a-form-item>
+          <a-form-item label="列表展示类型" name="list_show_type">
+            <a-radio-group v-model:value="form.list_show_type">
+              <a-radio :value="0">瀑布流</a-radio>
+              <a-radio :value="1">合集</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item label="社区贴纸类型" name="community_camera_tag_type_ids">
+            <a-checkbox-group
+              v-model:value="form.community_camera_tag_type_ids"
+              :options="communityTags.map(item => ({ label: item.name, value: item.id }))"
+              name="checkboxgroup"
+            />
+          </a-form-item>
+          <a-form-item label="标签集合" name="gather_ids">
+            <a-checkbox-group v-model:value="form.gather_ids" :options="tags.map(item => ({ label: item.name, value: item.id }))" name="checkboxgroup" />
+          </a-form-item>
+          <a-form-item label="选择标签" name="label_ids">
+            <tag-type v-model:value="form.label_ids" :tags="typeTags"></tag-type>
+          </a-form-item>
+          <a-form-item label="是否展示拍同款" name="is_show">
+            <a-switch v-model:checked="form.is_show" checked-children="是" un-checked-children="否" />
+          </a-form-item>
+          <a-form-item label="是否隐藏分栏" name="is_hidden_child">
+            <a-switch v-model:checked="form.is_hidden_child" checked-children="是" un-checked-children="否" />
+          </a-form-item>
+          <a-form-item label="是否开启Lite多贴纸" name="is_enable_lite_list">
+            <a-switch v-model:checked="form.is_enable_lite_list" checked-children="是" un-checked-children="否" />
+          </a-form-item>
+          <a-form-item label="是否展示全部栏目" name="is_show_all">
+            <a-switch v-model:checked="form.is_show_all" checked-children="是" un-checked-children="否" />
+          </a-form-item>
+          <a-form-item label="权重" name="sort">
+            <a-input-number v-model:value="form.sort" placeholder="请输入权重"> </a-input-number>
+          </a-form-item>
+          <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 4 } }">
+            <a-button :loading="loading" type="primary" html-type="submit" style="margin-right: 6px">保存</a-button>
+            <a-button @click="router.back()">返回</a-button>
+          </a-form-item>
+        </a-form>
+      </a-tab-pane>
+
+      <a-tab-pane :key="2" tab="子分类管理"><child-tab></child-tab> </a-tab-pane>
+    </a-tabs>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
+import { message } from "ant-design-vue";
 import { list as tagsList } from "~/api/ptkTagGather";
 import * as Api from "~/api/ptkType";
+import { upload } from "~/api/upload";
 import { TypeRecord, TagRecord } from "#/api/ptkType";
 import TagType from "./tag-type.vue";
-import { upload } from "~/api/upload";
-import { message } from "ant-design-vue";
+import ChildTab from "./child-tab.vue";
 
 let route = useRoute();
 let router = useRouter();
+let activeKey = ref<number>(1);
 let id = ref(Number(route.query.id || 0));
 let initFormData = (): TypeRecord => ({
   show_type: 0,
@@ -99,7 +111,7 @@ let fetchData = async () => {
   if (!id.value) return;
   let d = await Api.detail({ id: id.value });
   let { icon_url = "", icon = "", is_show = 0, is_hidden_child = 0, is_enable_lite_list = 0, is_show_all = 0 } = d;
-  d.icons = d.icon_url ? [{ url: d.icon_url, filename: d.icon }] : [];
+  d.icons = icon_url ? [{ url: icon_url, filename: icon }] : [];
   d.is_show = is_show ? true : false;
   d.is_hidden_child = is_hidden_child ? true : false;
   d.is_enable_lite_list = is_enable_lite_list ? true : false;
@@ -172,6 +184,7 @@ onActivated(() => {
     id.value = Number(route.query.id);
     form.value = initFormData();
     fetchData();
+    activeKey.value = 1;
   }
 });
 </script>
@@ -184,6 +197,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .edit-container {
-  padding: 40px 6px;
+  padding: 0 6px;
 }
 </style>

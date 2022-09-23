@@ -7,6 +7,9 @@
           <MenuUnfoldOutlined v-if="settingStore.collapsed" />
           <MenuFoldOutlined v-else />
         </a-button>
+        <a-breadcrumb v-if="settingStore.mode === 'pc'" style="margin-left: 10px">
+          <a-breadcrumb-item v-for="it in routeMached" :key="it.path">{{ it.meta?.title }}</a-breadcrumb-item>
+        </a-breadcrumb>
       </div>
       <a-popover>
         <template #content>
@@ -24,21 +27,30 @@
 </template>
 
 <script setup lang="ts">
+import { RouteRecordRaw } from "vue-router";
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons-vue";
 import setting from "~/store/setting";
 import user from "~/store/user";
 import Logo from "~/components/logo.vue";
+import { getRawOptionRoutes } from "~/utils/router";
 
 let settingStore = setting();
 let userStore = user();
+let router = useRouter();
+let route = useRoute();
+let routeMached = ref<RouteRecordRaw[]>(getRawOptionRoutes(route.path));
 
 let handleClick = () => {
   settingStore.collapsed = !settingStore.collapsed;
 };
+
 let logout = async () => {
   await userStore.logout();
   window.location.reload();
 };
+router.afterEach(() => {
+  routeMached.value = getRawOptionRoutes(route.path);
+});
 </script>
 
 <style lang="less" scoped>
