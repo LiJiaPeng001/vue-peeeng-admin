@@ -172,7 +172,7 @@
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
 import { linkMaps } from "~/utils/utils";
-import { detail, cates as cateList, types, typeTags, edit } from "~/api/ptk";
+import { detail, cates as cateList, types, typeTags, edit } from "~/api/ptk/index";
 import { RecordItem, TagTypeRecord, CateResult } from "#/api/ptk";
 import { upload } from "~/api/upload";
 import getSize from "~/utils/getImage";

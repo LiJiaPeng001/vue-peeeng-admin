@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-import * as Api from "~/api/pthChildTab";
+import * as Api from "~/api/pth/childTab";
 import { TypePayload, TypeRecord } from "#/api/ptkChildType";
 
 let route = useRoute();

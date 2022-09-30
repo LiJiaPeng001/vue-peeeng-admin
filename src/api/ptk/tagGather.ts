@@ -1,6 +1,6 @@
 import { TagRecord } from "#/api/ptkType";
 import { RequestRecord } from "#/api/index";
-import request from "../utils/request/index";
+import request from "~/utils/request/index";
 
 enum Api {
   list = "/api/get_gathers",

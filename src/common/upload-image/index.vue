@@ -29,7 +29,7 @@
     <!-- upload -->
     <div v-if="value.length < limit" class="image upload-item center-flex" @click="upload">
       <UploadOutlined></UploadOutlined>
-      <p>上传文件</p>
+      <p>上传（{{ value.length }}/{{ limit }}）</p>
     </div>
   </div>
   <a-badge style="margin-top: 6px" color="yellow" :text="`单文件限制${size}mb`" />
@@ -193,6 +193,7 @@ const changeCover = (i: number) => {
     color: #666;
     flex-direction: column;
     border: 1px dashed #d9d9d9;
+    padding-top: 12px;
     p {
       font-size: 14px;
       margin-top: 8px;

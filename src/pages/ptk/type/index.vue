@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 // import { message } from "ant-design-vue";
 import Search from "./search.vue";
-import * as Api from "~/api/ptkType";
+import * as Api from "~/api/ptk/type";
 import { TypePayload, TypeRecord } from "#/api/ptkType";
 
 let route = useRoute();

@@ -3,7 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     meta: {
       title: "登录",
     },

@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import { message } from "ant-design-vue";
 import Search from "./search.vue";
-import * as Api from "~/api/ptk";
+import * as Api from "~/api/ptk/index";
 import { RecordItem, CateResult, SearchPayload } from "#/api/ptk";
 
 let route = useRoute();

@@ -59,7 +59,7 @@
         </a-form>
       </a-tab-pane>
 
-      <a-tab-pane :key="2" tab="子分类管理"><child-tab></child-tab> </a-tab-pane>
+      <a-tab-pane v-if="id" :key="2" tab="子分类管理"><child-tab></child-tab> </a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -67,8 +67,8 @@
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-import { list as tagsList } from "~/api/ptkTagGather";
-import * as Api from "~/api/ptkType";
+import { list as tagsList } from "~/api/ptk/tagGather";
+import * as Api from "~/api/ptk/type";
 import { upload } from "~/api/upload";
 import { TypeRecord, TagRecord } from "#/api/ptkType";
 import TagType from "./tag-type.vue";

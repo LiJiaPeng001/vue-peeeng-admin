@@ -3,7 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/ptk",
-    name: "Ptk",
+    name: "ptk",
     meta: {
       title: "拍同款",
       icon: "CameraOutlined",
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "/ptk/list",
-        name: "PtkList",
+        name: "ptk-list",
         meta: {
           title: "作品列表",
         },
@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/detail",
-        name: "PtkDetail",
+        name: "ptk-detail",
         meta: {
           title: "作品编辑",
           hidden: true,
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/type",
-        name: "PtkType",
+        name: "ptk-type",
         meta: {
           title: "热门分类",
         },
@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/type/detail",
-        name: "PtkTypeDetail",
+        name: "ptk-type-detail",
         meta: {
           title: "分类编辑",
           hidden: true,
@@ -47,11 +47,19 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/tagGather",
-        name: "PtkTagGather",
+        name: "ptk-tag-gather",
         meta: {
           title: "标签集合",
         },
         component: () => import("~/pages/ptk/tagGather/index.vue"),
+      },
+      {
+        path: "/ptk/hotword",
+        name: "ptk-hotword",
+        meta: {
+          title: "搜索热词",
+        },
+        component: () => import("~/pages/ptk/hotword/index.vue"),
       },
     ],
   },

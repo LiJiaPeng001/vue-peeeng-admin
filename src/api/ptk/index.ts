@@ -1,6 +1,6 @@
 import { SearchPayload, RecordItem, TagTypeRecord, CateResult } from "#/api/ptk";
 import { RequestRecord } from "#/api/index";
-import request from "../utils/request/index";
+import request from "~/utils/request/index";
 
 enum Api {
   list = "/api/camera_tag_tab_content/list",

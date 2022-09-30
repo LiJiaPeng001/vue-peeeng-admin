@@ -33,8 +33,8 @@
 <script lang="ts" setup>
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
-import { typeTags as typeTagList } from "~/api/ptkType";
-import * as Api from "~/api/ptkTagGather";
+import { typeTags as typeTagList } from "~/api/ptk/type";
+import * as Api from "~/api/ptk/tagGather";
 import { TagRecord } from "#/api/ptkType";
 import TagType from "../type/detail/tag-type.vue";
 
