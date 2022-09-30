@@ -6,7 +6,7 @@
       :data-source="list"
       :columns="columns"
       :pagination="{ current: payload.page, pageSize: payload.limit, total: count, pageSizeOptions: ['12', '15', '20'] }"
-      :scroll="{ x: 800 }"
+      :scroll="{ x: 360 }"
       @change="onChange"
     >
     </a-table>
