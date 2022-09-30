@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-import * as Api from "~/api/pth/childTab";
+import * as Api from "~/api/ptk/childTab";
 import { TypePayload, TypeRecord } from "#/api/ptkChildType";
 
 let route = useRoute();
@@ -143,11 +143,5 @@ onActivated(() => {
     id.value = Number(route.query.id);
     list.value = [];
   }
-});
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: "PtkType",
 });
 </script>

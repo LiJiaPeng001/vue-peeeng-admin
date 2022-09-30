@@ -6,7 +6,7 @@ const mode = import.meta.env.MODE;
 let childrenRoutes: RouteRecordRaw[] = [
   {
     path: "/dashboard",
-    name: "dashboard",
+    name: "Dashboard",
     meta: {
       title: "工作台",
       icon: "HomeOutlined",
@@ -18,7 +18,7 @@ let childrenRoutes: RouteRecordRaw[] = [
 if (mode === "development") {
   childrenRoutes.push({
     path: "/test",
-    name: "test",
+    name: "Test",
     meta: {
       title: "Debugger",
       icon: "BugOutlined",
@@ -39,7 +39,7 @@ for (const key in files) {
 let routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "index",
+    name: "Index",
     redirect: "/dashboard",
     component: () => import("~/layouts/base-layout.vue"),
     children: childrenRoutes as RouteRecordRaw[],

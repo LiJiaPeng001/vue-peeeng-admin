@@ -64,6 +64,6 @@ fetchList();
 
 <script lang="ts">
 export default defineComponent({
-  name: "PtkType",
+  name: "PtkHotWord",
 });
 </script>

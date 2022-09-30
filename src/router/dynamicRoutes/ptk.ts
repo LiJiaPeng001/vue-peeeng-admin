@@ -3,7 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 const routes: RouteRecordRaw[] = [
   {
     path: "/ptk",
-    name: "ptk",
+    name: "Ptk",
     meta: {
       title: "拍同款",
       icon: "CameraOutlined",
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "/ptk/list",
-        name: "ptk-list",
+        name: "PtkList",
         meta: {
           title: "作品列表",
         },
@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/detail",
-        name: "ptk-detail",
+        name: "PtkDetail",
         meta: {
           title: "作品编辑",
           hidden: true,
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/type",
-        name: "ptk-type",
+        name: "PtkType",
         meta: {
           title: "热门分类",
         },
@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/type/detail",
-        name: "ptk-type-detail",
+        name: "PtkTypeDetail",
         meta: {
           title: "分类编辑",
           hidden: true,
@@ -47,7 +47,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/tagGather",
-        name: "ptk-tag-gather",
+        name: "PtkTagGather",
         meta: {
           title: "标签集合",
         },
@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "/ptk/hotword",
-        name: "ptk-hotword",
+        name: "PtkHotWord",
         meta: {
           title: "搜索热词",
         },
