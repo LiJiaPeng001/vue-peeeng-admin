@@ -82,8 +82,8 @@ let onDrop = (e: DragEvent, index: number) => {
 };
 
 const edit = async (i: number) => {
-  let { limit, accept, size } = props;
-  let value = await getFileUrl({ multiple: limit > 1 ? true : false, accept, size });
+  let { accept } = props;
+  let value = await getFileUrl({ size: 1, accept });
   let imgs = [...props.value];
   imgs.splice(i, 1, value[0]);
   emits("update:value", imgs);
@@ -100,7 +100,6 @@ const remove = (i: number) => {
 const preview = (index: number) => {
   let { value } = props;
   if (isVideo.value) return window.open(value[index].url);
-  console.log(value, "value");
   photoSwiper({
     dataSource: value,
     index,
@@ -109,7 +108,7 @@ const preview = (index: number) => {
 
 const upload = async () => {
   let { value, limit, accept, size } = props;
-  let images = await getFileUrl({ multiple: limit > 1 ? true : false, accept, size });
+  let images = await getFileUrl({ accept, size });
   if (value.length + images.length > limit) {
     images = images.slice(0, limit - value.length);
   }

@@ -34,9 +34,9 @@ export function getObjectURL(file: File): string {
   return url;
 }
 
-export async function getFileUrl(options: FileOptions = { multiple: false, accept: "image/*", size: 10 }) {
+export async function getFileUrl(options: FileOptions = { accept: "image/*", size: 10 }) {
   let { size = 10 } = options;
-  let files = await getFiles(options);
+  let files = await getFiles({ ...options, multiple: size > 1 ? true : false });
   let urls: any[] = [];
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
@@ -49,5 +49,6 @@ export async function getFileUrl(options: FileOptions = { multiple: false, accep
       file,
     });
   }
+  urls = urls.slice(0, size);
   return urls;
 }
