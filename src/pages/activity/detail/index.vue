@@ -1,190 +1,319 @@
 <template>
   <div class="edit-container">
-    <a-tabs v-model:activeKey="activeKey">
-      <a-tab-pane :key="1" tab="基本信息">
-        <a-form :scroll-to-first-error="{ block: 'center' }" :rules="rules" :model="form" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 12 }" @finish="onFinish">
-          <a-form-item label="状态" name="state">
-            <a-switch v-model:checked="form.state" checked-children="上架" un-checked-children="下架" />
-          </a-form-item>
-          <a-form-item label="内容类型" name="show_type">
-            <a-radio-group v-model:value="form.show_type">
-              <a-radio :value="0">文字</a-radio>
-              <a-radio :value="1">图标</a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item v-if="form.show_type == 0" label="名称" name="name">
-            <a-input v-model:value="form.name" placeholder="请输入展示名称"> </a-input>
-          </a-form-item>
-          <a-form-item v-if="form.show_type == 1" label="图标" name="icons">
-            <upload-image v-model:value="form.icons"></upload-image>
-          </a-form-item>
-          <a-form-item label="列表展示类型" name="list_show_type">
-            <a-radio-group v-model:value="form.list_show_type">
-              <a-radio :value="0">瀑布流</a-radio>
-              <a-radio :value="1">合集</a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item label="社区贴纸类型" name="community_camera_tag_type_ids">
-            <a-checkbox-group
-              v-model:value="form.community_camera_tag_type_ids"
-              :options="communityTags.map(item => ({ label: item.name, value: item.id }))"
-              name="checkboxgroup"
-            />
-          </a-form-item>
-          <a-form-item label="标签集合" name="gather_ids">
-            <a-checkbox-group v-model:value="form.gather_ids" :options="tags.map(item => ({ label: item.name, value: item.id }))" name="checkboxgroup" />
-          </a-form-item>
-          <a-form-item label="选择标签" name="label_ids">
-            <tag-type v-model:value="form.label_ids" :tags="typeTags"></tag-type>
-          </a-form-item>
-          <a-form-item label="是否展示拍同款" name="is_show">
-            <a-switch v-model:checked="form.is_show" checked-children="是" un-checked-children="否" />
-          </a-form-item>
-          <a-form-item label="是否隐藏分栏" name="is_hidden_child">
-            <a-switch v-model:checked="form.is_hidden_child" checked-children="是" un-checked-children="否" />
-          </a-form-item>
-          <a-form-item label="是否开启Lite多贴纸" name="is_enable_lite_list">
-            <a-switch v-model:checked="form.is_enable_lite_list" checked-children="是" un-checked-children="否" />
-          </a-form-item>
-          <a-form-item label="是否展示全部栏目" name="is_show_all">
-            <a-switch v-model:checked="form.is_show_all" checked-children="是" un-checked-children="否" />
-          </a-form-item>
-          <a-form-item label="权重" name="sort">
-            <a-input-number v-model:value="form.sort" placeholder="请输入权重"> </a-input-number>
-          </a-form-item>
-          <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 4 } }">
-            <a-button :loading="loading" type="primary" html-type="submit" style="margin-right: 6px">保存</a-button>
-            <a-button @click="router.back()">返回</a-button>
-          </a-form-item>
-        </a-form>
-      </a-tab-pane>
-
-      <a-tab-pane v-if="id" :key="2" tab="子分类管理"><child-tab></child-tab> </a-tab-pane>
-    </a-tabs>
+    <a-form :scroll-to-first-error="{ block: 'center' }" :rules="rules" :model="form" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 12 }" @finish="onFinish">
+      <a-form-item label="状态" name="state">
+        <a-radio-group v-model:value="form.state">
+          <a-radio :value="0">上架</a-radio>
+          <a-radio :value="1">下架</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="标题" name="name">
+        <a-input v-model:value="form.name" placeholder="请输入活动标题"> </a-input>
+      </a-form-item>
+      <a-form-item label="官方账号" name="official_uid">
+        <a-input v-model:value="form.official_uid" placeholder="请输入活动标题"> </a-input>
+      </a-form-item>
+      <a-form-item label="样式类型" name="style_type">
+        <a-radio-group v-model:value="form.style_type">
+          <a-radio :value="0">普通</a-radio>
+          <a-radio :value="1">挑战赛</a-radio>
+          <a-radio :value="2">单贴纸挑战赛</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="简介" name="desc">
+        <a-textarea v-model:value="form.desc" show-count :maxlength="200" :rows="4" placeholder="请输入活动简介"> </a-textarea>
+      </a-form-item>
+      <a-form-item label="参加按钮文案" name="join_text">
+        <a-input v-model:value="form.join_text" placeholder="请输入参加按钮文案"> </a-input>
+      </a-form-item>
+      <a-form-item label="背景图" name="bg_detail_imgs">
+        <upload-image v-model:value="form.bg_detail_imgs"></upload-image>
+      </a-form-item>
+      <a-form-item label="区间时间" name="intervalTime">
+        <a-range-picker v-model:value="form.intervalTime" show-time />
+      </a-form-item>
+      <a-form-item label="单用户发布作品数量" name="works_limit">
+        <a-input-number v-model:value="form.works_limit" />
+      </a-form-item>
+      <a-form-item label="有奖显示" name="is_has_award">
+        <a-radio-group v-model:value="form.is_has_award">
+          <a-radio :value="0">不显示</a-radio>
+          <a-radio :value="1">显示</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="活动列表置顶" name="is_top">
+        <a-radio-group v-model:value="form.is_top">
+          <a-radio :value="0">否</a-radio>
+          <a-radio :value="1">是</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="获奖名单" name="is_show_award_list">
+        <a-radio-group v-model:value="form.is_show_award_list">
+          <a-radio :value="0">不显示</a-radio>
+          <a-radio :value="1">显示</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="精选列表" name="is_show_choicness_list">
+        <a-radio-group v-model:value="form.is_show_choicness_list">
+          <a-radio :value="0">不显示</a-radio>
+          <a-radio :value="1">显示</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="排行榜" name="is_show_ranking_list">
+        <a-radio-group v-model:value="form.is_show_ranking_list">
+          <a-radio :value="0">否</a-radio>
+          <a-radio :value="1">是</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item v-if="form.is_show_ranking_list == 1" label="排行榜总数" name="ranking_number">
+        <a-input-number v-model:value="form.ranking_number" placeholder="请输入排行榜总数"></a-input-number>
+      </a-form-item>
+      <a-form-item v-if="form.is_show_ranking_list == 1" label="排行榜点赞" name="ranking_like_num_line">
+        <a-input-number v-model:value="form.ranking_like_num_line" placeholder="请输入排行榜点赞"></a-input-number>
+      </a-form-item>
+      <a-form-item label="道具" name="is_has_prop">
+        <a-radio-group v-model:value="form.is_has_prop">
+          <a-radio :value="0">没有</a-radio>
+          <a-radio :value="1">有</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="冻结" name="is_freeze">
+        <a-radio-group v-model:value="form.is_freeze">
+          <a-radio :value="0">否</a-radio>
+          <a-radio :value="1">是</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item v-if="form.is_freeze == 1" label="冻结数" name="freeze_number">
+        <a-input-number v-model:value="form.freeze_number" placeholder="请输入冻结数"></a-input-number>
+      </a-form-item>
+      <a-form-item label="推荐位作品ID" name="recommend_work_id">
+        <a-input-number v-model:value="form.recommend_work_id" placeholder="请输入推荐位作品ID"></a-input-number>
+      </a-form-item>
+      <!-- 贴纸功能 -->
+      <a-form-item label="贴纸功能">
+        <a-form-item-rest><a-switch v-model:checked="showForm.sticker" /></a-form-item-rest>
+      </a-form-item>
+      <template v-if="showForm.sticker">
+        <a-form-item label="Android贴纸类型">
+          <a-select
+            ref="select"
+            show-search
+            allow-clear
+            :filter-option="filterOption"
+            :options="typeList"
+            :field-names="{ label: 'name', value: 'id' }"
+            placeholder="请选择贴纸类型 (可搜索) "
+            @select="fetchTags($event, 'android')"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="Android贴纸" name="android_tag_ids">
+          <tag-table v-model:value="form.android_tag_ids" v-model:record="form.android_tags" :list="androidTags"></tag-table>
+        </a-form-item>
+        <a-form-item label="IOS贴纸类型">
+          <a-select
+            ref="select"
+            show-search
+            allow-clear
+            :filter-option="filterOption"
+            :options="typeList"
+            :field-names="{ label: 'name', value: 'id' }"
+            placeholder="请选择贴纸类型 (可搜索) "
+            @select="fetchTags($event, 'ios')"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item label="IOS贴纸" name="ios_tag_ids">
+          <tag-table v-model:value="form.ios_tag_ids" v-model:record="form.ios_tags" :list="iosTags"></tag-table>
+        </a-form-item>
+        <a-form-item label="相机模式" name="camera_tag_open_type">
+          <a-radio-group v-model:value="form.camera_tag_open_type">
+            <a-radio :value="0">原模式</a-radio>
+            <a-radio :value="1">Lite模式</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item label="预览模式" name="camera_tag_preview_mode">
+          <a-select ref="select" v-model:value="form.camera_tag_preview_mode" placeholder="请选择预览模式">
+            <a-select-option v-for="it in modeMaps" :key="it.value">{{ it.label }}</a-select-option>
+          </a-select>
+        </a-form-item>
+      </template>
+      <!-- 奖品配置 -->
+      <a-form-item label="奖品配置">
+        <a-form-item-rest><a-switch v-model:checked="showForm.prize" /></a-form-item-rest>
+      </a-form-item>
+      <template v-if="showForm.prize">
+        <a-form-item label="奖品图" name="award_imgs">
+          <upload-image v-model:value="form.award_imgs"></upload-image>
+        </a-form-item>
+        <a-form-item label="奖品图跳转方式" name="bg_detail_imgs">
+          <a-select ref="select" v-model:value="form.award_img_url_skip_type" placeholder="请选择跳转方式">
+            <a-select-option v-for="(it, i) in linkMaps" :key="Number(i)">{{ it }}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="奖品图跳转链接" name="award_img_skip_url">
+          <a-input v-model:value="form.award_img_skip_url" placeholder="请输入奖品图跳转链接"></a-input>
+        </a-form-item>
+      </template>
+      <!-- 拍同款配置 -->
+      <a-form-item label="拍同款配置">
+        <a-form-item-rest><a-switch v-model:checked="showForm.ptk" /></a-form-item-rest>
+      </a-form-item>
+      <temaplte v-if="showForm.ptk">
+        <a-form-item label="拍同款一级Tab" name="camera_tag_tab_id">
+          <a-select
+            ref="select"
+            v-model:value="form.camera_tag_tab_id"
+            show-search
+            allow-clear
+            :filter-option="filterOption"
+            :options="cates"
+            :field-names="{ label: 'name', value: 'id' }"
+            placeholder="请选择拍同款一级Tab (可搜索) "
+            @select="onSelectTabOne"
+          >
+          </a-select>
+        </a-form-item>
+        <a-form-item v-if="form.camera_tag_tab_id" label="拍同款一级分类子标签类型" name="camera_tag_tab_child_tab_type">
+          <a-select v-model:value="form.camera_tag_tab_child_tab_type" allow-clear :options="tabTypes" placeholder="请选择拍同款一级Tab " @select="onSelectTagType"> </a-select>
+        </a-form-item>
+        <a-form-item
+          v-if="form.camera_tag_tab_child_tab_type != -1"
+          :label="(tabTypes.find(it => it.value == form.camera_tag_tab_child_tab_type) || { label: '' }).label"
+          name="camera_tag_tab_child_tab_id"
+        >
+          <a-select
+            v-model:value="form.camera_tag_tab_child_tab_id"
+            :field-names="{ label: 'name', value: 'id' }"
+            allow-clear
+            :options="tabTypeLists"
+            placeholder="请选择拍同款一级Tab "
+          >
+          </a-select>
+        </a-form-item>
+      </temaplte>
+      <!-- 嗨嗨趣评 -->
+      <a-form-item label="嗨嗨趣评">
+        <a-form-item-rest><a-switch v-model:checked="showForm.hi" /></a-form-item-rest>
+      </a-form-item>
+      <template v-if="showForm.hi">
+        <a-form-item label="趣评使用次数限制" name="use_speedy_comment_limit">
+          <a-input-number v-model:value="form.use_speedy_comment_limit" placeholder="请输入趣评使用次数限制"></a-input-number>
+        </a-form-item>
+        <a-form-item label="趣评字体/边框色" name="background_color">
+          <a-input v-model:value="form.background_color" placeholder="请输入趣评背景/字体/边框色"></a-input>
+        </a-form-item>
+      </template>
+      <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 4 } }">
+        <a-button :loading="loading" type="primary" html-type="submit" style="margin-right: 6px">保存</a-button>
+        <a-button @click="router.back()">返回</a-button>
+      </a-form-item>
+    </a-form>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-import { list as tagsList } from "~/api/ptk/tagGather";
-import * as Api from "~/api/ptk/type";
-import { upload } from "~/api/upload";
-import { TypeRecord, TagRecord } from "#/api/ptkType";
-import TagType from "./tag-type.vue";
-import ChildTab from "./child-tab.vue";
+import * as Api from "~/api/activity/index";
+import { typeTags, types, cates as cateList, tabTypeList } from "~/api/ptk/index";
+// import { upload } from "~/api/upload";
+import day from "dayjs";
+import { TagTypeRecord, CateResult, TabTypeRecord } from "#/api/ptk";
+import { RecordItem, StickerTagType } from "#/api/activity/index";
+import TagTable from "./tag-table.vue";
+import { modeMaps, linkMaps } from "~/utils/utils";
 
 let route = useRoute();
 let router = useRouter();
-let activeKey = ref<number>(1);
-let id = ref(Number(route.query.id || 0));
-let initFormData = (): TypeRecord => ({
-  show_type: 0,
-  list_show_type: 0,
-  is_show: 0,
-  is_hidden_child: 0,
-  is_enable_lite_list: 0,
-  is_show_all: 0,
-  sort: 0,
-  icon_url: "",
-  icons: [],
-  community_camera_tag_type_ids: [],
-  gather_ids: [],
-  label_ids: [],
+let showForm = ref({
+  sticker: false,
+  prize: false,
+  ptk: false,
+  hi: true,
 });
-let form = ref<TypeRecord>(initFormData());
+let tabTypes = [
+  { label: "全部", value: -1 },
+  { label: "子分类", value: 0 },
+  { label: "贴纸标签", value: 1 },
+  { label: "贴纸标签集合", value: 2 },
+];
+let tabTypeLists = ref<TabTypeRecord[]>([]);
+let cates = ref<CateResult[]>([]);
+let typeList = ref<TagTypeRecord[]>([]);
+let androidTags = ref<StickerTagType[]>([]);
+let iosTags = ref<StickerTagType[]>([]);
+let id = ref(Number(route.query.id || 0));
+let initFormData = (): RecordItem => ({
+  bg_detail_imgs: [],
+  intervalTime: [],
+  android_tags: [],
+  ios_tags: [],
+  android_tag_ids: [],
+  ios_tag_ids: [],
+  camera_tag_open_type: 0,
+  award_imgs: [],
+});
+let form = ref<RecordItem>(initFormData());
 let loading = ref<boolean>(false);
 let rules = computed(() => {
   let r: Record<string, Rule[]> = {};
-  if (form.value.show_type == 0) {
-    r.name = [{ required: true }];
-  } else {
-    r.icons = [{ required: true, message: "请上传图标" }];
-  }
   return r;
 });
-let communityTags = ref<TagRecord[]>([]);
-let tags = ref<TagRecord[]>([]);
-let typeTags = ref<TagRecord[]>([]);
 
 let fetchData = async () => {
   if (!id.value) return;
   let d = await Api.detail({ id: id.value });
-  let { icon_url = "", icon = "", is_show = 0, is_hidden_child = 0, is_enable_lite_list = 0, is_show_all = 0 } = d;
-  d.icons = icon_url ? [{ url: icon_url, filename: icon }] : [];
-  d.is_show = is_show ? true : false;
-  d.is_hidden_child = is_hidden_child ? true : false;
-  d.is_enable_lite_list = is_enable_lite_list ? true : false;
-  d.is_show_all = is_show_all ? true : false;
+  let { bg_detail_img = "", bg_detail_img_url = "", start_time = "", end_time = "", award_img = "", award_img_url = "" } = d;
+  d.bg_detail_imgs = bg_detail_img_url ? [{ url: bg_detail_img_url, filename: bg_detail_img }] : [];
+  d.intervalTime = start_time ? [day(start_time), day(end_time)] : [];
+  d.award_imgs = award_img ? [{ url: award_img_url, filename: award_img }] : [];
   form.value = { ...form.value, ...d };
 };
-let fetchCommunityTags = async () => {
-  let { list } = await Api.communityTags();
-  communityTags.value = list;
+
+let fetchTags = async (camera_tag_type_id: number, type: string) => {
+  let { android_tags, ios_tags } = await typeTags({ camera_tag_type_id });
+  if (type == "ios") iosTags.value = ios_tags;
+  else androidTags.value = android_tags;
 };
-let fetchTags = async () => {
-  let { list } = await tagsList();
-  tags.value = list;
+let fetchCate = async () => {
+  let { list } = await cateList();
+  cates.value = list;
 };
-let fetchTypeTags = async () => {
-  let { list } = await Api.typeTags();
-  typeTags.value = list;
+let fetchTypes = async () => {
+  let { list } = await types();
+  typeList.value = list.map((item: TagTypeRecord) => ({ ...item, name: item.name + "=>" + item.type_text }));
+};
+let onSelectTabOne = () => {
+  form.value.camera_tag_tab_child_tab_type = -1;
+  form.value.camera_tag_tab_child_tab_id = 0;
+};
+let onSelectTagType = async (type: number) => {
+  form.value.camera_tag_tab_child_tab_id = 0;
+  if (type == -1) return;
+  let { list = [] } = await tabTypeList({ id: form.value.camera_tag_tab_id as number, type });
+  tabTypeLists.value = [{ id: 0, name: "全部" }, ...list];
+};
+
+let filterOption = (input: string, option: any) => {
+  return option.name.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 let onFinish = async () => {
   loading.value = true;
-  let {
-    state,
-    show_type,
-    name,
-    icons,
-    icon,
-    list_show_type,
-    community_camera_tag_type_ids,
-    gather_ids,
-    label_ids,
-    is_show,
-    is_hidden_child,
-    is_enable_lite_list,
-    is_show_all,
-    sort,
-  } = form.value;
-  let p: TypeRecord = {};
-  p.state = state;
-  p.show_type = show_type;
-  p.name = name;
-  p.list_show_type = list_show_type;
-  p.community_camera_tag_type_ids = community_camera_tag_type_ids;
-  p.gather_ids = gather_ids;
-  p.label_ids = label_ids;
-  p.is_show = is_show ? 1 : 0;
-  p.is_hidden_child = is_hidden_child ? 1 : 0;
-  p.is_enable_lite_list = is_enable_lite_list ? 1 : 0;
-  p.is_show_all = is_show_all ? 1 : 0;
-  p.sort = sort;
-  // image
-  if (icons && icons.length && icons[0].file) {
-    let image = await upload({ file: icons[0].file, type: 0 });
-    p.icon = image.file_name;
-  }
-  p.icon = p.icon || icon;
-  p.id = id.value;
-  await Api.edit(p).catch(() => {
-    loading.value = false;
-    return Promise.reject();
-  });
+  console.log(form.value);
   message.success("保存成功");
   loading.value = false;
 };
+
 fetchData();
-fetchCommunityTags();
-fetchTags();
-fetchTypeTags();
+fetchTypes();
+fetchCate();
+
 onActivated(() => {
   if (Number(route.query.id) != id.value) {
     id.value = Number(route.query.id);
     form.value = initFormData();
     fetchData();
-    activeKey.value = 1;
   }
 });
 </script>

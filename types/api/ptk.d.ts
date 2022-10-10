@@ -9,11 +9,13 @@ export type SearchPayload = TypePayload & {
   camera_tag_child_tab_id: number;
 };
 
-export interface CateResult {
-  name: string;
+export interface TabTypeRecord {
   id: number;
-  camera_tag_child_tabs: CateResult[];
+  name: string;
 }
+export type CateResult = TabTypeRecord & {
+  camera_tag_child_tabs: CateResult[];
+};
 
 export interface TagTypeRecord {
   id: number;

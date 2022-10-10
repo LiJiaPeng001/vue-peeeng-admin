@@ -171,7 +171,7 @@
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
-import { linkMaps } from "~/utils/utils";
+import { linkMaps, modeMaps } from "~/utils/utils";
 import { detail, cates as cateList, types, typeTags, edit } from "~/api/ptk/index";
 import { RecordItem, TagTypeRecord, CateResult } from "#/api/ptk";
 import { upload } from "~/api/upload";
@@ -265,12 +265,6 @@ let typeMaps = {
   3: "绿洲",
   4: "广告",
 };
-let modeMaps = [
-  { label: "拍照 ", value: "" },
-  { label: "GIF", value: "GIF" },
-  { label: "视频", value: "VIDEO" },
-  { label: "LivePhoto (仅IOS支持，Android仍为普通拍照)", value: "LIVEPHOTO" },
-];
 
 let fetchData = async () => {
   if (!id.value) return;
