@@ -1,4 +1,6 @@
-import { FileOptions } from "#/upload";
+import { upload } from "~/api/upload";
+import { FileOptions, UploadOptions } from "#/api/upload";
+import { ImageRecord } from "#/api/index";
 import { message } from "ant-design-vue";
 
 let input: HTMLInputElement;
@@ -51,4 +53,25 @@ export async function getFileUrl(options: FileOptions = { accept: "image/*", siz
   }
   urls = urls.slice(0, size);
   return urls;
+}
+
+export async function uploadFiles(files: ImageRecord[], options: UploadOptions = {}): Promise<ImageRecord[]> {
+  if (!files.length) return Promise.resolve(files);
+  return new Promise(async resolve => {
+    let images: ImageRecord[] = [];
+    // 0 拍同款 1 活动
+    let { type = 0 } = options;
+    for (let i = 0; i < files.length; i++) {
+      let item = files[i];
+      if (item.file) {
+        let { file_name = "" } = await upload({ type, file: item.file });
+        item.filename = file_name;
+      }
+      images.push({
+        url: item.url,
+        filename: item.filename,
+      });
+    }
+    resolve(images);
+  });
 }

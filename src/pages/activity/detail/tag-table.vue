@@ -6,11 +6,11 @@
         <div class="mask center-flex" @click="onChangeValue(it)">取消选择</div>
       </div>
     </div>
-    <a-badge v-if="!value.length && !list.length" color="yellow" :text="!list.length ? '请选择贴纸类型👆' : ''" />
+    <a-badge v-if="!(value || []).length && !list.length" color="yellow" :text="!list.length ? '请选择贴纸类型👆' : ''" />
     <div class="tags middle-flex">
       <div v-for="it in list" :key="it.id" class="tag cover fadeIn" :style="{ backgroundImage: `url(${it.icon_url})` }">
-        <div v-if="value.some(vid => vid == it.id)" class="active-mask center-flex">已选择</div>
-        <div class="mask center-flex" @click="onChangeValue(it)">{{ value.some(vid => vid == it.id) ? "取消选择" : "选择" }}</div>
+        <div v-if="(value || []).some(vid => vid == it.id)" class="active-mask center-flex">已选择</div>
+        <div class="mask center-flex" @click="onChangeValue(it)">{{ (value || []).some(vid => vid == it.id) ? "取消选择" : "选择" }}</div>
       </div>
     </div>
   </div>
@@ -20,8 +20,8 @@
 import { StickerTagType } from "#/api/activity/index";
 
 const props = defineProps<{
-  record: StickerTagType[];
-  value: number[];
+  record?: StickerTagType[];
+  value?: number[];
   list: StickerTagType[];
 }>();
 
@@ -31,9 +31,9 @@ const emits = defineEmits<{
 }>();
 
 let onChangeValue = (record: StickerTagType) => {
-  let current = props.record.findIndex(it => it.id == record.id);
-  let v = [...props.value];
-  let r = [...props.record];
+  let current = (props.record || []).findIndex(it => it.id == record.id);
+  let v = [...(props.value || [])];
+  let r = [...(props.record || [])];
   if (current > -1) {
     v.splice(current, 1);
     r.splice(current, 1);
