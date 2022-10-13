@@ -58,7 +58,10 @@ let rules = ref({
 let onSubmit = async () => {
   await form.value.validate();
   loading.value = true;
-  let { name } = await userStore.login(forms.value);
+  let { name } = await userStore.login(forms.value).catch(() => {
+    loading.value = false;
+    return Promise.reject();
+  });
   loading.value = false;
   notification.success({
     message: "登录成功",

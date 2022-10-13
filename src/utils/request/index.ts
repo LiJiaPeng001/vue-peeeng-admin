@@ -8,6 +8,9 @@ import createApi from "./createApi";
 
 export default (options: AxiosRequestConfig, condition?: OptionsConfig) =>
   createApi({
+    createOptions: {
+      timeout: 20000,
+    },
     setHeaders() {
       const auth = useAuth();
       let { token } = auth.value;

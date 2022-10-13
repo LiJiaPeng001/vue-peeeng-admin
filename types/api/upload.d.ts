@@ -8,6 +8,7 @@ export interface UploadPayload {
 export interface UploadResult {
   file_name: string;
   size: string;
+  url: string;
 }
 export interface FileOptions {
   multiple?: boolean;

@@ -6,8 +6,8 @@ import { getErrStatus, getErrMsg } from "./tools/index";
 import { message } from "ant-design-vue";
 // import useLoading from "./tools/loading";
 
-function noop() {}
-function login() {}
+function noop() { }
+function login() { }
 
 export default ({
   toast = message, // 提示方法
@@ -26,7 +26,7 @@ export default ({
   return async (requestOptions: AxiosRequestConfig, { shouldToast = true, shouldLogin = false }: OptionsConfig = {}) => {
     if (shouldLogin) await login();
     // 是否loadding
-    for (let i = 0; i < maxCount + 1; i++) {
+    for (let i = 0; i < maxCount; i++) {
       try {
         let userStore = user();
         // 更新本地token
@@ -47,16 +47,16 @@ export default ({
         return Promise.reject(data.msg);
       } catch (e: any) {
         const status = getErrStatus(e);
-        if (i < maxCount) {
+        if (i < maxCount && maxCount > 1) {
           // 401重新登录
           if (status === 401 && loginForce) {
             await loginForce();
             continue;
           }
-        }
-        if (e.message.indexOf("timeout of") > -1) {
-          toast.error("网络异常");
-          continue;
+          if (e.message.indexOf("timeout of") > -1) {
+            toast.error("网络异常");
+            continue;
+          }
         }
         // 自定义错误处理
         if (status) toast.error(status + " " + getErrMsg(e));

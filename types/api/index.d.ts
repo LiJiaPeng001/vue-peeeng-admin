@@ -9,7 +9,7 @@ export interface PaginationRecord {
 }
 
 export interface ImageRecord {
-  url: string;
+  url?: string;
   filename?: string;
   file?: File;
 }

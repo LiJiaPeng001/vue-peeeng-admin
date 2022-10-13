@@ -89,8 +89,8 @@
       <a-form-item label="推荐位作品ID" name="recommend_work_id">
         <a-input-number v-model:value="form.recommend_work_id" style="min-width: 150px" placeholder="请输入推荐位作品ID"></a-input-number>
       </a-form-item>
-      <a-form-item label="规则" name="rule">
-        <a-input v-model:value="form.rule" placeholder="请输入活动规则"> </a-input>
+      <a-form-item label="规则" name="rule" :wrapper-col="{ span: 16 }">
+        <handy-editor v-model:value="form.rule"></handy-editor>
       </a-form-item>
       <!-- 贴纸功能 -->
       <a-form-item label="贴纸功能">
@@ -162,7 +162,7 @@
       <a-form-item label="拍同款配置">
         <a-form-item-rest><a-switch v-model:checked="showForm.ptk" /></a-form-item-rest>
       </a-form-item>
-      <temaplte v-if="showForm.ptk">
+      <template v-if="showForm.ptk">
         <a-form-item label="拍同款一级Tab" name="camera_tag_tab_id">
           <a-select
             ref="select"
@@ -194,7 +194,7 @@
           >
           </a-select>
         </a-form-item>
-      </temaplte>
+      </template>
       <!-- 嗨嗨趣评 -->
       <a-form-item label="嗨嗨趣评">
         <a-form-item-rest><a-switch v-model:checked="showForm.hi" /></a-form-item-rest>
@@ -305,10 +305,11 @@ import { list as officialList } from "~/api/account/official";
 import day from "dayjs";
 import { TagTypeRecord, CateResult, TabTypeRecord } from "#/api/ptk";
 import { RecordItem, StickerTagType } from "#/api/activity/index";
-import TagTable from "./tag-table.vue";
 import { modeMaps, linkMaps } from "~/utils/utils";
 import { RecordItem as OfficialRecord } from "#/api/account/official";
 import { uploadFiles } from "~/utils/upload/index";
+import HandyEditor from "~/components/handy-editor/index.vue";
+import TagTable from "./tag-table.vue";
 
 let route = useRoute();
 let router = useRouter();
@@ -364,6 +365,7 @@ let initFormData = (): RecordItem => ({
   is_freeze: 0,
   freeze_number: 0,
   sync_weibo: 0,
+  rule: "",
 });
 let form = ref<RecordItem>(initFormData());
 let loading = ref<boolean>(false);
