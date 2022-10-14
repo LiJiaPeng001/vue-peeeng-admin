@@ -417,7 +417,7 @@ let onFinish = async () => {
           item.filename = file_name;
         }
         if (current == i) {
-          let [imgData] = await getSize(item.url);
+          let [imgData] = await getSize(item.url as string);
           p.cover = item.filename;
           p.cover_size = `${imgData.w}*${imgData.h}`;
         }

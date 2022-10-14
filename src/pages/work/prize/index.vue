@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Search v-model:payload="payload" @ok="fetchList" />
-    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0 })">添加</a-button>
+    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0, name: '', state: 0 })">添加</a-button>
     <a-table
       :loading="loading"
       :data-source="list"
@@ -18,7 +18,7 @@
         </template>
       </template>
     </a-table>
-    <prize-detail v-model:visible="visible" :record="record"></prize-detail>
+    <prize-detail v-model:visible="visible" :record="record" @ok="fetchList"></prize-detail>
   </div>
 </template>
 

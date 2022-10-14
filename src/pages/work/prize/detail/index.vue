@@ -4,6 +4,12 @@
       <a-form-item label="名称" name="name">
         <a-input v-model:value="form.name" placeholder="请输入名称"></a-input>
       </a-form-item>
+      <a-form-item label="状态" name="state">
+        <a-radio-group v-model:value="form.state">
+          <a-radio :value="0">无效</a-radio>
+          <a-radio :value="1">有效</a-radio>
+        </a-radio-group>
+      </a-form-item>
       <a-form-item :wrapper-col="{ xs: { offset: 0 }, sm: { offset: 3 } }">
         <a-button :loading="loading" type="primary" html-type="submit">保存</a-button>
       </a-form-item>
@@ -26,6 +32,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: "update:visible", value: boolean): void;
+  (e: "ok"): void;
 }>();
 
 let form = ref<RecordItem>({
@@ -44,13 +51,19 @@ let rules: Record<string, Rule[]> = {
 };
 let onFinish = async () => {
   loading.value = true;
-  await Api.edit(form.value).catch(() => {
+  let { name, state, id } = form.value;
+  let d: RecordItem = {};
+  d.name = name;
+  d.state = state;
+  d.id = id || 0;
+  await Api.edit(d).catch(() => {
     loading.value = false;
     return Promise.reject();
   });
   message.success("保存成功");
   loading.value = false;
   close();
+  emits("ok");
 };
 
 let close = () => {
