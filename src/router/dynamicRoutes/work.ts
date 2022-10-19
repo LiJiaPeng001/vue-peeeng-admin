@@ -12,6 +12,14 @@ const routes: RouteRecordRaw[] = [
     component: () => import("~/pages/work/index.vue"),
     children: [
       {
+        path: "/work/list",
+        name: "WorkList",
+        meta: {
+          title: "作品列表",
+        },
+        component: () => import("~/pages/work/index.vue"),
+      },
+      {
         path: "/work/prize",
         name: "WorkPrize",
         meta: {

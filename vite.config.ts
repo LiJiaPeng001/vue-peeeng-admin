@@ -11,8 +11,6 @@ function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
 }
 
-// let { VITE_BASE_URL } = import.meta.env
-
 export default ({ mode }: ConfigEnv) => {
   let env = getEnvVariable(mode);
   return defineConfig({

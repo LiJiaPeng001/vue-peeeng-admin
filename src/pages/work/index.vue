@@ -11,8 +11,9 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, text, record }">
-        <template v-if="column.key === 'bg_detail_img_url'">
-          <my-image :width="50" :height="50" :url="text"></my-image>
+        <template v-if="column.key === 'real_img_list'">
+          <my-image v-if="record.tag_type == 0" :width="50" :height="50" :images="text.map((item:any) => item.file_name)"></my-image>
+          <my-video v-if="record.tag_type == 2" :width="50" :height="50" :url="text[0].file_name"></my-video>
         </template>
         <template v-if="column.key === 'action'">
           <div class="btn-action">
@@ -26,19 +27,23 @@
 
 <script lang="ts" setup>
 import Search from "./search.vue";
-import * as Api from "~/api/activity/index";
-import { RecordItem, SearchPayload } from "#/api/activity/index";
-
-let route = useRoute();
-
-let { page = 1, state = -1, limit = 12, name = "", id = "" } = route.query;
+import * as Api from "~/api/work/index";
+import { RecordItem, SearchPayload } from "#/api/work/index";
 
 let payload = ref<SearchPayload>({
-  page: Number(page),
-  limit: Number(limit),
-  id: id ? Number(id) : String(id),
-  state: Number(state),
-  name: String(name),
+  page: 1,
+  limit: 12,
+  id: undefined,
+  activity_id: undefined,
+  topic_id: undefined,
+  uid: undefined,
+  nick: "",
+  phone_number: "",
+  score: 0,
+  order: 1,
+  review_state: 0,
+  start_time: "",
+  end_time: "",
 });
 
 let count = ref(0);
@@ -54,52 +59,37 @@ let columns = ref([
     width: 100,
   },
   {
-    title: "活动标题",
-    dataIndex: "name",
-    // width: 150,
+    title: "作品来源",
+    dataIndex: "work_affiliation",
   },
   {
-    title: "封面",
-    key: "bg_detail_img_url",
-    dataIndex: "bg_detail_img_url",
-    // width: 150,
+    title: "相册",
+    dataIndex: "real_img_list",
+    key: "real_img_list",
   },
   {
-    title: "开始时间",
-    dataIndex: "start_time",
-    // width: 80,
+    title: "用户ID",
+    dataIndex: "uid",
   },
   {
-    title: "结束时间",
-    dataIndex: "end_time",
-  },
-  {
-    title: "作品数",
-    dataIndex: "works_num",
+    title: "审核状态",
+    dataIndex: "review_state",
   },
   {
     title: "点赞数",
-    dataIndex: "like_num",
+    dataIndex: "like_num_text",
   },
   {
-    title: "评论数",
-    dataIndex: "comment_num",
+    title: "舔狗数",
+    dataIndex: "hidden_follow_num",
   },
   {
-    title: "参与人数",
-    dataIndex: "people_num",
+    title: "奖励金币数",
+    dataIndex: "award_gold_number",
   },
   {
-    title: "图片数",
-    dataIndex: "photo_num",
-  },
-  {
-    title: "单人发布作品数",
-    dataIndex: "works_limit",
-  },
-  {
-    title: "状态",
-    dataIndex: "state_text",
+    title: "创建时间",
+    dataIndex: "create_time",
   },
   {
     title: "操作",
