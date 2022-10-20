@@ -3,6 +3,7 @@ import { MessageApi } from "ant-design-vue/es/message";
 export interface OptionsConfig {
   shouldLogin?: boolean;
   shouldToast?: boolean;
+  shouldLoading?: boolean;
 }
 
 export interface CreateApiOptions {

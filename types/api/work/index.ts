@@ -2,12 +2,24 @@ import { PaginationRecord } from "../index";
 
 export interface RecordItem {
   id?: number;
-  uid?: number;
-  user_name?: string;
+  is_illegal?: boolean;
+  delete_time?: string;
+  disable_comment?: number
 }
 
 export interface RealImgRecord {
   file_name: string
+}
+
+export interface CheckParams {
+  score: number;
+  ids: number[]
+}
+
+export interface AutoLikeParams {
+  ids?: number[];
+  like_limit_number?: number;
+  follow_limit_number?: number;
 }
 
 export type SearchPayload = PaginationRecord & {

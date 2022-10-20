@@ -25,7 +25,7 @@ export default defineStore("user", {
       return user;
     },
     async logout() {
-      await logout();
+      // await logout();
       let user = {
         name: "",
         token: "",

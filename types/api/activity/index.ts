@@ -17,6 +17,7 @@ export interface GoldConfig {
   gte: number;
   gold_number: number;
 }
+
 export interface RecordItem {
   id?: number;
   name?: string;

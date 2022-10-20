@@ -32,7 +32,6 @@
 
 <script lang="ts" setup>
 import { message } from "ant-design-vue";
-import type { Rule } from "ant-design-vue/es/form";
 import { typeTags as typeTagList } from "~/api/ptk/type";
 import * as Api from "~/api/ptk/tagGather";
 import { TagRecord } from "#/api/ptkType";
@@ -67,7 +66,7 @@ let columns = ref([
     width: 100,
   },
 ]);
-let rules: Record<string, Rule[]> = {
+let rules = {
   name: [{ required: true }],
   label_ids: [{ required: true, message: "请选择标签" }],
 };

@@ -20,6 +20,15 @@ const routes: RouteRecordRaw[] = [
         component: () => import("~/pages/work/index.vue"),
       },
       {
+        path: "/work/detail",
+        name: "WorkDetail",
+        meta: {
+          title: "作品详情",
+          hidden: true
+        },
+        component: () => import("~/pages/work/detail/index.vue"),
+      },
+      {
         path: "/work/prize",
         name: "WorkPrize",
         meta: {

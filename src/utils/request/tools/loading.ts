@@ -12,7 +12,7 @@ export default function useLoading() {
       };
     },
     render() {
-      return this.visible && h("div", { class: "loading-ctrl" }, [h(Spin, { tip: "wuhu" })]);
+      return this.visible && h("div", { class: "loading-ctrl" }, [h(Spin, { tip: "加载中" })]);
     },
   });
   if (!app) {

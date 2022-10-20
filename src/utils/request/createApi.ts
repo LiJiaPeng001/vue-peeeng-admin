@@ -4,10 +4,12 @@ import user from "~/store/user";
 import { OptionsConfig, CreateApiOptions } from "./types";
 import { getErrStatus, getErrMsg } from "./tools/index";
 import { message } from "ant-design-vue";
-// import useLoading from "./tools/loading";
+import useLoading from "./tools/loading";
 
 function noop() { }
 function login() { }
+
+let loading = useLoading()
 
 export default ({
   toast = message, // 提示方法
@@ -23,14 +25,16 @@ export default ({
     Object.assign(config.headers || {}, headers);
     return config;
   });
-  return async (requestOptions: AxiosRequestConfig, { shouldToast = true, shouldLogin = false }: OptionsConfig = {}) => {
+  return async (requestOptions: AxiosRequestConfig, { shouldToast = true, shouldLogin = false, shouldLoading = false }: OptionsConfig = {}) => {
     if (shouldLogin) await login();
     // 是否loadding
     for (let i = 0; i < maxCount; i++) {
       try {
+        if (shouldLoading) loading.show()
         let userStore = user();
         // 更新本地token
         const { data, headers } = await instence(requestOptions);
+        if (shouldLoading) loading.hide()
         let { authorization = "" } = headers;
         const auth = useAuth();
         let { name } = auth.value;

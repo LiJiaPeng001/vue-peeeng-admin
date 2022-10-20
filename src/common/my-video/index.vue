@@ -1,9 +1,9 @@
 <template>
-  <div class="video-icon center-flex" :style="{ width: width + 'px', height: height + 'px' }" @click="visible = true">
+  <div class="video-icon center-flex cover" :style="{ width: width + 'px', height: height + 'px', backgroundImage: `url(${poster})` }" @click="visible = true">
     <img :src="video" class="icon" />
   </div>
   <a-modal v-model:visible="visible" @ok="close">
-    <video v-if="visible" preload="auto" class="video-play" :src="url" controls autoplay></video>
+    <video v-if="visible" :poster="poster" preload="auto" class="video-play" :src="url" controls></video>
   </a-modal>
 </template>
 
@@ -12,6 +12,7 @@ defineProps<{
   url?: string;
   width?: number;
   height?: number;
+  poster?: string;
 }>();
 
 const { video } = useLocalImage();
