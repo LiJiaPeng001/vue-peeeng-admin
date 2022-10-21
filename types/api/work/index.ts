@@ -5,10 +5,29 @@ export interface RecordItem {
   is_illegal?: boolean;
   delete_time?: string;
   disable_comment?: number
+  is_auto_like?: boolean
+  review_state?: number
+  real_img_list?: RealImgRecord[];
+  tag_type?: number;
+  cover_url?: string;
+  award_config_id?: number;
 }
 
 export interface RealImgRecord {
   file_name: string
+}
+export interface ResolveRecord {
+  score?: number,
+  id?: number;
+  gold_number?: number;
+  subfield_ids?: number[]
+}
+export interface RejectRecord {
+  id?: number;
+  review_img?: number;
+  review_content?: number;
+  review_desc?: string;
+  disable_image_array?: number[];
 }
 
 export interface CheckParams {

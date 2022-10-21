@@ -1,6 +1,10 @@
 <template>
-  <div class="video-icon center-flex cover" :style="{ width: width + 'px', height: height + 'px', backgroundImage: `url(${poster})` }" @click="visible = true">
-    <img :src="video" class="icon" />
+  <div
+    class="video-icon center-flex cover"
+    :style="{ width: width + 'px', height: height + 'px', backgroundImage: `url(${poster})` }"
+    @click.stop="hasClick ? emits('click') : (visible = true)"
+  >
+    <img :src="video" class="icon" @click.stop="!hasClick ? undefined : (visible = true)" />
   </div>
   <a-modal v-model:visible="visible" @ok="close">
     <video v-if="visible" :poster="poster" preload="auto" class="video-play" :src="url" controls></video>
@@ -13,6 +17,11 @@ defineProps<{
   width?: number;
   height?: number;
   poster?: string;
+  hasClick?: boolean;
+}>();
+
+const emits = defineEmits<{
+  (v: "click"): void;
 }>();
 
 const { video } = useLocalImage();
@@ -31,7 +40,6 @@ let close = () => {
   background-color: #000;
   .icon {
     width: 30%;
-    height: 30%;
     display: block;
   }
 }

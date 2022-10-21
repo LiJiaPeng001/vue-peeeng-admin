@@ -25,12 +25,16 @@
         <template v-if="column.key === 'action'">
           <div class="btn-action">
             <span class="primary" @click="toEdit(text.id)">编辑</span>
-            <span class="primary" @click="toEdit(text.id)">通过</span>
+            <span v-if="text.review_state == 0 || text.review_state == 1" class="primary" @click="check(1, text)">{{ text.review_state == 1 ? "分数" : "通过" }}</span>
+            <span v-if="text.review_state == 0" class="danger" @click="check(0, text)">拒绝</span>
+            <span :class="text.is_auto_like ? 'danger' : 'primary'" @click="openLike(text)">{{ text.is_auto_like ? "取消点赞" : "点赞" }}</span>
           </div>
         </template>
       </template>
     </a-table>
-    <like-modal v-model:visible="visible" :ids="selectedRowKeys"></like-modal>
+    <like-modal v-model:visible="visible" :ids="selectedRowKeys" @ok="fetchList"></like-modal>
+    <resolve-modal v-model:visible="resolveVisible" :record="record" @ok="fetchList"></resolve-modal>
+    <reject-modal v-model:visible="rejectVisible" :record="record" @ok="fetchList"></reject-modal>
   </div>
 </template>
 
@@ -40,6 +44,8 @@ import * as Api from "~/api/work/index";
 import { RecordItem, SearchPayload } from "#/api/work/index";
 import { message, Modal } from "ant-design-vue";
 import LikeModal from "./components/like-modal.vue";
+import ResolveModal from "./components/resolve-modal.vue";
+import RejectModal from "./components/reject-modal.vue";
 
 let payload = ref<SearchPayload>({
   page: 1,
@@ -59,7 +65,10 @@ let payload = ref<SearchPayload>({
 
 let selectedRowKeys = ref<number[]>([]);
 let count = ref(0);
+let record = ref<RecordItem>({});
 let visible = ref<boolean>(false);
+let resolveVisible = ref<boolean>(false);
+let rejectVisible = ref<boolean>(false);
 let list = ref<RecordItem[]>([]);
 let go = useGo();
 let loading = ref(false);
@@ -108,11 +117,12 @@ let columns = ref([
     title: "操作",
     key: "action",
     fixed: "right",
-    width: 100,
+    width: 180,
   },
 ]);
 
 let fetchList = async () => {
+  selectedRowKeys.value = [];
   loading.value = true;
   let d = await Api.list(payload.value).catch(() => {
     loading.value = false;
@@ -141,9 +151,25 @@ let toEdit = (id: number) => {
     query: { id },
   });
 };
+let check = (state: number, data: RecordItem) => {
+  record.value = data;
+  if (state == 1) resolveVisible.value = true;
+  else rejectVisible.value = true;
+};
 let rowClassName = (record: RecordItem) => {
   let { is_illegal, delete_time } = record;
   return is_illegal ? "is_illegal" : delete_time ? "delete_time" : null;
+};
+let openLike = async (v: RecordItem) => {
+  let { id = 0, is_auto_like = false } = v;
+  if (is_auto_like) {
+    await Api.stopautolike({ id });
+    message.success("已取消自动点赞");
+    fetchList();
+  } else {
+    selectedRowKeys.value = [id];
+    edit(3);
+  }
 };
 let edit = async (v: number) => {
   if (!selectedRowKeys.value.length) return message.error("请选择作品");
@@ -154,7 +180,6 @@ let edit = async (v: number) => {
         await Api.check({ score: v, ids: selectedRowKeys.value });
         message.success("设置分数成功");
         fetchList();
-        selectedRowKeys.value = [];
       },
       onCancel() {
         Modal.destroyAll();

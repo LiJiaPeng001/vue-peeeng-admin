@@ -50,6 +50,7 @@ export default ({
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);
       } catch (e: any) {
+        if (shouldLoading) loading.hide()
         const status = getErrStatus(e);
         if (i < maxCount && maxCount > 1) {
           // 401重新登录

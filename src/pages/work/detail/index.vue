@@ -4,6 +4,12 @@
       <a-tab-pane :key="1" tab="基本信息">
         <basic-info :record="data"></basic-info>
       </a-tab-pane>
+      <a-tab-pane :key="2" tab="颁奖">
+        <give-prize :record="data"></give-prize>
+      </a-tab-pane>
+      <a-tab-pane :key="3" tab="马甲号相关">
+        <user-action :record="data"></user-action>
+      </a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -12,6 +18,8 @@
 import { RecordItem } from "#/api/work";
 import { detail } from "~/api/work/index";
 import BasicInfo from "./components/basic-info.vue";
+import GivePrize from "./components/give-prize.vue";
+import UserAction from "./components/user-action.vue";
 
 let route = useRoute();
 // let router = useRouter();

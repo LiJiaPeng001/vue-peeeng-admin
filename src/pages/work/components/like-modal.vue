@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="点赞上限" :visible="visible" @ok="ok" @cancel="close">
+  <a-modal title="点赞点赞" :visible="visible" @ok="ok" @cancel="close">
     <a-form ref="formRef" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }" :rules="rules" :model="form">
       <a-form-item :wrapper-col="{ xs: { offset: 0, span: 22 }, sm: { offset: 0, span: 22 } }">
         <a-form-item-rest>
@@ -25,6 +25,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: "update:visible", v: boolean): void;
+  (e: "ok", v: void): void;
 }>();
 
 let form = ref<AutoLikeParams>({
@@ -39,6 +40,7 @@ let ok = async () => {
   await formRef.value.validate();
   await autolike({ ids, like_limit_number: form.value.like_limit_number });
   message.success("操作成功");
+  emits("ok");
   close();
 };
 let close = () => {

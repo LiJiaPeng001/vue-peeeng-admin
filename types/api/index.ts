@@ -13,3 +13,8 @@ export interface ImageRecord {
   filename?: string;
   file?: File;
 }
+
+export interface HomeTabsRecord {
+  id?: number;
+  name?: string
+}

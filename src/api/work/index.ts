@@ -1,4 +1,4 @@
-import { SearchPayload, RecordItem, CheckParams, AutoLikeParams } from "#/api/work/index";
+import { SearchPayload, RecordItem, CheckParams, AutoLikeParams, ResolveRecord, RejectRecord } from "#/api/work/index";
 import { RequestRecord } from "#/api/index";
 import request from "~/utils/request/index";
 
@@ -8,6 +8,10 @@ enum Api {
   edit = "/api/works/save",
   check = "/api/works/list_check",
   autolike = "/api/works/auto_like",
+  stopautolike = "/api/works/stop_auto_like",
+  resolve = "/api/works/alone_check",
+  reject = "/api/works/review_fail",
+  award = "/api/works/award",
 }
 
 export function list(data: SearchPayload): Promise<RequestRecord<RecordItem>> {
@@ -41,6 +45,34 @@ export function check(data: CheckParams): Promise<void> {
 export function autolike(data: AutoLikeParams): Promise<void> {
   return request({
     url: Api.autolike,
+    method: "post",
+    data,
+  });
+}
+export function stopautolike(data: { id: number }): Promise<void> {
+  return request({
+    url: Api.stopautolike,
+    method: "post",
+    data,
+  });
+}
+export function resolve(data: ResolveRecord): Promise<void> {
+  return request({
+    url: Api.resolve,
+    method: "post",
+    data,
+  });
+}
+export function reject(data: RejectRecord): Promise<void> {
+  return request({
+    url: Api.reject,
+    method: "post",
+    data,
+  });
+}
+export function award(data: RecordItem): Promise<void> {
+  return request({
+    url: Api.award,
     method: "post",
     data,
   });
