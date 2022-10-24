@@ -45,8 +45,7 @@ let handleClick = () => {
 };
 
 let logout = async () => {
-  await userStore.logout();
-  window.location.reload();
+  await userStore.reloadPage();
 };
 router.afterEach(() => {
   routeMached.value = getRawOptionRoutes(route.path);

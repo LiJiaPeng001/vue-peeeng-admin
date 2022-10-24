@@ -6,10 +6,10 @@ import { getErrStatus, getErrMsg } from "./tools/index";
 import { message } from "ant-design-vue";
 import useLoading from "./tools/loading";
 
-function noop() { }
-function login() { }
+function noop() {}
+function login() {}
 
-let loading = useLoading()
+let loading = useLoading();
 
 export default ({
   toast = message, // 提示方法
@@ -30,11 +30,11 @@ export default ({
     // 是否loadding
     for (let i = 0; i < maxCount; i++) {
       try {
-        if (shouldLoading) loading.show()
+        if (shouldLoading) loading.show();
         let userStore = user();
         // 更新本地token
         const { data, headers } = await instence(requestOptions);
-        if (shouldLoading) loading.hide()
+        if (shouldLoading) loading.hide();
         let { authorization = "" } = headers;
         const auth = useAuth();
         let { name } = auth.value;
@@ -42,15 +42,12 @@ export default ({
         // success code
         if (data.code === 0) return data.data;
         // 重新登录
-        if (data.code === 401 || data.code === 419) {
-          await userStore.logout();
-          window.location.reload();
-        }
+        if (data.code === 401 || data.code === 419) await userStore.reloadPage();
         // 报错提醒
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);
       } catch (e: any) {
-        if (shouldLoading) loading.hide()
+        if (shouldLoading) loading.hide();
         const status = getErrStatus(e);
         if (i < maxCount && maxCount > 1) {
           // 401重新登录

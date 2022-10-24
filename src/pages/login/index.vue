@@ -32,6 +32,7 @@
 import { UserOutlined, LockFilled } from "@ant-design/icons-vue";
 import { notification } from "ant-design-vue";
 import user from "~/store/user";
+import { LoginPayload } from "#/api/user";
 
 let router = useRouter();
 let { logo } = useLocalImage();
@@ -40,7 +41,7 @@ let loading = ref(false);
 
 let labelCol = { span: 0 };
 let wrapperCol = { span: 24 };
-let forms = ref({
+let forms = ref<LoginPayload>({
   username: "admin",
   password: "admin",
 });
