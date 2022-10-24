@@ -4,9 +4,9 @@ export interface RecordItem {
   id?: number;
   is_illegal?: boolean;
   delete_time?: string;
-  disable_comment?: number
-  is_auto_like?: boolean
-  review_state?: number
+  disable_comment?: number;
+  is_auto_like?: boolean;
+  review_state?: number;
   real_img_list?: RealImgRecord[];
   tag_type?: number;
   cover_url?: string;
@@ -14,13 +14,13 @@ export interface RecordItem {
 }
 
 export interface RealImgRecord {
-  file_name: string
+  file_name: string;
 }
 export interface ResolveRecord {
-  score?: number,
+  score?: number;
   id?: number;
   gold_number?: number;
-  subfield_ids?: number[]
+  subfield_ids?: number[];
 }
 export interface RejectRecord {
   id?: number;
@@ -32,7 +32,7 @@ export interface RejectRecord {
 
 export interface CheckParams {
   score: number;
-  ids: number[]
+  ids: number[];
 }
 
 export interface AutoLikeParams {
@@ -61,5 +61,5 @@ export type SearchPayload = PaginationRecord & {
   subfield_id?: number;
   start_time?: string;
   end_time?: string;
-  real_img_list?: RealImgRecord[]
+  real_img_list?: RealImgRecord[];
 };

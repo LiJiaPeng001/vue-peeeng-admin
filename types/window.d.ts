@@ -1,3 +1,3 @@
 declare interface Window {
-  HE: any
+  HE: any;
 }

@@ -16,5 +16,5 @@ export interface ImageRecord {
 
 export interface HomeTabsRecord {
   id?: number;
-  name?: string
+  name?: string;
 }

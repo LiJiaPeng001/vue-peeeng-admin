@@ -18,38 +18,50 @@ export function workList(data: PayloadParams): Promise<RecordItem[]> {
   });
 }
 export function checkToolUser(data: PayloadParams): Promise<{ content: string }> {
-  return request({
-    url: Api.checkToolUser,
-    data,
-    method: "post",
-  }, {
-    shouldLoading: true
-  });
+  return request(
+    {
+      url: Api.checkToolUser,
+      data,
+      method: "post",
+    },
+    {
+      shouldLoading: true,
+    }
+  );
 }
-export function like(data: { id?: number, uid?: number }): Promise<void> {
-  return request({
-    url: Api.like,
-    data,
-    method: "post",
-  }, {
-    shouldLoading: true
-  });
+export function like(data: { id?: number; uid?: number }): Promise<void> {
+  return request(
+    {
+      url: Api.like,
+      data,
+      method: "post",
+    },
+    {
+      shouldLoading: true,
+    }
+  );
 }
-export function nolike(data: { id?: number, uid?: number }): Promise<void> {
-  return request({
-    url: Api.nolike,
-    data,
-    method: "post",
-  }, {
-    shouldLoading: true
-  });
+export function nolike(data: { id?: number; uid?: number }): Promise<void> {
+  return request(
+    {
+      url: Api.nolike,
+      data,
+      method: "post",
+    },
+    {
+      shouldLoading: true,
+    }
+  );
 }
 export function comment(data: PayloadParams): Promise<void> {
-  return request({
-    url: Api.comment,
-    data,
-    method: "post",
-  }, {
-    shouldLoading: true
-  });
+  return request(
+    {
+      url: Api.comment,
+      data,
+      method: "post",
+    },
+    {
+      shouldLoading: true,
+    }
+  );
 }

@@ -66,7 +66,7 @@ export async function uploadFiles(files: ImageRecord[], options: UploadOptions =
       if (item.file) {
         let { file_name = "", url = "" } = await upload({ type, file: item.file });
         item.filename = file_name;
-        item.url = item.url || url
+        item.url = item.url || url;
       }
       images.push({
         url: item.url,

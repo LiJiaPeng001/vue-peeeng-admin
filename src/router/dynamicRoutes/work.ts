@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
         name: "WorkDetail",
         meta: {
           title: "作品详情",
-          hidden: true
+          hidden: true,
         },
         component: () => import("~/pages/work/detail/index.vue"),
       },
