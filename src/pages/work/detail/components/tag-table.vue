@@ -11,10 +11,8 @@
     <div class="tags middle-flex">
       <div v-for="it in list" :key="it.id" class="tag cover fadeIn" :style="{ backgroundImage: `url(${it.icon_url})` }">
         <div class="mask center-flex" @click="onChangeValue(it)">选择</div>
-        <div v-if="it.uid" class="is-author center-flex">无作者</div>
       </div>
     </div>
-    <a-badge style="margin-top: 6px" color="yellow" text="选择贴纸将把作者回填至配置类型" />
   </div>
 </template>
 

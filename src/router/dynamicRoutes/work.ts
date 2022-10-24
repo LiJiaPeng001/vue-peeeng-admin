@@ -36,6 +36,14 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/work/prize/index.vue"),
       },
+      {
+        path: "/work/comment",
+        name: "WorkComment",
+        meta: {
+          title: "作品评论",
+        },
+        component: () => import("~/pages/work/comment/index.vue"),
+      },
     ],
   },
 ];

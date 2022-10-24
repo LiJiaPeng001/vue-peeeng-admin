@@ -22,12 +22,16 @@
           <my-image v-if="record.tag_type == 0" :width="50" :height="50" :images="text.map((item:any) => item.file_name)"></my-image>
           <my-video v-if="record.tag_type == 2" :width="50" :height="50" :poster="record.cover_url" :url="text[0].file_name"></my-video>
         </template>
+        <template v-if="column.key === 'compile_choiceness_time'">
+          <a-switch v-if="record.review_state == 1 && record.activity_id" :checked="text ? true : false" @change="changeMode(record)"></a-switch>
+          <span v-else>-</span>
+        </template>
         <template v-if="column.key === 'action'">
           <div class="btn-action">
             <span class="primary" @click="toEdit(text.id)">编辑</span>
             <span v-if="text.review_state == 0 || text.review_state == 1" class="primary" @click="check(1, text)">{{ text.review_state == 1 ? "分数" : "通过" }}</span>
             <span v-if="text.review_state == 0" class="danger" @click="check(0, text)">拒绝</span>
-            <span :class="text.is_auto_like ? 'danger' : 'primary'" @click="openLike(text)">{{ text.is_auto_like ? "取消点赞" : "点赞" }}</span>
+            <span v-if="text.review_state == 1" :class="text.is_auto_like ? 'danger' : 'primary'" @click="openLike(text)">{{ text.is_auto_like ? "取消点赞" : "点赞" }}</span>
           </div>
         </template>
       </template>
@@ -77,7 +81,6 @@ let columns = ref([
   {
     title: "编号",
     dataIndex: "id",
-    fixed: "left",
     width: 100,
   },
   {
@@ -112,6 +115,11 @@ let columns = ref([
   {
     title: "创建时间",
     dataIndex: "create_time",
+  },
+  {
+    title: "活动精选",
+    dataIndex: "compile_choiceness_time",
+    key: "compile_choiceness_time",
   },
   {
     title: "操作",
@@ -187,6 +195,10 @@ let edit = async (v: number) => {
     });
   }
   if (v == 3) visible.value = true;
+};
+let changeMode = async (record: RecordItem) => {
+  record.compile_choiceness_time = record.compile_choiceness_time ? "" : "1";
+  await Api.choiceness({ id: record.id });
 };
 </script>
 

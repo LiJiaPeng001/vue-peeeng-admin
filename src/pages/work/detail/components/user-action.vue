@@ -74,6 +74,7 @@ let onComment = async () => {
 };
 
 let onLike = async (state: number) => {
+  if (!form.value.uid) return message.error("请选择马甲号");
   let payload = { id: props.record.id, uid: form.value.uid };
   if (state == 1) await like(payload);
   else await nolike(payload);

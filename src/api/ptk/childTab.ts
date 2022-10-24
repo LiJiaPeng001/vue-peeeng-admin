@@ -1,4 +1,4 @@
-import { TypePayload, TypeRecord } from "#/api/ptkChildType.d.";
+import { TypePayload, TypeRecord } from "#/api/ptkChildType";
 import { RequestRecord } from "#/api/index";
 import request from "~/utils/request/index";
 

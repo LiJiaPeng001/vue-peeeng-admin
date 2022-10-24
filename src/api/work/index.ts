@@ -1,4 +1,4 @@
-import { SearchPayload, RecordItem, CheckParams, AutoLikeParams, ResolveRecord, RejectRecord } from "#/api/work/index";
+import { SearchPayload, RecordItem, CheckParams, AutoLikeParams, ResolveRecord, RejectRecord, FindRecord } from "#/api/work/index";
 import { RequestRecord } from "#/api/index";
 import request from "~/utils/request/index";
 
@@ -12,6 +12,10 @@ enum Api {
   resolve = "/api/works/alone_check",
   reject = "/api/works/review_fail",
   award = "/api/works/award",
+  find = "/api/works/restore_images",
+  cameraTag = "/api/works/set_work_camera_tag",
+  choiceness = "/api/works/compile_choiceness",
+  moveTopic = "/api/works/migrate_dynamic",
 }
 
 export function list(data: SearchPayload): Promise<RequestRecord<RecordItem>> {
@@ -73,6 +77,34 @@ export function reject(data: RejectRecord): Promise<void> {
 export function award(data: RecordItem): Promise<void> {
   return request({
     url: Api.award,
+    method: "post",
+    data,
+  });
+}
+export function find(data: FindRecord): Promise<void> {
+  return request({
+    url: Api.find,
+    method: "post",
+    data,
+  });
+}
+export function cameraTag(data: RecordItem): Promise<void> {
+  return request({
+    url: Api.cameraTag,
+    method: "post",
+    data,
+  });
+}
+export function choiceness(data: RecordItem): Promise<void> {
+  return request({
+    url: Api.choiceness,
+    method: "post",
+    data,
+  });
+}
+export function moveTopic(data: RecordItem): Promise<void> {
+  return request({
+    url: Api.moveTopic,
     method: "post",
     data,
   });

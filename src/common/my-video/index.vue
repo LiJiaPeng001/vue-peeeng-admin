@@ -34,8 +34,8 @@ let close = () => {
 <style lang="less" scoped>
 .video-icon {
   border-radius: 4px;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   background-color: #000;
   .icon {

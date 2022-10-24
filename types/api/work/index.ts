@@ -1,4 +1,5 @@
 import { PaginationRecord } from "../index";
+import { TagRecord } from "../ptk";
 
 export interface RecordItem {
   id?: number;
@@ -11,16 +12,32 @@ export interface RecordItem {
   tag_type?: number;
   cover_url?: string;
   award_config_id?: number;
+  android_camera_tag_id?: number;
+  ios_camera_tag_id?: number;
+  camera_tag_open_type?: number;
+  camera_tag_preview_mode?: string;
+  android_camera_tag?: TagRecord;
+  ios_camera_tag?: TagRecord;
+  compile_choiceness_time?: string;
+  channel_id?: number;
+  topic_id?: number;
+  activity_id?: number;
+  tagType?: number;
 }
 
 export interface RealImgRecord {
   file_name: string;
+  original_file_name: string;
 }
 export interface ResolveRecord {
   score?: number;
   id?: number;
   gold_number?: number;
   subfield_ids?: number[];
+}
+export interface FindRecord {
+  id?: number;
+  img_array?: string[];
 }
 export interface RejectRecord {
   id?: number;

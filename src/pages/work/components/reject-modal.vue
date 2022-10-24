@@ -4,14 +4,14 @@ vue
     <a-form ref="formRef" :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }" :rules="rules" :model="form">
       <a-form-item label="文字内容" name="review_content">
         <a-radio-group v-model:value="form.review_content">
-          <a-radio :value="2">失败</a-radio>
-          <a-radio :value="1">成功</a-radio>
+          <a-radio :value="2">违规</a-radio>
+          <a-radio :value="1">正常</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="文件" name="review_img">
         <a-radio-group v-model:value="form.review_img">
-          <a-radio :value="2">失败</a-radio>
-          <a-radio :value="1">成功</a-radio>
+          <a-radio :value="2">违规</a-radio>
+          <a-radio :value="1">正常</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item v-if="images.length" label="文件列表" name="disable_image_array">

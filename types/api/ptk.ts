@@ -1,4 +1,5 @@
 import { ImageRecord } from "./index";
+import { TypePayload } from "#/api/ptkChildType";
 
 export type SearchPayload = TypePayload & {
   id?: number | string;
@@ -8,6 +9,13 @@ export type SearchPayload = TypePayload & {
   camera_tag_tab_id: number;
   camera_tag_child_tab_id: number;
 };
+
+export interface TagRecord {
+  id: number;
+  name: string;
+  icon_url: string;
+  uid?: number;
+}
 
 export interface TabTypeRecord {
   id: number;

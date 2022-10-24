@@ -24,7 +24,7 @@ const props = defineProps<{
 
 let router = useRouter();
 let form = ref<RecordItem>({
-  ...props.record,
+  disable_comment: props.record.disable_comment,
 });
 let loading = ref<boolean>(false);
 let rules = {
@@ -32,11 +32,14 @@ let rules = {
 };
 
 watchEffect(() => {
-  form.value = { ...props.record };
+  form.value.disable_comment = props.record.disable_comment;
 });
 
 let onFinish = async () => {
-  await edit(form.value);
+  await edit({
+    id: props.record.id,
+    ...form.value,
+  });
   message.success("保存成功");
 };
 </script>

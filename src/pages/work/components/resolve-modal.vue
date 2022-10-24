@@ -50,6 +50,10 @@ let form = ref<ResolveRecord>({
   score: 2,
   gold_number: 0,
   subfield_ids: [],
+  ...props.record,
+});
+watchEffect(() => {
+  form.value = { ...props.record };
 });
 let tabList = ref<HomeTabsRecord[]>([]);
 let formRef = ref();
@@ -70,10 +74,13 @@ let onSelect = (e: number) => {
 };
 let ok = async () => {
   let { id = 0 } = props.record;
+  let { score = 0, subfield_ids = [], gold_number } = form.value;
   await formRef.value.validate();
   await resolve({
     id,
-    ...form.value,
+    score,
+    subfield_ids,
+    gold_number,
   });
   message.success("操作成功");
   emits("ok");
