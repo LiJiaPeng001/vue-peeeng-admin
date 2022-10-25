@@ -1,22 +1,21 @@
 <template>
   <div class="container">
     <Search v-model:payload="payload" @ok="fetchList" />
-    <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0 })">添加</a-button>
+    <a-button size="small" style="margin: 0 8px 10px 0" :type="selectedRowKeys.length ? 'primary' : 'default'" @click="remove()">批量删除</a-button>
     <a-table
+      row-key="id"
       :loading="loading"
       :data-source="list"
       :columns="columns"
       :pagination="{ current: payload.page, pageSize: payload.limit, total: count, pageSizeOptions: ['12', '15', '20'] }"
       :scroll="{ x: 1000 }"
+      :row-selection="rowSelection"
       @change="onChange"
     >
-      <template #bodyCell="{ column, text, record }">
-        <template v-if="column.key === 'bg_detail_img_url'">
-          <my-image :width="50" :height="50" :url="text"></my-image>
-        </template>
+      <template #bodyCell="{ column, text }">
         <template v-if="column.key === 'action'">
           <div class="btn-action">
-            <span class="primary" @click="toEdit(record)">编辑</span>
+            <span class="danger" @click="remove(text)">删除</span>
           </div>
         </template>
       </template>
@@ -26,25 +25,25 @@
 
 <script lang="ts" setup>
 import Search from "./search.vue";
-import * as Api from "~/api/activity/index";
-import { RecordItem, SearchPayload } from "#/api/activity/index";
-
-let route = useRoute();
-
-let { page = 1, state = -1, limit = 12, name = "", id = "" } = route.query;
+import * as Api from "~/api/work/comment";
+import { RecordItem, SearchPayload } from "#/api/work/comment";
+import { message, Modal } from "ant-design-vue";
 
 let payload = ref<SearchPayload>({
-  page: Number(page),
-  limit: Number(limit),
-  id: id ? Number(id) : String(id),
-  state: Number(state),
-  name: String(name),
+  page: 1,
+  limit: 12,
+  comment_id: undefined,
+  works_id: undefined,
+  source_uid: undefined,
+  select_type: 0,
+  nick: "",
+  comment: "",
 });
 
 let count = ref(0);
 let list = ref<RecordItem[]>([]);
-let go = useGo();
 let loading = ref(false);
+let selectedRowKeys = ref<number[]>([]);
 
 let columns = ref([
   {
@@ -54,52 +53,28 @@ let columns = ref([
     width: 100,
   },
   {
-    title: "活动标题",
-    dataIndex: "name",
-    // width: 150,
+    title: "作品ID",
+    dataIndex: "work_id",
   },
   {
-    title: "封面",
-    key: "bg_detail_img_url",
-    dataIndex: "bg_detail_img_url",
-    // width: 150,
+    title: "评论人ID",
+    dataIndex: "source_uid",
   },
   {
-    title: "开始时间",
-    dataIndex: "start_time",
-    // width: 80,
+    title: "评论人名",
+    dataIndex: "user_nick",
   },
   {
-    title: "结束时间",
-    dataIndex: "end_time",
+    title: "评论内容",
+    dataIndex: "content",
   },
   {
-    title: "作品数",
-    dataIndex: "works_num",
+    title: "举报次数",
+    dataIndex: "inform_num",
   },
   {
-    title: "点赞数",
-    dataIndex: "like_num",
-  },
-  {
-    title: "评论数",
-    dataIndex: "comment_num",
-  },
-  {
-    title: "参与人数",
-    dataIndex: "people_num",
-  },
-  {
-    title: "图片数",
-    dataIndex: "photo_num",
-  },
-  {
-    title: "单人发布作品数",
-    dataIndex: "works_limit",
-  },
-  {
-    title: "状态",
-    dataIndex: "state_text",
+    title: "创建时间",
+    dataIndex: "create_time",
   },
   {
     title: "操作",
@@ -109,7 +84,13 @@ let columns = ref([
   },
 ]);
 
+const onSelectChange = (keys: number[]) => {
+  selectedRowKeys.value = keys;
+};
+let rowSelection = { fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange };
+
 let fetchList = async () => {
+  selectedRowKeys.value = [];
   loading.value = true;
   let d = await Api.list(payload.value).catch(() => {
     loading.value = false;
@@ -128,11 +109,18 @@ let onChange = (values: { current: number; pageSize: number }) => {
 
 fetchList();
 
-let toEdit = (record: RecordItem) => {
-  go({
-    path: "/activity/detail",
-    query: {
-      id: record.id,
+let remove = (record?: RecordItem) => {
+  let ids: number[] = [];
+  ids = record && record.id ? [record.id] : selectedRowKeys.value;
+  Modal.confirm({
+    content: `确定删除？`,
+    async onOk() {
+      await Api.remove({ ids });
+      message.success("删除成功");
+      fetchList();
+    },
+    onCancel() {
+      Modal.destroyAll();
     },
   });
 };

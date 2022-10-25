@@ -1,15 +1,18 @@
 <template>
   <div class="search-form">
     <a-form :model="form" layout="inline" @finish="onFinish">
-      <a-form-item label="Id" name="id">
-        <a-input-number v-model:value="form.id" style="min-width: 140px" placeholder="请输入活动id"> </a-input-number>
+      <a-form-item label="评论id" name="comment_id">
+        <a-input-number v-model:value="form.comment_id" style="min-width: 140px" placeholder="请输入评论id"> </a-input-number>
       </a-form-item>
-      <a-form-item label="活动名称" name="name">
-        <a-input v-model:value="form.name" placeholder="请输入活动名称"> </a-input>
+      <a-form-item label="作品id" name="works_id">
+        <a-input-number v-model:value="form.works_id" style="min-width: 140px" placeholder="请输入作品id"> </a-input-number>
       </a-form-item>
-      <a-form-item label="作品状态" name="state">
-        <a-select ref="select" v-model:value="form.state">
-          <a-select-option v-for="(it, i) in stateMaps" :key="Number(i)">{{ it }}</a-select-option>
+      <a-form-item label="评论人id" name="source_uid">
+        <a-input-number v-model:value="form.source_uid" style="min-width: 140px" placeholder="请输入评论人id"> </a-input-number>
+      </a-form-item>
+      <a-form-item label="回复类型" name="select_type">
+        <a-select ref="select" v-model:value="form.select_type" style="min-width: 180px">
+          <a-select-option v-for="(it, i) in typeMaps" :key="Number(i)">{{ it }}</a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item>
@@ -21,8 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SearchPayload } from "#/api/activity/index";
-import { stateMaps } from "~/utils/utils";
+import { SearchPayload } from "#/api/work/comment";
 
 const props = defineProps<{ payload: SearchPayload }>();
 const emits = defineEmits(["update:payload", "ok"]);
@@ -35,7 +37,13 @@ watchEffect(() => {
   form.value = { ...props.payload };
 });
 
-const onFinish = (values: any) => {
+let typeMaps = {
+  0: "全部",
+  1: "用户回复马甲号评论",
+  2: "用户评论马甲号作品",
+};
+
+const onFinish = (values: SearchPayload) => {
   let query = { ...props.payload, ...values, page: 1 };
   emits("update:payload", query);
   emits("ok");
@@ -44,9 +52,6 @@ const onFinish = (values: any) => {
 const clear = () => {
   onFinish({
     page: 1,
-    name: "",
-    id: "",
-    state: -1,
     limit: 12,
   });
 };

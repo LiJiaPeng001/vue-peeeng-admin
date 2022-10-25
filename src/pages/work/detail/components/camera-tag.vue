@@ -97,7 +97,6 @@ let fetchTags = async () => {
   androidTags.value = android_tags;
   iosTags.value = ios_tags;
 };
-fetchTags();
 fetchTypes();
 </script>
 
