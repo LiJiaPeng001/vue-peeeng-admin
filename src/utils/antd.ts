@@ -2,7 +2,17 @@ import { App } from "vue";
 import "ant-design-vue/lib/notification/style/index.less";
 import "ant-design-vue/lib/message/style/index.less";
 import "ant-design-vue/lib/modal/style/index.less";
-import { HomeOutlined, SettingOutlined, CameraOutlined, BugOutlined, EditOutlined, DeleteOutlined, CreditCardOutlined, FileImageOutlined } from "@ant-design/icons-vue";
+import {
+  HomeOutlined,
+  SettingOutlined,
+  CameraOutlined,
+  BugOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  CreditCardOutlined,
+  FileImageOutlined,
+  UserOutlined,
+} from "@ant-design/icons-vue";
 
 export default (app: App) => {
   app.component("HomeOutlined", HomeOutlined);
@@ -13,4 +23,5 @@ export default (app: App) => {
   app.component("DeleteOutlined", DeleteOutlined);
   app.component("CreditCardOutlined", CreditCardOutlined);
   app.component("FileImageOutlined", FileImageOutlined);
+  app.component("UserOutlined", UserOutlined);
 };

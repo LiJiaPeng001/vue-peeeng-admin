@@ -41,8 +41,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(route => {
-  let title = import.meta.env.title || route.meta.title;
-  document.title = title;
+  document.title = import.meta.env.title || route.meta.title || "无他社区后台管理";
   NProgress.done();
 });
 

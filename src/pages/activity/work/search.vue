@@ -1,16 +1,14 @@
 <template>
   <div class="search-form">
     <a-form :model="form" layout="inline" @finish="onFinish">
-      <a-form-item label="Id" name="id">
-        <a-input-number v-model:value="form.id" style="min-width: 140px" placeholder="请输入活动id"> </a-input-number>
-      </a-form-item>
-      <a-form-item label="活动名称" name="name">
-        <a-input v-model:value="form.name" placeholder="请输入活动名称"> </a-input>
-      </a-form-item>
-      <a-form-item label="作品状态" name="state">
-        <a-select v-model:value="form.state">
-          <a-select-option v-for="(it, i) in stateMaps" :key="Number(i)">{{ it }}</a-select-option>
+      <a-form-item label="列表类型" name="type">
+        <a-select v-model:value="form.type" style="min-width: 120px">
+          <a-select-option key="new">最新</a-select-option>
+          <a-select-option key="hot">热门</a-select-option>
         </a-select>
+      </a-form-item>
+      <a-form-item label="活动id" name="activity_id">
+        <a-input-number v-model:value="form.activity_id" style="min-width: 140px" placeholder="请输入活动id"> </a-input-number>
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit" style="margin-right: 8px">查询</a-button>
@@ -21,13 +19,12 @@
 </template>
 
 <script lang="ts" setup>
-import { SearchPayload } from "#/api/activity/index";
-import { stateMaps } from "~/utils/utils";
+import { SearchParams } from "#/api/activity/work";
 
-const props = defineProps<{ payload: SearchPayload }>();
+const props = defineProps<{ payload: SearchParams }>();
 const emits = defineEmits(["update:payload", "ok"]);
 
-let form = ref<SearchPayload>({
+let form = ref<SearchParams>({
   ...props.payload,
 });
 
@@ -35,7 +32,7 @@ watchEffect(() => {
   form.value = { ...props.payload };
 });
 
-const onFinish = (values: any) => {
+const onFinish = (values: SearchParams) => {
   let query = { ...props.payload, ...values, page: 1 };
   emits("update:payload", query);
   emits("ok");
@@ -44,9 +41,7 @@ const onFinish = (values: any) => {
 const clear = () => {
   onFinish({
     page: 1,
-    name: "",
-    id: "",
-    state: -1,
+    type: "new",
     limit: 12,
   });
 };

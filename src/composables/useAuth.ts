@@ -1,5 +1,5 @@
 import { Ref } from "vue";
-import { UserInfo } from "#/store";
+import { UserInfo } from "#/api/user";
 
 type LocalName = "wuta_community_admin" | "wt_lang_data";
 type LocalTypes<T> = T extends "wuta_community_admin" ? UserInfo : never;

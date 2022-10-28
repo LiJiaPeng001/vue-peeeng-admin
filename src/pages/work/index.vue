@@ -18,6 +18,12 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, text, record }">
+        <template v-if="column.key === 'id'">
+          <a-button size="small" @click="toWorkUrl(record.id)">{{ text }}</a-button>
+        </template>
+        <template v-if="column.key === 'uid'">
+          <a-button size="small" @click="changeUid(text)">{{ text }}</a-button>
+        </template>
         <template v-if="column.key === 'real_img_list'">
           <my-image v-if="record.tag_type == 0" :width="50" :height="50" :images="text.map((item:any) => item.file_name)"></my-image>
           <my-video v-if="record.tag_type == 2" :width="50" :height="50" :poster="record.cover_url" :url="text[0].file_name"></my-video>
@@ -51,6 +57,8 @@ import LikeModal from "./components/like-modal.vue";
 import ResolveModal from "./components/resolve-modal.vue";
 import RejectModal from "./components/reject-modal.vue";
 
+let communityUrl = import.meta.env.VITE_COMMUNITY_URL;
+
 let payload = ref<SearchPayload>({
   page: 1,
   limit: 12,
@@ -81,6 +89,7 @@ let columns = ref([
   {
     title: "编号",
     dataIndex: "id",
+    key: "id",
     width: 100,
   },
   {
@@ -95,6 +104,7 @@ let columns = ref([
   {
     title: "用户ID",
     dataIndex: "uid",
+    key: "uid",
   },
   {
     title: "审核状态",
@@ -168,6 +178,14 @@ let rowClassName = (record: RecordItem) => {
   let { is_illegal, delete_time } = record;
   return is_illegal ? "is_illegal" : delete_time ? "delete_time" : null;
 };
+let toWorkUrl = (id: number) => {
+  window.open(`${communityUrl}/works/${id}`);
+};
+let changeUid = (uid: number) => {
+  payload.value.uid = uid;
+  payload.value.page = 1;
+  fetchList();
+};
 let openLike = async (v: RecordItem) => {
   let { id = 0, is_auto_like = false } = v;
   if (is_auto_like) {
@@ -208,11 +226,25 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.ant-table-striped :deep(.is_illegal) td {
-  background-color: #ffe8eb;
+<style lang="less">
+.ant-table-tbody {
+  .is_illegal {
+    td {
+      background-color: #ffe8eb;
+    }
+    // .ant-table-cell-row-hover {
+    //   background-color: #ffe8eb !important;
+    // }
+  }
 }
-.ant-table-striped :deep(.delete_time) td {
-  background-color: #e2e2e2;
+.ant-table-tbody {
+  .delete_time {
+    td {
+      background-color: #e2e2e2;
+    }
+    // .ant-table-cell-row-hover {
+    //   background-color: #e2e2e2 !important;
+    // }
+  }
 }
 </style>

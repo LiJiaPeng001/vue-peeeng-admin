@@ -28,6 +28,14 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/activity/detail/index.vue"),
       },
+      {
+        path: "/activity/work",
+        name: "ActivityWork",
+        meta: {
+          title: "列表类型",
+        },
+        component: () => import("~/pages/activity/work/index.vue"),
+      },
     ],
   },
 ];

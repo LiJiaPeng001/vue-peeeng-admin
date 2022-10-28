@@ -603,7 +603,7 @@ onActivated(() => {
 
 <script lang="ts">
 export default defineComponent({
-  name: "PtkTypeDetail",
+  name: "ActivityDetail",
 });
 </script>
 
