@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw, RouteLocationNormalized } from "vue-router";
 import permission from "~/store/permission";
 import setting from "~/store/setting";
 
@@ -62,7 +62,6 @@ export function getOpenKeys(path = "") {
 export function getRawOptionRoutes(path?: string): RouteRecordRaw[] {
   if (!path) {
     let route = useRoute();
-    console.log(useRoute, "route");
     path = route.path as string;
   }
   let permissionStore = permission();
@@ -74,4 +73,18 @@ export function getRawOptionRoutes(path?: string): RouteRecordRaw[] {
     }, [] as RouteRecordRaw[]);
   };
   return flat(getPermissionRoutes(permissionStore.currentRoutes, path));
+}
+
+/**
+ * @desc 序列化route
+ * @param route RouteLocationNormalized
+ * @returns RouteLocationNormalized
+ */
+
+export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormalized {
+  if (!route) return route;
+  const { ...opt } = route;
+  return {
+    ...opt,
+  };
 }

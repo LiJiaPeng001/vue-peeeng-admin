@@ -28,8 +28,8 @@ let onEditorChange = useDebounceFn((e: InputEvent) => {
 }, 1000);
 
 let initConfig = () => {
-  if (HE) return;
-  HE = window.HE.getEditor("textarea-edit", {
+  let heId = "textarea-edit";
+  HE = window.HE.getEditor(heId, {
     autoHeight: true,
     autoFloat: false,
     topOffset: 0,

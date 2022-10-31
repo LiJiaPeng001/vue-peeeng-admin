@@ -14,6 +14,6 @@ import setting from "~/store/setting";
 let route = useRoute();
 let settingStore = setting();
 let cacheTabs = computed(() => {
-  return settingStore.cacheTabs.filter(item => item.name != settingStore.refreshName).map(item => item.name as string);
+  return settingStore.getCacheTabs.filter(item => item.name != settingStore.refreshName).map(item => item.name as string);
 });
 </script>

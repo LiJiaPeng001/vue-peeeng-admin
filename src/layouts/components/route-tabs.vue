@@ -6,7 +6,7 @@
       <div class="tabs-box">
         <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
           <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
-          <a-tab-pane v-for="pane in settingStore.cacheTabs" :key="pane.path" :tab="pane.meta?.title" closable> </a-tab-pane>
+          <a-tab-pane v-for="pane in settingStore.getCacheTabs" :key="pane.fullPath" :tab="pane.meta?.title" closable> </a-tab-pane>
         </a-tabs>
       </div>
       <!-- action-btn -->
@@ -24,14 +24,14 @@
                 <CloseOutlined />
                 <span style="margin-left: 6px">关闭标签页</span>
               </a-menu-item>
-              <a-menu-item @click="removeTab(2)">
+              <!-- <a-menu-item @click="removeTab(2)">
                 <VerticalRightOutlined />
                 <span style="margin-left: 6px">关闭左侧标签</span>
               </a-menu-item>
               <a-menu-item @click="removeTab(3)">
                 <VerticalLeftOutlined />
                 <span style="margin-left: 6px">关闭右侧标签</span>
-              </a-menu-item>
+              </a-menu-item> -->
               <a-menu-item @click="removeTab(5)">
                 <PicCenterOutlined />
                 <span style="margin-left: 6px">关闭其他标签</span>
@@ -48,10 +48,10 @@
   </a-affix>
 </template>
 <script lang="ts" setup>
-import { RedoOutlined, DownOutlined, CloseOutlined, VerticalLeftOutlined, VerticalRightOutlined, MinusOutlined, PicCenterOutlined } from "@ant-design/icons-vue";
+import { RedoOutlined, DownOutlined, CloseOutlined, MinusOutlined, PicCenterOutlined } from "@ant-design/icons-vue";
 import permission from "~/store/permission";
 import setting from "~/store/setting";
-import { getRouteItem } from "~/utils/router";
+import { getRouteItem, getOpenKeys } from "~/utils/router";
 
 let settingStore = setting();
 let permissionStore = permission();
@@ -61,25 +61,22 @@ let go = useGo();
 
 let onChangePageAddRoute = () => {
   settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
-  if (route.path !== "/dashboard" && !settingStore.cacheTabs.some(item => item.path == route.fullPath)) {
-    settingStore.cacheTabs = [...settingStore.cacheTabs, { ...getRouteItem(permissionStore.currentRoutes, route.path), path: route.fullPath }];
-  }
+  settingStore.addTab(unref(route));
 };
 onChangePageAddRoute();
-
-router.afterEach(onChangePageAddRoute);
-
-let activeKey = computed(() => {
-  return route.fullPath;
+router.afterEach(() => {
+  onChangePageAddRoute();
+  getOpenKeys(route.path);
 });
 
-let edit = function (path: string) {
-  let { cacheTabs } = settingStore;
-  let current = cacheTabs.findIndex(item => item.path == path);
-  settingStore.cacheTabs = cacheTabs.filter(item => item.path !== path);
-  if (current > 0) {
-    return go(cacheTabs[current - 1].path);
-  }
+let activeKey = computed(() => {
+  return route.fullPath || route.path;
+});
+
+let edit = async function (fullPath: string) {
+  settingStore.closeTabByKey(fullPath);
+  let len = settingStore.getCacheTabs.length;
+  if (len > 0) return go(settingStore.getCacheTabs[len - 1].fullPath);
   go("/dashboard");
 };
 let refreshPage = async function () {
@@ -88,21 +85,17 @@ let refreshPage = async function () {
   settingStore.refreshName = "";
 };
 let removeTab = function (state: number) {
-  let { cacheTabs = [] } = settingStore;
-  if (!cacheTabs.length) return;
-  let current = cacheTabs.findIndex(item => item.path === route.path);
+  if (!settingStore.getCacheTabs.length) return;
+  let current = settingStore.getCacheTabs.findIndex(item => item.fullPath === route.fullPath);
   if (state === 1) {
-    settingStore.cacheTabs = cacheTabs.filter(item => item.path !== route.path);
+    settingStore.closeTab(unref(route));
     go("/dashboard");
   }
-  if (state === 2) settingStore.cacheTabs = cacheTabs.slice(current, cacheTabs.length);
-  if (state === 3) settingStore.cacheTabs = cacheTabs.slice(0, current + 1);
   if (state === 5) {
-    if (cacheTabs.length === 1) return;
-    settingStore.cacheTabs = [cacheTabs[current]];
+    settingStore.changeTab([settingStore.getCacheTabs[current]]);
   }
   if (state === 4) {
-    settingStore.cacheTabs = [];
+    settingStore.clearTab();
     go("/dashboard");
   }
 };
