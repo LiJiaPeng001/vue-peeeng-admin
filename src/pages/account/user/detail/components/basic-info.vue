@@ -9,7 +9,7 @@
     <a-descriptions-item label="待审核背景图">
       <my-image :url="record.wait_review_background_img_url"></my-image>
     </a-descriptions-item>
-    <a-descriptions-item label="用户状态" :span="3">       <a-badge :status="record.state == 0 ? 'processing' : 'error'" :text="record.state_text" />     </a-descriptions-item>
+    <a-descriptions-item label="用户状态">       <a-badge :status="record.state == 0 ? 'processing' : 'error'" :text="record.state_text" />     </a-descriptions-item>
     <a-descriptions-item label="等级">{{ record.level }}</a-descriptions-item>
     <a-descriptions-item label="舔狗数">{{ record.hidden_love_user_number }}</a-descriptions-item>
     <a-descriptions-item label="推荐数">{{ record.recommend_num }}</a-descriptions-item>

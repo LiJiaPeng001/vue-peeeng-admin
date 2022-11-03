@@ -7,7 +7,10 @@
       <a-tab-pane :key="2" tab="禁言">
         <no-say :record="data" @ok="fetchData"></no-say>
       </a-tab-pane>
-      <a-tab-pane :key="3" tab="背景图">
+      <a-tab-pane :key="3" tab="勋章徽章">
+        <badge-info :record="data"></badge-info>
+      </a-tab-pane>
+      <a-tab-pane :key="4" tab="背景图">
         <bg-action></bg-action>
       </a-tab-pane>
       <!-- <a-tab-pane :key="5" tab="拍同款">
@@ -29,6 +32,7 @@ import { detail } from "~/api/account/user";
 import BasicInfo from "./components/basic-info.vue";
 import NoSay from "./components/no-say.vue";
 import BgAction from "./components/bg-action.vue";
+import BadgeInfo from "./components/badge-info.vue";
 
 let route = useRoute();
 // let router = useRouter();

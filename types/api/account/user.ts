@@ -10,6 +10,12 @@ export type SearchParams = PaginationRecord & {
   gold_number_sort?: boolean;
 };
 
+export interface BadgeParams {
+  id?: number;
+  medal_id?: number;
+  badge_id?: number;
+}
+
 export interface BanParams {
   id?: number;
   state?: number;

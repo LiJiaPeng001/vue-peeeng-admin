@@ -1,4 +1,4 @@
-import { RecordItem, SearchParams, BanParams, NoSayParams } from "#/api/account/user";
+import { RecordItem, SearchParams, BanParams, NoSayParams, BadgeParams } from "#/api/account/user";
 import { RequestRecord } from "#/api/index";
 import request from "~/utils/request/index";
 
@@ -9,6 +9,8 @@ enum Api {
   tuijian = "/api/users/deal_recommend",
   white = "/api/users/deal_white_user",
   nosay = "/api/users/deal_banned_to_post",
+  medal = "/api/users/medal",
+  badge = "/api/users/badge",
 }
 
 export function list(data: SearchParams): Promise<RequestRecord<RecordItem>> {
@@ -59,6 +61,20 @@ export function white(data: { id?: number }): Promise<void> {
 export function nosay(data: NoSayParams): Promise<void> {
   return request({
     url: Api.nosay,
+    data,
+    method: "post",
+  });
+}
+export function medal(data: BadgeParams): Promise<void> {
+  return request({
+    url: Api.medal,
+    data,
+    method: "post",
+  });
+}
+export function badge(data: BadgeParams): Promise<void> {
+  return request({
+    url: Api.badge,
     data,
     method: "post",
   });
