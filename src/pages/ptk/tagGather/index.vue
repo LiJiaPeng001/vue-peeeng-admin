@@ -6,9 +6,9 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <div class="btn-action">
-            <span class="primary" @click="toEdit(record)">编辑</span>
+            <span primary @click="toEdit(record)">编辑</span>
             <a-popconfirm title="您确定要删除嘛?" ok-text="是" cancel-text="否" @confirm="remove(record)">
-              <span class="danger">删除</span>
+              <span danger>删除</span>
             </a-popconfirm>
           </div>
         </template>

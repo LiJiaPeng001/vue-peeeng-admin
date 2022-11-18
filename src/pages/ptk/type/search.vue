@@ -43,9 +43,3 @@ const clear = () => {
   });
 };
 </script>
-
-<style lang="less" scoped>
-.search-form {
-  padding: 10px 10px 20px;
-}
-</style>

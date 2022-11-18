@@ -15,7 +15,7 @@
       <template #bodyCell="{ column, text }">
         <template v-if="column.key === 'action'">
           <div class="btn-action">
-            <span class="danger" @click="remove(text)">删除</span>
+            <span danger @click="remove(text)">删除</span>
           </div>
         </template>
       </template>

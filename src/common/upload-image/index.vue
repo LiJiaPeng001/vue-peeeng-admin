@@ -1,10 +1,11 @@
 <template>
-  <div class="value middle-flex">
+  <div class="value" middle-flex>
     <div
       v-for="(it, i) in value"
       :key="it.url"
       draggable="true"
-      class="image cover fadeIn"
+      class="image cover"
+      animation-fadeIn
       :style="{ backgroundImage: `url(${it.url})` }"
       @dragover.prevent
       @dragstart="dragstart($event, i)"

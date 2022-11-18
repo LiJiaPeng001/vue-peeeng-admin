@@ -1,13 +1,19 @@
 <template>
   <div
-    class="video-icon center-flex cover"
+    b-rounded-4
+    center-flex
+    cover
+    w-full
+    h-full
+    cursor-pointer
+    bg-hex-000
     :style="{ width: width + 'px', height: height + 'px', backgroundImage: `url(${poster})` }"
     @click.stop="hasClick ? emits('click') : (visible = true)"
   >
-    <img :src="video" class="icon" @click.stop="!hasClick ? undefined : (visible = true)" />
+    <img class="w-30%" block :src="video" @click.stop="!hasClick ? undefined : (visible = true)" />
   </div>
   <a-modal v-model:visible="visible" @ok="close">
-    <video v-if="visible" :poster="poster" preload="auto" class="video-play" :src="url" controls></video>
+    <video v-if="visible" max-w-full b-rounded-10 class="m-[0-auto-20]" :poster="poster" preload="auto" :src="url" controls></video>
   </a-modal>
 </template>
 
@@ -30,22 +36,3 @@ let close = () => {
   visible.value = false;
 };
 </script>
-
-<style lang="less" scoped>
-.video-icon {
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  background-color: #000;
-  .icon {
-    width: 30%;
-    display: block;
-  }
-}
-.video-play {
-  max-width: 100%;
-  border-radius: 10px;
-  margin: 20px auto 0;
-}
-</style>

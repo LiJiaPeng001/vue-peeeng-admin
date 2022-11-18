@@ -1,5 +1,5 @@
 <template>
-  <img v-if="url" :class="`${type || 'cover'} my-image`" :src="url" :style="{ width: width + 'px', height: height + 'px' }" alt="" @click="openSwiper" />
+  <img v-if="url" :class="`${type || 'cover'}`" b-rounded-4 block w-120 h-120 :src="url" :style="{ width: width + 'px', height: height + 'px' }" alt="" @click="openSwiper" />
 </template>
 
 <script lang="ts" setup>
@@ -29,12 +29,3 @@ let openSwiper = () => {
   });
 };
 </script>
-
-<style lang="less" scoped>
-.my-image {
-  border-radius: 4px;
-  display: block;
-  width: 120px;
-  height: 120px;
-}
-</style>

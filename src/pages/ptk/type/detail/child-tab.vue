@@ -12,7 +12,7 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <div class="btn-action">
-            <span class="primary" @click="toEdit(record)">编辑</span>
+            <span primary @click="toEdit(record)">编辑</span>
           </div>
         </template>
       </template>

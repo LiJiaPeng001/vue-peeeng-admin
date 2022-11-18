@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import autoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import Unocss from "unocss/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
 import viteHtmlPlugin from "./src/plugins/viteHtmlPlugin";
@@ -23,6 +24,7 @@ export default ({ mode }: ConfigEnv) => {
     },
     plugins: [
       vue(),
+      Unocss(),
       Components({
         resolvers: [AntDesignVueResolver()],
       }),

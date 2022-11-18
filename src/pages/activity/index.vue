@@ -15,9 +15,7 @@
           <my-image :width="50" :height="50" :url="text"></my-image>
         </template>
         <template v-if="column.key === 'action'">
-          <div class="btn-action">
-            <span class="primary" @click="toEdit(record)">编辑</span>
-          </div>
+          <span primary @click="toEdit(record)">编辑</span>
         </template>
       </template>
     </a-table>

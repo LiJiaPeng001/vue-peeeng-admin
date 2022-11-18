@@ -1,8 +1,11 @@
 <template>
-  <a-button>我是debugger</a-button>
-  <a-input placeholder="输入"></a-input>
+  <a-button class="mx-auto mb-10" @click="toggleDark">222</a-button>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+let isDark = useDark();
+
+const toggleDark = useToggle(isDark);
+</script>
 <script lang="ts">
 export default defineComponent({
   name: "Test",

@@ -64,12 +64,3 @@ const clear = () => {
   });
 };
 </script>
-
-<style lang="less" scoped>
-.search-form {
-  padding: 10px 10px 8px;
-  .ant-form-item {
-    margin-bottom: 12px;
-  }
-}
-</style>

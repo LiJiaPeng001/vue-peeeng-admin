@@ -20,10 +20,8 @@
           <a-switch :checked="text" @change="onWhite($event, record)"></a-switch>
         </template>
         <template v-if="column.key === 'action'">
-          <div class="btn-action">
-            <span class="primary" @click="toEdit(record)">编辑</span>
-            <span class="danger" @click="openModal(record)">封禁</span>
-          </div>
+          <span primary @click="toEdit(record)">编辑</span>
+          <span danger @click="openModal(record)">封禁</span>
         </template>
       </template>
     </a-table>
