@@ -1,20 +1,11 @@
 import presetRemToPx from "@unocss/preset-rem-to-px";
-import {
-  defineConfig,
-  presetAttributify,
-  presetIcons,
-  presetTypography,
-  presetUno,
-  presetWebFonts,
-  // transformerDirectives,
-  // transformerVariantGroup,
-} from "unocss";
+import { defineConfig, presetAttributify, presetIcons, presetTypography, presetUno, presetWebFonts, transformerDirectives, transformerVariantGroup } from "unocss";
 
 export default defineConfig({
   theme: {
-    extends: {
+    extend: {
       animation: {
-        fadeIn: "fadeIn 0.3s linear",
+        "fade-in": "fadeIn 0.3s linear",
       },
     },
   },
@@ -43,8 +34,5 @@ export default defineConfig({
       },
     }),
   ],
-  // transformers: [
-  //   transformerDirectives(),
-  //   transformerVariantGroup(),
-  // ],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
 });

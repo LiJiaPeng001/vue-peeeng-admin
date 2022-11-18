@@ -1,5 +1,5 @@
 <template>
-  <a-button class="mx-auto mb-10" @click="toggleDark">222</a-button>
+  <a-button animate-fade-in @click="toggleDark">222</a-button>
 </template>
 <script lang="ts" setup>
 let isDark = useDark();
