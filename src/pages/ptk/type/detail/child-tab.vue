@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <a-button type="primary" style="margin-bottom: 12px" @click="toEdit">添加</a-button>
     <a-table
       :loading="loading"

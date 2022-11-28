@@ -6,8 +6,6 @@ import Components from "unplugin-vue-components/vite";
 import Unocss from "unocss/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
-import viteHtmlPlugin from "./src/plugins/viteHtmlPlugin";
-
 function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
 }
@@ -34,9 +32,7 @@ export default ({ mode }: ConfigEnv) => {
           enabled: true, // Default `false`
         },
         dirs: ["./src/composables"],
-      }),
-      viteHtmlPlugin({
-        metaEnv: env,
+        vueTemplate: true,
       }),
     ],
     css: {

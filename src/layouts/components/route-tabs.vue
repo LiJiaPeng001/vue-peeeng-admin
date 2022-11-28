@@ -6,7 +6,8 @@
       <div class="tabs-box">
         <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
           <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
-          <a-tab-pane v-for="pane in settingStore.getCacheTabs" :key="pane.fullPath" :tab="pane.meta?.title" closable> </a-tab-pane>
+          <a-tab-pane v-for="pane in settingStore.getCacheTabs" :key="pane.fullPath" :tab="`${pane.meta?.title}${Number(pane.query.id) ? ':' + pane.query.id : ''}`" closable>
+          </a-tab-pane>
         </a-tabs>
       </div>
       <!-- action-btn -->
@@ -104,7 +105,6 @@ let removeTab = function (state: number) {
 <style lang="less" scoped>
 .layout-tabs {
   padding: 10px 12px;
-  background-color: #f6f6f6;
   .tabs-box {
     flex-grow: 1;
     overflow-x: auto;
@@ -116,7 +116,6 @@ let removeTab = function (state: number) {
     span {
       width: 30px;
       height: 30px;
-      background-color: #fff;
       cursor: pointer;
       color: #aaa;
       transition: 0.2s;

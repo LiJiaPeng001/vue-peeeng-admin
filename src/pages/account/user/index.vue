@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <Search v-model:payload="payload" @ok="fetchList" />
     <a-table
       :loading="loading"

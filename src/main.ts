@@ -1,7 +1,7 @@
 import { createApp } from "vue";
+import dayjs from "dayjs";
 import "uno.css";
 import "@unocss/reset/normalize.css";
-
 import App from "./App.vue";
 import router from "./router/index";
 import pinia from "./store";
@@ -10,6 +10,7 @@ import antd from "./utils/antd";
 import "./style/index.less";
 
 const Vue = createApp(App);
+dayjs.locale("zh-cn");
 Vue.use(pinia);
 Vue.use(router);
 

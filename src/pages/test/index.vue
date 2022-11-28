@@ -1,11 +1,7 @@
 <template>
-  <a-button animate-fade-in @click="toggleDark">222</a-button>
+  <a-button animate-fade-in text="text-sm dark:red" @click="toggleDark()">222</a-button>
 </template>
-<script lang="ts" setup>
-let isDark = useDark();
-
-const toggleDark = useToggle(isDark);
-</script>
+<script lang="ts" setup></script>
 <script lang="ts">
 export default defineComponent({
   name: "Test",

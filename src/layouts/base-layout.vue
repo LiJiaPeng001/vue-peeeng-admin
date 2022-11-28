@@ -38,7 +38,6 @@ let cacheTabs = computed(() => {
   .page-layout {
     .route-page {
       margin: 0 12px 10px 12px;
-      background-color: white;
       border-radius: 2px;
       padding: 6px;
     }

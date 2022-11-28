@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <a-tabs v-model:activeKey="activeKey">
       <a-tab-pane :key="1" tab="基本信息">
         <basic-info :record="data"></basic-info>

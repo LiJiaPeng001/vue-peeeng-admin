@@ -12,7 +12,6 @@
   left: 0;
   z-index: 9;
   top: 0;
-  background-color: white;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
 }
 </style>

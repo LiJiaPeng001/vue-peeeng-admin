@@ -11,17 +11,19 @@
           <a-breadcrumb-item v-for="it in routeMached" :key="it.path">{{ it.meta?.title }}</a-breadcrumb-item>
         </a-breadcrumb>
       </div>
-      <a-popover>
-        <template #content>
-          <p @click="logout">退出登录</p>
-        </template>
-        <a-avatar>
-          <template #icon>
-            <UserOutlined />
+      <div>
+        <a-popover>
+          <template #content>
+            <p @click="logout">退出登录</p>
           </template>
-        </a-avatar>
-        {{ userStore.user.name }}
-      </a-popover>
+          <a-avatar>
+            <template #icon>
+              <UserOutlined />
+            </template>
+          </a-avatar>
+          {{ userStore.user.name }}
+        </a-popover>
+      </div>
     </div>
   </div>
 </template>
@@ -68,7 +70,7 @@ router.afterEach(() => {
     position: fixed;
     top: 0;
     right: 0;
-    transition: width 0.2s;
+    // transition: width 0.2s;
     background-color: #fff;
     z-index: 9;
   }

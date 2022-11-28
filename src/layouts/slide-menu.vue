@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showTabs" class="slide-menu">
+  <div class="slide-menu">
     <div class="slide-blank" :style="{ width: settingStore.layoutW + 'px' }"></div>
     <component :is="settingStore.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
       <div class="header center-flex">
@@ -12,6 +12,7 @@
         mode="inline"
         :style="{ width: settingStore.menuW + 'px' }"
         :open-keys="settingStore.openKeys"
+        :theme="isDark ? 'dark' : 'light'"
         @click="handleClick"
       >
         <template v-for="item in permissionStore.currentRoutes" :key="item.path">
@@ -35,7 +36,7 @@
 <script setup lang="ts">
 import permission from "~/store/permission";
 import setting from "~/store/setting";
-import constantRoutes from "~/router/constantRoutes/index";
+// import constantRoutes from "~/router/constantRoutes/index";
 import SubMenu from "./components/sub-menu.vue";
 import Logo from "../components/logo.vue";
 import { getOpenKeys } from "../utils/router";
@@ -45,7 +46,8 @@ let go = useGo();
 let settingStore = setting();
 let permissionStore = permission();
 
-let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
+// let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
+getOpenKeys();
 
 let selectedKeys = computed(() => {
   return [route.meta.parentRoute || route.path];
@@ -59,7 +61,7 @@ useResizeObserver(
   }, 20)
 );
 
-getOpenKeys();
+// getOpenKeys();
 
 let handleClick = ({ key = "" }: { key: string }) => {
   go(key);
@@ -82,13 +84,15 @@ export default defineComponent({
 .slide-menu {
   position: relative;
   z-index: 99;
+  min-height: 100vh;
+  background-color: var(--slider-bg-color);
   .slide-blank {
     height: 100%;
     flex-shrink: 0;
   }
   .header {
     height: 64px;
-    transition: width 0.2s linear;
+    // transition: width 0.2s linear;
   }
 }
 </style>

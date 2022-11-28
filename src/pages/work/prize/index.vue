@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <Search v-model:payload="payload" @ok="fetchList" />
     <a-button type="primary" style="margin-bottom: 12px" @click="toEdit({ id: 0, name: '', state: 0 })">添加</a-button>
     <a-table

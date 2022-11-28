@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <Search v-model:payload="payload" @ok="fetchList" />
     <div class="btns">
       <a-button size="small" style="margin: 0 8px 10px 0" :type="selectedRowKeys.length ? 'primary' : 'default'" @click="edit(1)">批量1分</a-button>

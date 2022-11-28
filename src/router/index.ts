@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import NProgress from "nprogress";
+// import NProgress from "nprogress";
 import constantRoutes from "./constantRoutes/index";
 import dynamicRoutes from "./dynamicRoutes/index";
 
-import "nprogress/nprogress.css";
+// import "nprogress/nprogress.css";
 import user from "~/store/user";
 
 function flattenRoute(routes: RouteRecordRaw[]) {
@@ -33,7 +33,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  NProgress.start();
+  // NProgress.start();
   let userStore = user();
   if (!userStore.isLogin && to.path !== "/login") return next("/login");
   if (userStore.isLogin && to.path == "/login") return next("/");
@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(route => {
   document.title = import.meta.env.title || route.meta.title || "无他社区后台管理";
-  NProgress.done();
+  // NProgress.done();
 });
 
 export default router;
