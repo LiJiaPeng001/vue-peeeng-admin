@@ -5,6 +5,7 @@ import autoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import Unocss from "unocss/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+// import { getThemeVariables } from 'ant-design-vue/dist/theme'
 
 function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
@@ -40,6 +41,9 @@ export default ({ mode }: ConfigEnv) => {
         less: {
           javascriptEnabled: true,
           additionalData: `@import "${resolve(__dirname, "./src/style/variable.less")}";`,
+          // modifyVars: getThemeVariables({
+          //   dark: true, // 开启暗黑模式
+          // }),
         },
       },
     },

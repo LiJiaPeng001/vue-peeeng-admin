@@ -7,6 +7,7 @@ import router from "./router/index";
 import pinia from "./store";
 import components from "./common/index";
 import antd from "./utils/antd";
+
 import "./style/index.less";
 
 const Vue = createApp(App);

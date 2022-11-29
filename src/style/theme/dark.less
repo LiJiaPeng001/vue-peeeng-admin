@@ -1,8 +1,16 @@
 html[class="dark"] {
-  --bgColor: #1a1a1a;
+  @import "ant-design-vue/dist/antd.dark.less";
+
+  --bgColor: #000000;
   --textColor: #ffffff;
 
   // slider-menu
-  --slider-bg-color: #001529;
-  --slider-highlight-bg-color: #00061a;
+  --slider-bg-color: #141414;
+
+  // content
+  --content-bg-color: #151515;
+
+  .ant-menu {
+    box-shadow: none;
+  }
 }

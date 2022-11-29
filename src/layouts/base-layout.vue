@@ -40,6 +40,7 @@ let cacheTabs = computed(() => {
       margin: 0 12px 10px 12px;
       border-radius: 2px;
       padding: 6px;
+      background: var(--content-bg-color);
     }
   }
   .base-container {

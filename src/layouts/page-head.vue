@@ -2,7 +2,7 @@
   <div class="layout-header">
     <div class="layout-fixed middle-flex" :style="{ width: `calc(100% - ${settingStore.layoutW}px)` }">
       <div class="l-menu middle-flex">
-        <Logo v-if="settingStore.mode === 'mobile'" style="width: 36px; height: 36px; margin-right: 10px"></Logo>
+        <img v-if="settingStore.mode === 'mobile'" :src="logo" w-36 h-36 mr-10 />
         <a-button size="small" @click="handleClick">
           <MenuUnfoldOutlined v-if="settingStore.collapsed" />
           <MenuFoldOutlined v-else />
@@ -11,14 +11,15 @@
           <a-breadcrumb-item v-for="it in routeMached" :key="it.path">{{ it.meta?.title }}</a-breadcrumb-item>
         </a-breadcrumb>
       </div>
-      <div>
-        <a-popover>
+      <div middle-flex>
+        <dark-mode mr-20 />
+        <a-popover mb-10>
           <template #content>
             <p @click="logout">退出登录</p>
           </template>
           <a-avatar>
             <template #icon>
-              <UserOutlined />
+              <UserOutlined w-18 h-18 />
             </template>
           </a-avatar>
           {{ userStore.user.name }}
@@ -33,14 +34,15 @@ import { RouteRecordRaw } from "vue-router";
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons-vue";
 import setting from "~/store/setting";
 import user from "~/store/user";
-import Logo from "~/components/logo.vue";
 import { getRawOptionRoutes } from "~/utils/router";
+import DarkMode from "~/components/dark-mode/index.vue";
 
 let settingStore = setting();
 let userStore = user();
 let router = useRouter();
 let route = useRoute();
 let routeMached = ref<RouteRecordRaw[]>(getRawOptionRoutes(route.path));
+let { logo } = useLocalImage();
 
 let handleClick = () => {
   settingStore.collapsed = !settingStore.collapsed;
@@ -56,13 +58,14 @@ router.afterEach(() => {
 
 <style lang="less" scoped>
 .layout-header {
-  background-color: #fff;
   border-bottom: 1px solid rgba(0, 21, 41, 0.08);
   box-sizing: border-box;
   position: relative;
   height: 64px;
   cursor: pointer;
   .layout-fixed {
+    background-color: var(--content-bg-color);
+    color: var(--textColor);
     justify-content: space-between;
     height: 64px;
     line-height: 64px;
@@ -70,8 +73,6 @@ router.afterEach(() => {
     position: fixed;
     top: 0;
     right: 0;
-    // transition: width 0.2s;
-    background-color: #fff;
     z-index: 9;
   }
 }

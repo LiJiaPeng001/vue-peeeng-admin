@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <a-affix :offset-top="64">
-    <div class="layout-tabs middle-flex">
+    <div class="layout-tabs middle-flex" middle-flex px-12 py-10>
       <!-- tabs -->
-      <div class="tabs-box">
+      <div class="tabs-box" grow-1 overflow-x-auto w-0>
         <a-tabs :active-key="activeKey" size="small" :hide-add="true" :tab-bar-gutter="3" type="editable-card" @tab-click="go" @edit="edit">
           <a-tab-pane v-for="pane in settingStore.defaultTabs" :key="pane.path" :tab="pane.meta?.title" :closable="false"> </a-tab-pane>
           <a-tab-pane v-for="pane in settingStore.getCacheTabs" :key="pane.fullPath" :tab="`${pane.meta?.title}${Number(pane.query.id) ? ':' + pane.query.id : ''}`" closable>
@@ -11,8 +11,8 @@
         </a-tabs>
       </div>
       <!-- action-btn -->
-      <div class="extra-btns middle-flex">
-        <span style="margin-right: 4px" @click="refreshPage"><RedoOutlined /></span>
+      <div middle-flex mr-6 shrink-0>
+        <span mr-4 w-30 h-30 cursor-pointer color-hex-aaa transition-200 font-14 center-flex hover:color-hex-000 @click="refreshPage"><RedoOutlined /></span>
         <a-dropdown trigger="click">
           <span><DownOutlined /></span>
           <template #overlay>
@@ -104,30 +104,7 @@ let removeTab = function (state: number) {
 
 <style lang="less" scoped>
 .layout-tabs {
-  padding: 10px 12px;
-  .tabs-box {
-    flex-grow: 1;
-    overflow-x: auto;
-    width: 0;
-  }
-  .extra-btns {
-    margin-left: 6px;
-    flex-shrink: 0;
-    span {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      color: #aaa;
-      transition: 0.2s;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &:hover {
-        color: #000;
-      }
-    }
-  }
+  background-color: var(--bgColor);
 }
 </style>
 

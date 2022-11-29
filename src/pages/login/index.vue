@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <dark-mode absolute top-20 right-20 z-9 />
     <ul class="circles">
       <li v-for="n in 10" :key="n"></li>
     </ul>
@@ -80,7 +81,7 @@ let onSubmit = async () => {
   justify-content: center;
   height: 100vh;
   overflow: auto;
-  background: #f0f2f5;
+  background: var(--bg-color);
   background-size: 100%;
 }
 .form-model {
