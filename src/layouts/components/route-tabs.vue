@@ -50,19 +50,18 @@
 </template>
 <script lang="ts" setup>
 import { RedoOutlined, DownOutlined, CloseOutlined, MinusOutlined, PicCenterOutlined } from "@ant-design/icons-vue";
-import permission from "~/store/permission";
-import setting from "~/store/setting";
 import { getRouteItem, getOpenKeys } from "~/utils/router";
 
-let settingStore = setting();
-let permissionStore = permission();
+let settingStore = useSettingStore();
+let permissionStore = usePermissionStore();
 let route = useRoute();
 let router = useRouter();
 let go = useGo();
 
 let onChangePageAddRoute = () => {
+  console.log("wuhu");
   settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
-  settingStore.addTab(unref(route));
+  settingStore.addTab(route);
 };
 onChangePageAddRoute();
 router.afterEach(() => {

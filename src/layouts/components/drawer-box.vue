@@ -13,9 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import setting from "~/store/setting";
-
-let settingStore = setting();
+let settingStore = useSettingStore();
 
 function close() {
   settingStore.collapsed = true;

@@ -32,12 +32,11 @@
 <script setup lang="ts">
 import { UserOutlined, LockFilled } from "@ant-design/icons-vue";
 import { notification } from "ant-design-vue";
-import user from "~/store/user";
 import { LoginPayload } from "#/api/user";
 
 let router = useRouter();
 let { logo } = useLocalImage();
-let userStore = user();
+let user = useUserStore();
 let loading = ref(false);
 
 let labelCol = { span: 0 };
@@ -60,7 +59,7 @@ let rules = ref({
 let onSubmit = async () => {
   await form.value.validate();
   loading.value = true;
-  let { name } = await userStore.login(forms.value).catch(() => {
+  let { name } = await user.login(forms.value).catch(() => {
     loading.value = false;
     return Promise.reject();
   });

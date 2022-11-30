@@ -32,7 +32,7 @@ export default ({ mode }: ConfigEnv) => {
         eslintrc: {
           enabled: true, // Default `false`
         },
-        dirs: ["./src/composables"],
+        dirs: ["./src/composables", "./src/store"],
         vueTemplate: true,
       }),
     ],

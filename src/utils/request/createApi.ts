@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { AxiosRequestConfig } from "axios";
-import user from "~/store/user";
 import { OptionsConfig, CreateApiOptions } from "./types";
 import { getErrStatus, getErrMsg } from "./tools/index";
 import { message } from "ant-design-vue";
@@ -31,18 +30,19 @@ export default ({
     for (let i = 0; i < maxCount; i++) {
       try {
         if (shouldLoading) loading.show();
-        let userStore = user();
+        let user = useUserStore();
         // 更新本地token
         const { data, headers } = await instence(requestOptions);
         if (shouldLoading) loading.hide();
         let { authorization = "" } = headers;
         const auth = useAuth();
-        let { name } = auth.value;
-        auth.value = { token: authorization || auth.value.token, name };
+        let { name, token } = auth.value;
+        auth.value = { token: authorization || token, name };
+
         // success code
         if (data.code === 0) return data.data;
         // 重新登录
-        if (data.code === 401 || data.code === 419) await userStore.reloadPage();
+        if (data.code === 401 || data.code === 419) await user.reloadPage();
         // 报错提醒
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);

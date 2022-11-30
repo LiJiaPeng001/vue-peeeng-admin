@@ -9,7 +9,7 @@
           <router-view v-slot="{ Component }">
             <transition name="fade-slide" mode="out-in">
               <keep-alive :include="cacheTabs">
-                <component :is="Component" v-if="route.name !== settingStore.refreshName" :key="route.fullPath"></component>
+                <component :is="Component" v-if="route.name !== setting.refreshName" :key="route.fullPath"></component>
               </keep-alive>
             </transition>
           </router-view>
@@ -20,15 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import setting from "~/store/setting";
 import pageHead from "./page-head.vue";
 import slideMenu from "./slide-menu.vue";
 import RouteTabs from "./components/route-tabs.vue";
 
 let route = useRoute();
-let settingStore = setting();
+let setting = useSettingStore();
 let cacheTabs = computed(() => {
-  return settingStore.getCacheTabs.filter(item => item.name != settingStore.refreshName).map(item => item.name as string);
+  return setting.getCacheTabs.filter(item => item.name != setting.refreshName).map(item => item.name as string);
 });
 </script>
 

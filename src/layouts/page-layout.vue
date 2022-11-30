@@ -9,10 +9,8 @@
 </template>
 
 <script lang="ts" setup>
-import setting from "~/store/setting";
-
 let route = useRoute();
-let settingStore = setting();
+let settingStore = useSettingStore();
 let cacheTabs = computed(() => {
   return settingStore.getCacheTabs.filter(item => item.name != settingStore.refreshName).map(item => item.name as string);
 });

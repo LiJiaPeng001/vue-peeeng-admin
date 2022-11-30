@@ -1,13 +1,13 @@
 <template>
   <div class="layout-header">
-    <div class="layout-fixed middle-flex" :style="{ width: `calc(100% - ${settingStore.layoutW}px)` }">
-      <div class="l-menu middle-flex">
-        <img v-if="settingStore.mode === 'mobile'" :src="logo" w-36 h-36 mr-10 />
+    <div class="layout-fixed" middle-flex :style="{ width: `calc(100% - ${setting.layoutW}px)` }">
+      <div class="l-menu" middle-flex>
+        <img v-if="setting.mode === 'mobile'" :src="logo" w-36 h-36 mr-10 />
         <a-button size="small" @click="handleClick">
-          <MenuUnfoldOutlined v-if="settingStore.collapsed" />
+          <MenuUnfoldOutlined v-if="setting.collapsed" />
           <MenuFoldOutlined v-else />
         </a-button>
-        <a-breadcrumb v-if="settingStore.mode === 'pc'" style="margin-left: 10px">
+        <a-breadcrumb v-if="setting.mode === 'pc'" style="margin-left: 10px">
           <a-breadcrumb-item v-for="it in routeMached" :key="it.path">{{ it.meta?.title }}</a-breadcrumb-item>
         </a-breadcrumb>
       </div>
@@ -22,7 +22,7 @@
               <UserOutlined w-18 h-18 />
             </template>
           </a-avatar>
-          {{ userStore.user.name }}
+          {{ user.user.name }}
         </a-popover>
       </div>
     </div>
@@ -32,24 +32,22 @@
 <script setup lang="ts">
 import { RouteRecordRaw } from "vue-router";
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons-vue";
-import setting from "~/store/setting";
-import user from "~/store/user";
 import { getRawOptionRoutes } from "~/utils/router";
 import DarkMode from "~/components/dark-mode/index.vue";
 
-let settingStore = setting();
-let userStore = user();
 let router = useRouter();
 let route = useRoute();
+let user = useUserStore();
+let setting = useSettingStore();
 let routeMached = ref<RouteRecordRaw[]>(getRawOptionRoutes(route.path));
 let { logo } = useLocalImage();
 
 let handleClick = () => {
-  settingStore.collapsed = !settingStore.collapsed;
+  setting.collapsed = !setting.collapsed;
 };
 
 let logout = async () => {
-  await userStore.reloadPage();
+  await user.reloadPage();
 };
 router.afterEach(() => {
   routeMached.value = getRawOptionRoutes(route.path);

@@ -3,13 +3,12 @@ import { RouteRecordRaw } from "vue-router";
 import constantRoutes from "~/router/constantRoutes/index";
 import dynamicRoutes from "~/router/dynamicRoutes/index";
 
-let routes: RouteRecordRaw[] = [...constantRoutes, ...dynamicRoutes];
+export const usePermissionStore = defineStore("permission", () => {
+  let routes = ref<RouteRecordRaw[]>([...constantRoutes, ...dynamicRoutes]);
+  let currentRoutes = computed(() => routes.value.find(item => item.path === "/")?.children || []);
 
-export default defineStore("permission", {
-  state() {
-    return {
-      routes,
-      currentRoutes: routes.find(item => item.path === "/")?.children || [],
-    };
-  },
+  return {
+    routes,
+    currentRoutes,
+  };
 });

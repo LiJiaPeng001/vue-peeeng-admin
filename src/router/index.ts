@@ -4,7 +4,6 @@ import constantRoutes from "./constantRoutes/index";
 import dynamicRoutes from "./dynamicRoutes/index";
 
 // import "nprogress/nprogress.css";
-import user from "~/store/user";
 
 function flattenRoute(routes: RouteRecordRaw[]) {
   return routes.reduce((all, item) => {
@@ -34,9 +33,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // NProgress.start();
-  let userStore = user();
-  if (!userStore.isLogin && to.path !== "/login") return next("/login");
-  if (userStore.isLogin && to.path == "/login") return next("/");
+  let user = useUserStore();
+  if (!user.isLogin && to.path !== "/login") return next("/login");
+  if (user.isLogin && to.path == "/login") return next("/");
   next();
 });
 

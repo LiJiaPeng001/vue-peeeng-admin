@@ -1,40 +1,41 @@
 import { defineStore } from "pinia";
 import { UserInfo, LoginPayload } from "#/api/user";
-import { login, logout } from "~/api/user";
+import { login as loginApi, logout as quit } from "~/api/user";
 
 const authority = useAuth();
 
-export default defineStore("user", {
-  state() {
-    return {
-      user: authority.value,
+export const useUserStore = defineStore("user", () => {
+  let user = ref<UserInfo>({
+    ...authority.value,
+  });
+  let isLogin = computed(() => user.value?.name);
+  async function login(payload: LoginPayload): Promise<UserInfo> {
+    let d = await loginApi(payload);
+    const auth = useAuth();
+    let { token } = auth.value;
+    d = { ...d, token };
+    user.value = d;
+    auth.value = d;
+    return d;
+  }
+  async function logout() {
+    await quit();
+    let d = {
+      name: "",
+      token: "",
     };
-  },
-  getters: {
-    isLogin: state => state.user.name,
-  },
-  actions: {
-    async login(payload: LoginPayload): Promise<UserInfo> {
-      let user = await login(payload);
-      const auth = useAuth();
-      let { token } = auth.value;
-      user = { ...user, token };
-      this.user = user;
-      auth.value = user;
-      return user;
-    },
-    async logout() {
-      await logout();
-      let user = {
-        name: "",
-        token: "",
-      };
-      this.user = user;
-      authority.value = user;
-    },
-    async reloadPage() {
-      await this.logout();
-      window.location.reload();
-    },
-  },
+    user.value = d;
+    authority.value = d;
+  }
+  async function reloadPage() {
+    await logout();
+    window.location.reload();
+  }
+  return {
+    user,
+    isLogin,
+    login,
+    logout,
+    reloadPage,
+  };
 });

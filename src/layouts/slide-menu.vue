@@ -1,21 +1,21 @@
 <template>
   <div class="slide-menu" min-h-100vh z-99 relative>
-    <div h-full shrink-0 :style="{ width: settingStore.layoutW + 'px' }"></div>
-    <component :is="settingStore.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
+    <div h-full shrink-0 :style="{ width: setting.layoutW + 'px' }"></div>
+    <component :is="setting.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
       <div h-64 transition-20 center-flex>
         <img :src="logo" w-36 h-36 mr-12 />
-        <div v-if="!settingStore.inlineCollapsed" color-white font-500 text-20>无他社区</div>
+        <div v-if="!setting.inlineCollapsed" color-white font-500 text-20>无他社区</div>
       </div>
       <a-menu
         :selected-keys="selectedKeys"
-        :inline-collapsed="settingStore.inlineCollapsed"
+        :inline-collapsed="setting.inlineCollapsed"
         mode="inline"
-        :style="{ width: settingStore.menuW + 'px' }"
-        :open-keys="settingStore.openKeys"
+        :style="{ width: setting.menuW + 'px' }"
+        :open-keys="setting.openKeys"
         theme="dark"
         @click="handleClick"
       >
-        <template v-for="item in permissionStore.currentRoutes" :key="item.path">
+        <template v-for="item in permission.currentRoutes" :key="item.path">
           <template v-if="item.children">
             <sub-menu :key="item.path" :menu-info="item" />
           </template>
@@ -34,16 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import permission from "~/store/permission";
-import setting from "~/store/setting";
 // import constantRoutes from "~/router/constantRoutes/index";
 import SubMenu from "./components/sub-menu.vue";
 import { getOpenKeys } from "../utils/router";
 
 let route = useRoute();
 let go = useGo();
-let settingStore = setting();
-let permissionStore = permission();
+let setting = useSettingStore();
+let permission = usePermissionStore();
 let { logo } = useLocalImage();
 
 // let showTabs = computed(() => !constantRoutes.some(item => item.path === route.path));
@@ -57,7 +55,7 @@ useResizeObserver(
   document.body,
   useThrottleFn(entries => {
     const entry = entries[0];
-    settingStore.onlistenBodyResize(entry.contentRect);
+    setting.onlistenBodyResize(entry.contentRect);
   }, 20)
 );
 

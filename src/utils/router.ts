@@ -1,6 +1,4 @@
 import type { RouteRecordRaw, RouteLocationNormalized } from "vue-router";
-import permission from "~/store/permission";
-import setting from "~/store/setting";
 
 export function getRouteItem(routes: RouteRecordRaw[], path: string): any {
   let route = {};
@@ -39,8 +37,8 @@ export function getOpenKeys(path = "") {
     let route = useRoute();
     path = route.path;
   }
-  let settingStore = setting();
-  let { currentRoutes: routes } = permission();
+  let settingStore = useSettingStore();
+  let { currentRoutes: routes } = usePermissionStore();
   let keys: string[] = [];
   let filterKeys = getPermissionRoutes(routes, path);
   function deepKeys(openKeys: RouteRecordRaw[]): void {
@@ -64,7 +62,7 @@ export function getRawOptionRoutes(path?: string): RouteRecordRaw[] {
     let route = useRoute();
     path = route.path as string;
   }
-  let permissionStore = permission();
+  let permissionStore = usePermissionStore();
   const flat = (list: RouteRecordRaw[]): RouteRecordRaw[] => {
     return list.reduce((all, item: RouteRecordRaw) => {
       all.push(item);
