@@ -5,7 +5,6 @@ import autoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import Unocss from "unocss/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
-// import { getThemeVariables } from 'ant-design-vue/dist/theme'
 
 function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
@@ -28,7 +27,7 @@ export default ({ mode }: ConfigEnv) => {
         resolvers: [AntDesignVueResolver()],
       }),
       autoImport({
-        imports: ["vue", "vue-router", "@vueuse/core"],
+        imports: ["vue", "vue-router", "@vueuse/core", { "~/api/demo.ts": [] }],
         eslintrc: {
           enabled: true, // Default `false`
         },

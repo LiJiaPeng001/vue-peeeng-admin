@@ -59,7 +59,6 @@ let router = useRouter();
 let go = useGo();
 
 let onChangePageAddRoute = () => {
-  console.log("wuhu");
   settingStore.defaultTabs = [getRouteItem(permissionStore.currentRoutes, "/dashboard")];
   settingStore.addTab(route);
 };

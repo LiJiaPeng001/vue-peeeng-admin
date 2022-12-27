@@ -62,7 +62,8 @@ router.afterEach(() => {
   height: 64px;
   cursor: pointer;
   .layout-fixed {
-    background-color: var(--content-bg-color);
+    backdrop-filter: saturate(50%) blur(8px);
+    background-color: var(--fixed-bg-header);
     color: var(--textColor);
     justify-content: space-between;
     height: 64px;
