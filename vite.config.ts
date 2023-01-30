@@ -5,6 +5,7 @@ import autoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import Unocss from "unocss/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import viteTestPlugin from "./src/plugins/viteHtmlPlugin";
 
 function getEnvVariable(mode: string) {
   return loadEnv(mode, process.cwd());
@@ -23,6 +24,7 @@ export default ({ mode }: ConfigEnv) => {
     plugins: [
       vue(),
       Unocss(),
+      viteTestPlugin(),
       Components({
         resolvers: [AntDesignVueResolver()],
       }),

@@ -5,10 +5,13 @@ import { login as loginApi, logout as quit } from "~/api/user";
 const authority = useAuth();
 
 export const useUserStore = defineStore("user", () => {
-  let user = ref<UserInfo>({
-    ...authority.value,
-  });
+  let user = ref<UserInfo>(authority.value);
   let isLogin = computed(() => user.value?.name);
+  /**
+   *
+   * @param payload LoginPayload
+   * @returns UserInfo
+   */
   async function login(payload: LoginPayload): Promise<UserInfo> {
     let d = await loginApi(payload);
     const auth = useAuth();
@@ -18,6 +21,9 @@ export const useUserStore = defineStore("user", () => {
     auth.value = d;
     return d;
   }
+  /**
+   * logout
+   */
   async function logout() {
     await quit();
     let d = {
