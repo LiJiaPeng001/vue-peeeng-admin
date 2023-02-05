@@ -63,12 +63,14 @@ let onSubmit = async () => {
     loading.value = false;
     return Promise.reject();
   });
-  loading.value = false;
-  notification.success({
-    message: "登录成功",
-    description: `欢迎回来，${name}`,
-  });
-  router.replace("/dashboard");
+  setTimeout(() => {
+    loading.value = false;
+    notification.success({
+      message: "登录成功",
+      description: `欢迎回来，${name}`,
+    });
+    router.replace("/dashboard");
+  }, 2000);
 };
 </script>
 

@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(route => {
-  document.title = import.meta.env.title || route.meta.title || "无他社区后台管理";
+  document.title = import.meta.env.title || route.meta.title || "后台管理";
   // NProgress.done();
 });
 

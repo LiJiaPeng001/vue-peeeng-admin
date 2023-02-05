@@ -4,7 +4,7 @@
     <component :is="setting.mode === 'pc' ? 'LayoutSlider' : 'DrawerBox'">
       <div h-64 transition-20 center-flex>
         <img :src="logo" w-36 h-36 mr-12 />
-        <div v-if="!setting.inlineCollapsed" color-white font-500 text-20>无他社区</div>
+        <div v-if="!setting.inlineCollapsed" color-white font-500 text-20>后台管理</div>
       </div>
       <a-menu
         :selected-keys="selectedKeys"
