@@ -12,6 +12,8 @@ import antd from "./utils/antd";
 
 import "./style/index.less";
 
+import "./mock/index"
+
 const Vue = createApp(App);
 const pinia = createPinia();
 

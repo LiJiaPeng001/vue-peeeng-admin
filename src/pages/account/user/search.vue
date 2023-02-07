@@ -26,9 +26,6 @@
           <a-select-option :key="2">永久封禁</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="金币数降序" name="state">
-        <a-switch v-model:checked="form.gold_number_sort"></a-switch>
-      </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit" style="margin-right: 8px">查询</a-button>
         <a-button type="default" @click="clear">清空</a-button>

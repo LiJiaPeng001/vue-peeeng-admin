@@ -27,14 +27,6 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import("~/pages/account/user/detail/index.vue"),
       },
-      {
-        path: "/account/join",
-        name: "AccountJoin",
-        meta: {
-          title: "参与统计",
-        },
-        component: () => import("~/pages/account/join/index.vue"),
-      },
     ],
   },
 ];

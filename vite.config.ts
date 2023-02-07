@@ -13,6 +13,7 @@ function getEnvVariable(mode: string) {
 
 export default ({ mode }: ConfigEnv) => {
   let env = getEnvVariable(mode);
+  console.log(env)
   return defineConfig({
     base: "/", // 基础路径
     resolve: {
@@ -48,12 +49,12 @@ export default ({ mode }: ConfigEnv) => {
         },
       },
     },
-    server: {
-      port: 2525,
-      host: "0.0.0.0",
-      proxy: {
-        "^/api*": env.VITE_BASE_URL,
-      },
-    },
+    // server: {
+    //   port: 2525,
+    //   host: "0.0.0.0",
+    //   proxy: {
+    //     "^/api*": env.VITE_BASE_URL,
+    //   },
+    // },
   });
 };

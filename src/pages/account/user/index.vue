@@ -9,19 +9,9 @@
       :scroll="{ x: 1000 }"
       @change="onChange"
     >
-      <template #bodyCell="{ column, text, record }">
-        <template v-if="column.key === 'background_img_url' || column.key === 'avatar_url'">
-          <my-image :width="50" :height="50" :url="text"></my-image>
-        </template>
-        <template v-if="column.key === 'recommend_time'">
-          <a-switch :checked="!!text" @change="onTuijian($event, record)"></a-switch>
-        </template>
-        <template v-if="column.key === 'is_white_user'">
-          <a-switch :checked="text" @change="onWhite($event, record)"></a-switch>
-        </template>
+      <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <span primary @click="toEdit(record)">编辑</span>
-          <span danger @click="openModal(record)">封禁</span>
         </template>
       </template>
     </a-table>
@@ -61,33 +51,15 @@ let columns = ref([
   },
   {
     title: "昵称",
-    dataIndex: "nick",
+    dataIndex: "name",
   },
-  {
-    title: "头像",
-    dataIndex: "avatar_url",
-    key: "avatar_url",
-  },
-  // {
-  //   title: "背景图",
-  //   dataIndex: "background_img_url	",
-  //   key: "background_img_url",
-  // },
   {
     title: "手机号",
-    dataIndex: "phone_number",
-  },
-  {
-    title: "金币数",
-    dataIndex: "gold_number",
+    dataIndex: "phone",
   },
   {
     title: "等级",
     dataIndex: "level",
-  },
-  {
-    title: "生日",
-    dataIndex: "birthday",
   },
   {
     title: "创建时间",
@@ -95,17 +67,7 @@ let columns = ref([
   },
   {
     title: "状态",
-    dataIndex: "state_text",
-  },
-  {
-    title: "是否推荐",
-    dataIndex: "recommend_time",
-    key: "recommend_time",
-  },
-  {
-    title: "是否白名单",
-    dataIndex: "is_white_user",
-    key: "is_white_user",
+    dataIndex: "state",
   },
   {
     title: "操作",
@@ -128,18 +90,6 @@ let fetchList = async () => {
 let onChange = (values: { current: number; pageSize: number }) => {
   payload.value.page = values.current;
   payload.value.limit = values.pageSize;
-  fetchList();
-};
-let openModal = (d: RecordItem) => {
-  record.value = { ...d };
-  banVisible.value = true;
-};
-let onTuijian = async (type: boolean, d: RecordItem) => {
-  await Api.tuijian({ id: d.id, type: type ? 1 : 0 });
-  fetchList();
-};
-let onWhite = async (type: boolean, d: RecordItem) => {
-  await Api.white({ id: d.id });
   fetchList();
 };
 

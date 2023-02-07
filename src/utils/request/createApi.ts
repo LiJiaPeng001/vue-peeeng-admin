@@ -5,8 +5,8 @@ import { getErrStatus, getErrMsg } from "./tools/index";
 import { message } from "ant-design-vue";
 import useLoading from "./tools/loading";
 
-function noop() {}
-function login() {}
+function noop() { }
+function login() { }
 
 let loading = useLoading();
 
@@ -32,17 +32,12 @@ export default ({
         if (shouldLoading) loading.show();
         let user = useUserStore();
         // 更新本地token
-        const { data, headers } = await instence(requestOptions);
+        const { data } = await instence(requestOptions);
         if (shouldLoading) loading.hide();
-        let { authorization = "" } = headers;
-        const auth = useAuth();
-        let { name, token } = auth.value;
-        auth.value = { token: authorization || token, name };
-
         // success code
-        if (data.code === 0) return data.data;
+        if (data.code === 200) return data.data;
         // 重新登录
-        if (data.code === 401 || data.code === 419) await user.reloadPage();
+        if (data.code === 401 || data.code === 419) await user.logout();
         // 报错提醒
         if (shouldToast) toast.error(data.msg);
         return Promise.reject(data.msg);
