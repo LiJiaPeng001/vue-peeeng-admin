@@ -5,7 +5,7 @@ import dynamicRoutes from "./dynamicRoutes/index";
 
 // import "nprogress/nprogress.css";
 
-function flattenRoute(routes: RouteRecordRaw[]) {
+function flattenRoute(routes: RouteRecordRaw[]): RouteRecordRaw[] {
   return routes.reduce((all, item) => {
     if (item.children) all.push(...flattenRoute(item.children));
     else all.push(item);

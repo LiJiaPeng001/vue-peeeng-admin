@@ -31,7 +31,6 @@ export default ({
       try {
         if (shouldLoading) loading.show();
         let user = useUserStore();
-        // 更新本地token
         const { data } = await instence(requestOptions);
         if (shouldLoading) loading.hide();
         // success code
