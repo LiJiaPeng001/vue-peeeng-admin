@@ -38,7 +38,7 @@ export const useSettingStore = defineStore("setting", () => {
   }
   function onlistenBodyResize(options: ResizeObserverEntry["contentRect"]) {
     let { width = 0 } = options;
-    if (width >= 1000) {
+    if (width >= 750) {
       state.mode = "pc";
       state.collapsed = false;
     } else {

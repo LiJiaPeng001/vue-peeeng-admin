@@ -13,7 +13,6 @@ function getEnvVariable(mode: string) {
 
 export default ({ mode }: ConfigEnv) => {
   let env = getEnvVariable(mode);
-  console.log(env)
   return defineConfig({
     base: "/", // 基础路径
     resolve: {
@@ -25,7 +24,7 @@ export default ({ mode }: ConfigEnv) => {
     plugins: [
       vue(),
       Unocss(),
-      viteTestPlugin(),
+      viteTestPlugin(env),
       Components({
         resolvers: [AntDesignVueResolver()],
       }),
